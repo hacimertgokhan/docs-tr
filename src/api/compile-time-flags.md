@@ -2,43 +2,43 @@
 outline: deep
 ---
 
-# Compile-Time Flags {#compile-time-flags}
+# Derleme Zamanı İşaretleri {#derleme-zamani-isaretleri}
 
 :::tip
-Compile-time flags only apply when using the `esm-bundler` build of Vue (i.e. `vue/dist/vue.esm-bundler.js`).
+Derleme zamanı işaretleri yalnızca Vue'nun `esm-bundler` yapısını (yani `vue/dist/vue.esm-bundler.js`) kullanırken geçerlidir.
 :::
 
-When using Vue with a build step, it is possible to configure a number of compile-time flags to enable / disable certain features. The benefit of using compile-time flags is that features disabled this way can be removed from the final bundle via tree-shaking.
+Vue'yi bir derleme adımıyla kullanırken, belirli özellikleri etkinleştirmek / devre dışı bırakmak için bir dizi derleme zamanı işareti yapılandırmak mümkündür. Derleme zamanı işaretlerini kullanmanın faydası, bu şekilde devre dışı bırakılan özelliklerin ağaç sallama yoluyla son paketten kaldırılabilmesidir.
 
-Vue will work even if these flags are not explicitly configured. However, it is recommended to always configure them so that the relevant features can be properly removed when possible.
+Bu işaretler açıkça yapılandırılmamış olsa bile Vue çalışacaktır. Ancak, ilgili özelliklerin mümkün olduğunda düzgün şekilde kaldırılabilmesi için bunları her zaman yapılandırmanız önerilir.
 
-See [Configuration Guides](#configuration-guides) on how to configure them depending on your build tool.
+Derleme aracınıza bağlı olarak bunları nasıl yapılandıracağınız hakkında [Yapılandırma Kılavuzları](#yapılandırma-kılavuzları) bölümüne bakın.
 
 ## `__VUE_OPTIONS_API__` {#VUE_OPTIONS_API}
 
-- **Default:** `true`
+- **Varsayılan:** `true`
 
-  Enable / disable Options API support. Disabling this will result in smaller bundles, but may affect compatibility with 3rd party libraries if they rely on Options API.
+  Options API desteğini etkinleştirin / devre dışı bırakın. Bunu devre dışı bırakmak daha küçük paketlerle sonuçlanır, ancak Options API'sine bağımlı olmaları durumunda 3. taraf kütüphanelerle uyumluluğu etkileyebilir.
 
 ## `__VUE_PROD_DEVTOOLS__` {#VUE_PROD_DEVTOOLS}
 
-- **Default:** `false`
+- **Varsayılan:** `false`
 
-  Enable / disable devtools support in production builds. This will result in more code included in the bundle, so it is recommended to only enable this for debugging purposes.
+  Üretim yapılarında devtools desteğini etkinleştirin / devre dışı bırakın. Bu, pakete daha fazla kodun dahil edilmesine neden olur, bu nedenle bunu yalnızca hata ayıklama amaçları için etkinleştirmeniz önerilir.
 
 ## `__VUE_PROD_HYDRATION_MISMATCH_DETAILS__` {#VUE_PROD_HYDRATION_MISMATCH_DETAILS}
 
-- **Default:** `false`
+- **Varsayılan:** `false`
 
-  Enable/disable detailed warnings for hydration mismatches in production builds. This will result in more code included in the bundle, so it is recommended to only enable this for debugging purposes.
+  Üretim yapılarında hidrasyon uyuşmazlıkları için ayrıntılı uyarıları etkinleştirin/devre dışı bırakın. Bu, pakete daha fazla kodun dahil edilmesine neden olur, bu nedenle bunu yalnızca hata ayıklama amaçları için etkinleştirmeniz önerilir.
 
-- Only available in 3.4+
+- Yalnızca 3.4+ sürümünde mevcuttur
 
-## Configuration Guides {#configuration-guides}
+## Yapılandırma Kılavuzları {#yapılandırma-kılavuzları}
 
 ### Vite {#vite}
 
-`@vitejs/plugin-vue` automatically provides default values for these flags. To change the default values, use Vite's [`define` config option](https://vitejs.dev/config/shared-options.html#define):
+`@vitejs/plugin-vue`, bu işaretler için otomatik olarak varsayılan değerler sağlar. Varsayılan değerleri değiştirmek için Vite'in [`define` yapılandırma seçeneğini](https://vitejs.dev/config/shared-options.html#define) kullanın:
 
 ```js
 // vite.config.js
@@ -46,7 +46,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   define: {
-    // enable hydration mismatch details in production build
+    // üretim yapısında hidrasyon uyuşmazlığı ayrıntılarını etkinleştir
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'true'
   }
 })
@@ -54,7 +54,7 @@ export default defineConfig({
 
 ### vue-cli {#vue-cli}
 
-`@vue/cli-service` automatically provides default values for some of these flags. To configure /change the values:
+`@vue/cli-service`, bu işaretlerin bazıları için otomatik olarak varsayılan değerler sağlar. Değerleri yapılandırmak / değiştirmek için:
 
 ```js
 // vue.config.js
@@ -74,7 +74,7 @@ module.exports = {
 
 ### webpack {#webpack}
 
-Flags should be defined using webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/):
+İşaretler, webpack'in [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) kullanılarak tanımlanmalıdır:
 
 ```js
 // webpack.config.js
@@ -92,7 +92,7 @@ module.exports = {
 
 ### Rollup {#rollup}
 
-Flags should be defined using [@rollup/plugin-replace](https://github.com/rollup/plugins/tree/master/packages/replace):
+İşaretler, [@rollup/plugin-replace](https://github.com/rollup/plugins/tree/master/packages/replace) kullanılarak tanımlanmalıdır:
 
 ```js
 // rollup.config.js

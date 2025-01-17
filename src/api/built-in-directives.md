@@ -1,117 +1,117 @@
-# Built-in Directives {#built-in-directives}
+# Dahili Direktifler {#dahili-direktifler}
 
 ## v-text {#v-text}
 
-Update the element's text content.
+Öğenin metin içeriğini güncelleyin.
 
-- **Expects:** `string`
+- **Beklenen:** `string`
 
-- **Details**
+- **Detaylar**
 
-  `v-text` works by setting the element's [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) property, so it will overwrite any existing content inside the element. If you need to update the part of `textContent`, you should use [mustache interpolations](/guide/essentials/template-syntax#text-interpolation) instead.
+  `v-text`, öğenin [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) özelliğini ayarlayarak çalışır, bu nedenle öğenin içindeki mevcut herhangi bir içeriğin üzerine yazacaktır. `textContent`'in bir bölümünü güncellemeniz gerekiyorsa, bunun yerine [bıyık enterpolasyonlarını](/guide/essentials/template-syntax#text-interpolation) kullanmalısınız.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
   <span v-text="msg"></span>
-  <!-- same as -->
+  <!-- aynı şey -->
   <span>{{msg}}</span>
   ```
 
-- **See also** [Template Syntax - Text Interpolation](/guide/essentials/template-syntax#text-interpolation)
+- **Ayrıca bakınız** [Şablon Sözdizimi - Metin Enterpolasyonu](/guide/essentials/template-syntax#text-interpolation)
 
 ## v-html {#v-html}
 
-Update the element's [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML).
+Öğenin [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML)'ini güncelleyin.
 
-- **Expects:** `string`
+- **Beklenen:** `string`
 
-- **Details**
+- **Detaylar**
 
-  Contents of `v-html` are inserted as plain HTML - Vue template syntax will not be processed. If you find yourself trying to compose templates using `v-html`, try to rethink the solution by using components instead.
+  `v-html`'nin içeriği düz HTML olarak eklenir - Vue şablon sözdizimi işlenmeyecektir. `v-html` kullanarak şablon oluşturmaya çalışıyorsanız, bunun yerine bileşenleri kullanarak çözümü yeniden düşünmeye çalışın.
 
-  ::: warning Security Note
-  Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). Only use `v-html` on trusted content and **never** on user-provided content.
+  ::: warning Güvenlik Notu
+  Web sitenizde rastgele HTML'yi dinamik olarak render etmek çok tehlikeli olabilir, çünkü kolayca [XSS saldırılarına](https://en.wikipedia.org/wiki/Cross-site_scripting) yol açabilir. `v-html`'yi yalnızca güvenilir içerikte ve **asla** kullanıcı tarafından sağlanan içerikte kullanmayın.
   :::
 
-  In [Single-File Components](/guide/scaling-up/sfc), `scoped` styles will not apply to content inside `v-html`, because that HTML is not processed by Vue's template compiler. If you want to target `v-html` content with scoped CSS, you can instead use [CSS modules](./sfc-css-features#css-modules) or an additional, global `<style>` element with a manual scoping strategy such as BEM.
+  [Tek Dosyalı Bileşenlerde](/guide/scaling-up/sfc), `scoped` stilleri `v-html` içindeki içeriğe uygulanmaz, çünkü bu HTML, Vue'nin şablon derleyicisi tarafından işlenmez. Kapsamlı CSS ile `v-html` içeriğini hedeflemek istiyorsanız, bunun yerine [CSS modüllerini](./sfc-css-features#css-modules) veya BEM gibi manuel bir kapsam stratejisiyle ek, global bir `<style>` öğesi kullanabilirsiniz.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
   <div v-html="html"></div>
   ```
 
-- **See also** [Template Syntax - Raw HTML](/guide/essentials/template-syntax#raw-html)
+- **Ayrıca bakınız** [Şablon Sözdizimi - Ham HTML](/guide/essentials/template-syntax#raw-html)
 
 ## v-show {#v-show}
 
-Toggle the element's visibility based on the truthy-ness of the expression value.
+Öğenin görünürlüğünü, ifade değerinin doğruluğuna göre değiştirin.
 
-- **Expects:** `any`
+- **Beklenen:** `any`
 
-- **Details**
+- **Detaylar**
 
-  `v-show` works by setting the `display` CSS property via inline styles, and will try to respect the initial `display` value when the element is visible. It also triggers transitions when its condition changes.
+  `v-show`, satır içi stiller aracılığıyla `display` CSS özelliğini ayarlayarak çalışır ve öğe görünür olduğunda başlangıç `display` değerine uymaya çalışır. Koşulu değiştiğinde geçişleri de tetikler.
 
-- **See also** [Conditional Rendering - v-show](/guide/essentials/conditional#v-show)
+- **Ayrıca bakınız** [Koşullu Render - v-show](/guide/essentials/conditional#v-show)
 
 ## v-if {#v-if}
 
-Conditionally render an element or a template fragment based on the truthy-ness of the expression value.
+İfade değerinin doğruluğuna göre bir öğeyi veya bir şablon parçasını koşullu olarak render edin.
 
-- **Expects:** `any`
+- **Beklenen:** `any`
 
-- **Details**
+- **Detaylar**
 
-  When a `v-if` element is toggled, the element and its contained directives / components are destroyed and re-constructed. If the initial condition is falsy, then the inner content won't be rendered at all.
+  Bir `v-if` öğesi değiştirildiğinde, öğe ve içerdiği direktifler / bileşenler yok edilir ve yeniden oluşturulur. Başlangıç koşulu yanlışsa, iç içerik hiç render edilmeyecektir.
 
-  Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  Yalnızca metin veya birden çok öğe içeren koşullu bir bloğu belirtmek için `<template>` üzerinde kullanılabilir.
 
-  This directive triggers transitions when its condition changes.
+  Bu direktif, koşulu değiştiğinde geçişleri tetikler.
 
-  When used together, `v-if` has a higher priority than `v-for`. We don't recommend using these two directives together on one element — see the [list rendering guide](/guide/essentials/list#v-for-with-v-if) for details.
+  Birlikte kullanıldığında, `v-if`, `v-for`'dan daha yüksek önceliğe sahiptir. Bu iki direktifi tek bir öğe üzerinde birlikte kullanmanızı önermiyoruz — ayrıntılar için [liste render rehberine](/guide/essentials/list#v-for-with-v-if) bakın.
 
-- **See also** [Conditional Rendering - v-if](/guide/essentials/conditional#v-if)
+- **Ayrıca bakınız** [Koşullu Render - v-if](/guide/essentials/conditional#v-if)
 
 ## v-else {#v-else}
 
-Denote the "else block" for `v-if` or a `v-if` / `v-else-if` chain.
+`v-if` veya bir `v-if` / `v-else-if` zinciri için "else bloğunu" belirtin.
 
-- **Does not expect expression**
+- **İfade beklemez**
 
-- **Details**
+- **Detaylar**
 
-  - Restriction: previous sibling element must have `v-if` or `v-else-if`.
+  - Kısıtlama: önceki kardeş öğede `v-if` veya `v-else-if` olmalıdır.
 
-  - Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  - Yalnızca metin veya birden çok öğe içeren koşullu bir bloğu belirtmek için `<template>` üzerinde kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
   <div v-if="Math.random() > 0.5">
-    Now you see me
+    Şimdi beni görüyorsun
   </div>
   <div v-else>
-    Now you don't
+    Şimdi görmüyorsun
   </div>
   ```
 
-- **See also** [Conditional Rendering - v-else](/guide/essentials/conditional#v-else)
+- **Ayrıca bakınız** [Koşullu Render - v-else](/guide/essentials/conditional#v-else)
 
 ## v-else-if {#v-else-if}
 
-Denote the "else if block" for `v-if`. Can be chained.
+`v-if` için "else if bloğunu" belirtin. Zincirlenebilir.
 
-- **Expects:** `any`
+- **Beklenen:** `any`
 
-- **Details**
+- **Detaylar**
 
-  - Restriction: previous sibling element must have `v-if` or `v-else-if`.
+  - Kısıtlama: önceki kardeş öğede `v-if` veya `v-else-if` olmalıdır.
 
-  - Can be used on `<template>` to denote a conditional block containing only text or multiple elements.
+  - Yalnızca metin veya birden çok öğe içeren koşullu bir bloğu belirtmek için `<template>` üzerinde kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
   <div v-if="type === 'A'">
@@ -124,21 +124,21 @@ Denote the "else if block" for `v-if`. Can be chained.
     C
   </div>
   <div v-else>
-    Not A/B/C
+    A/B/C değil
   </div>
   ```
 
-- **See also** [Conditional Rendering - v-else-if](/guide/essentials/conditional#v-else-if)
+- **Ayrıca bakınız** [Koşullu Render - v-else-if](/guide/essentials/conditional#v-else-if)
 
 ## v-for {#v-for}
 
-Render the element or template block multiple times based on the source data.
+Kaynak verilerine göre öğeyi veya şablon bloğunu birden çok kez render edin.
 
-- **Expects:** `Array | Object | number | string | Iterable`
+- **Beklenen:** `Array | Object | number | string | Iterable`
 
-- **Details**
+- **Detaylar**
 
-  The directive's value must use the special syntax `alias in expression` to provide an alias for the current element being iterated on:
+  Direktifin değeri, üzerinde yinelendiği geçerli öğe için bir takma ad sağlamak üzere `alias in expression` özel sözdizimini kullanmalıdır:
 
   ```vue-html
   <div v-for="item in items">
@@ -146,7 +146,7 @@ Render the element or template block multiple times based on the source data.
   </div>
   ```
 
-  Alternatively, you can also specify an alias for the index (or the key if used on an Object):
+  Alternatif olarak, dizin için bir takma ad (veya bir Nesne üzerinde kullanılıyorsa anahtar) da belirtebilirsiniz:
 
   ```vue-html
   <div v-for="(item, index) in items"></div>
@@ -154,7 +154,7 @@ Render the element or template block multiple times based on the source data.
   <div v-for="(value, name, index) in object"></div>
   ```
 
-  The default behavior of `v-for` will try to patch the elements in-place without moving them. To force it to reorder elements, you should provide an ordering hint with the `key` special attribute:
+  `v-for`'un varsayılan davranışı, öğeleri hareket ettirmeden yerinde yama yapmaya çalışacaktır. Öğeleri yeniden sıralamaya zorlamak için, `key` özel özniteliğiyle bir sıralama ipucu sağlamalısınız:
 
   ```vue-html
   <div v-for="item in items" :key="item.id">
@@ -162,247 +162,247 @@ Render the element or template block multiple times based on the source data.
   </div>
   ```
 
-  `v-for` can also work on values that implement the [Iterable Protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol), including native `Map` and `Set`.
+  `v-for` ayrıca, yerel `Map` ve `Set` dahil olmak üzere [Yinelenebilir Protokolü](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol)'ü uygulayan değerler üzerinde de çalışabilir.
 
-- **See also**
-  - [List Rendering](/guide/essentials/list)
+- **Ayrıca bakınız**
+  - [Liste Render](/guide/essentials/list)
 
 ## v-on {#v-on}
 
-Attach an event listener to the element.
+Öğeye bir olay dinleyicisi ekleyin.
 
-- **Shorthand:** `@`
+- **Kısa yol:** `@`
 
-- **Expects:** `Function | Inline Statement | Object (without argument)`
+- **Beklenen:** `Function | Satır İçi İfade | Nesne (argüman olmadan)`
 
-- **Argument:** `event` (optional if using Object syntax)
+- **Argüman:** `event` (Nesne sözdizimi kullanılıyorsa isteğe bağlı)
 
-- **Modifiers**
+- **Değiştiriciler**
 
-  - `.stop` - call `event.stopPropagation()`.
-  - `.prevent` - call `event.preventDefault()`.
-  - `.capture` - add event listener in capture mode.
-  - `.self` - only trigger handler if event was dispatched from this element.
-  - `.{keyAlias}` - only trigger handler on certain keys.
-  - `.once` - trigger handler at most once.
-  - `.left` - only trigger handler for left button mouse events.
-  - `.right` - only trigger handler for right button mouse events.
-  - `.middle` - only trigger handler for middle button mouse events.
-  - `.passive` - attaches a DOM event with `{ passive: true }`.
+  - `.stop` - `event.stopPropagation()`'ı çağırın.
+  - `.prevent` - `event.preventDefault()`'ı çağırın.
+  - `.capture` - yakalama modunda olay dinleyicisi ekleyin.
+  - `.self` - yalnızca olay bu öğeden gönderildiyse işleyiciyi tetikleyin.
+  - `.{keyAlias}` - yalnızca belirli tuşlarda işleyiciyi tetikleyin.
+  - `.once` - işleyiciyi en fazla bir kez tetikleyin.
+  - `.left` - yalnızca sol düğme fare olayları için işleyiciyi tetikleyin.
+  - `.right` - yalnızca sağ düğme fare olayları için işleyiciyi tetikleyin.
+  - `.middle` - yalnızca orta düğme fare olayları için işleyiciyi tetikleyin.
+  - `.passive` - ` { passive: true }` ile bir DOM olayı ekler.
 
-- **Details**
+- **Detaylar**
 
-  The event type is denoted by the argument. The expression can be a method name, an inline statement, or omitted if there are modifiers present.
+  Olay türü, argümanla belirtilir. İfade bir metot adı, satır içi bir ifade olabilir veya değiştiriciler varsa atlanabilir.
 
-  When used on a normal element, it listens to [**native DOM events**](https://developer.mozilla.org/en-US/docs/Web/Events) only. When used on a custom element component, it listens to **custom events** emitted on that child component.
+  Normal bir öğe üzerinde kullanıldığında, yalnızca [**yerel DOM olaylarını**](https://developer.mozilla.org/en-US/docs/Web/Events) dinler. Özel bir öğe bileşeni üzerinde kullanıldığında, o alt bileşende yayılan **özel olayları** dinler.
 
-  When listening to native DOM events, the method receives the native event as the only argument. If using inline statement, the statement has access to the special `$event` property: `v-on:click="handle('ok', $event)"`.
+  Yerel DOM olaylarını dinlerken, metot yerel olayı tek argüman olarak alır. Satır içi ifade kullanılıyorsa, ifade özel `$event` özelliğine erişebilir: `v-on:click="handle('ok', $event)"`.
 
-  `v-on` also supports binding to an object of event / listener pairs without an argument. Note when using the object syntax, it does not support any modifiers.
+  `v-on`, ayrıca bir olay / dinleyici çiftleri nesnesine argüman olmadan bağlanmayı destekler. Nesne sözdizimini kullanırken, herhangi bir değiştiriciyi desteklemediğini unutmayın.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
-  <!-- method handler -->
+  <!-- metot işleyicisi -->
   <button v-on:click="doThis"></button>
 
-  <!-- dynamic event -->
+  <!-- dinamik olay -->
   <button v-on:[event]="doThis"></button>
 
-  <!-- inline statement -->
+  <!-- satır içi ifade -->
   <button v-on:click="doThat('hello', $event)"></button>
 
-  <!-- shorthand -->
+  <!-- kısa yol -->
   <button @click="doThis"></button>
 
-  <!-- shorthand dynamic event -->
+  <!-- kısa yol dinamik olay -->
   <button @[event]="doThis"></button>
 
-  <!-- stop propagation -->
+  <!-- durdurma yayılımı -->
   <button @click.stop="doThis"></button>
 
-  <!-- prevent default -->
+  <!-- önleme varsayılanı -->
   <button @click.prevent="doThis"></button>
 
-  <!-- prevent default without expression -->
+  <!-- ifadesiz varsayılanı önleme -->
   <form @submit.prevent></form>
 
-  <!-- chain modifiers -->
+  <!-- zincir değiştiriciler -->
   <button @click.stop.prevent="doThis"></button>
 
-  <!-- key modifier using keyAlias -->
+  <!-- keyAlias kullanarak tuş değiştiricisi -->
   <input @keyup.enter="onEnter" />
 
-  <!-- the click event will be triggered at most once -->
+  <!-- tıklama olayı en fazla bir kez tetiklenecektir -->
   <button v-on:click.once="doThis"></button>
 
-  <!-- object syntax -->
+  <!-- nesne sözdizimi -->
   <button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
   ```
 
-  Listening to custom events on a child component (the handler is called when "my-event" is emitted on the child):
+  Bir alt bileşende özel olayları dinleme ("my-event" alt öğede yayımlandığında işleyici çağrılır):
 
   ```vue-html
   <MyComponent @my-event="handleThis" />
 
-  <!-- inline statement -->
+  <!-- satır içi ifade -->
   <MyComponent @my-event="handleThis(123, $event)" />
   ```
 
-- **See also**
-  - [Event Handling](/guide/essentials/event-handling)
-  - [Components - Custom Events](/guide/essentials/component-basics#listening-to-events)
+- **Ayrıca bakınız**
+  - [Olay İşleme](/guide/essentials/event-handling)
+  - [Bileşenler - Özel Olaylar](/guide/essentials/component-basics#listening-to-events)
 
 ## v-bind {#v-bind}
 
-Dynamically bind one or more attributes, or a component prop to an expression.
+Bir veya daha fazla özniteliği veya bir bileşen prop'unu dinamik olarak bir ifadeye bağlayın.
 
-- **Shorthand:**
-  - `:` or `.` (when using `.prop` modifier)
-  - Omitting value (when attribute and bound value has the same name, requires 3.4+)
+- **Kısa yol:**
+  - `:` veya `.` (`.prop` değiştiricisi kullanılırken)
+  - Değerin atlanması (öznitelik ve bağlı değer aynı ada sahip olduğunda, 3.4+ sürümünü gerektirir)
 
-- **Expects:** `any (with argument) | Object (without argument)`
+- **Beklenen:** `any (argümanlı) | Nesne (argümansız)`
 
-- **Argument:** `attrOrProp (optional)`
+- **Argüman:** `attrOrProp (isteğe bağlı)`
 
-- **Modifiers**
+- **Değiştiriciler**
 
-  - `.camel` - transform the kebab-case attribute name into camelCase.
-  - `.prop` - force a binding to be set as a DOM property (3.2+).
-  - `.attr` - force a binding to be set as a DOM attribute (3.2+).
+  - `.camel` - kebab-case öznitelik adını camelCase'e dönüştürün.
+  - `.prop` - bağlamanın bir DOM özelliği olarak ayarlanmasını zorlar (3.2+).
+  - `.attr` - bağlamanın bir DOM özniteliği olarak ayarlanmasını zorlar (3.2+).
 
-- **Usage**
+- **Kullanım**
 
-  When used to bind the `class` or `style` attribute, `v-bind` supports additional value types such as Array or Objects. See linked guide section below for more details.
+  `class` veya `style` özniteliğini bağlamak için kullanıldığında, `v-bind`, Dizi veya Nesneler gibi ek değer türlerini destekler. Daha fazla ayrıntı için aşağıdaki bağlantılı kılavuz bölümüne bakın.
 
-  When setting a binding on an element, Vue by default checks whether the element has the key defined as a property using an `in` operator check. If the property is defined, Vue will set the value as a DOM property instead of an attribute. This should work in most cases, but you can override this behavior by explicitly using `.prop` or `.attr` modifiers. This is sometimes necessary, especially when [working with custom elements](/guide/extras/web-components#passing-dom-properties).
+  Bir öğede bağlama ayarlarken, Vue varsayılan olarak öğenin `in` operatör kontrolünü kullanarak bir özellik olarak tanımlanan anahtara sahip olup olmadığını kontrol eder. Özellik tanımlanmışsa, Vue değeri bir öznitelik yerine DOM özelliği olarak ayarlayacaktır. Bu çoğu durumda işe yaramalıdır, ancak `.prop` veya `.attr` değiştiricilerini açıkça kullanarak bu davranışı geçersiz kılabilirsiniz. Bu, özellikle [özel öğelerle çalışırken](/guide/extras/web-components#passing-dom-properties) bazen gereklidir.
 
-  When used for component prop binding, the prop must be properly declared in the child component.
+  Bileşen prop bağlama için kullanıldığında, prop alt bileşende uygun şekilde bildirilmelidir.
 
-  When used without an argument, can be used to bind an object containing attribute name-value pairs.
+  Bir argüman olmadan kullanıldığında, öznitelik adı-değer çiftleri içeren bir nesneyi bağlamak için kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
-  <!-- bind an attribute -->
+  <!-- bir özniteliği bağla -->
   <img v-bind:src="imageSrc" />
 
-  <!-- dynamic attribute name -->
+  <!-- dinamik öznitelik adı -->
   <button v-bind:[key]="value"></button>
 
-  <!-- shorthand -->
+  <!-- kısa yol -->
   <img :src="imageSrc" />
 
-  <!-- same-name shorthand (3.4+), expands to :src="src" -->
+   <!-- aynı ad kısa yolu (3.4+), :src="src" olarak genişler -->
   <img :src />
 
-  <!-- shorthand dynamic attribute name -->
+  <!-- kısa yol dinamik öznitelik adı -->
   <button :[key]="value"></button>
 
-  <!-- with inline string concatenation -->
+  <!-- satır içi dize birleştirmeyle -->
   <img :src="'/path/to/images/' + fileName" />
 
-  <!-- class binding -->
+  <!-- sınıf bağlama -->
   <div :class="{ red: isRed }"></div>
   <div :class="[classA, classB]"></div>
   <div :class="[classA, { classB: isB, classC: isC }]"></div>
 
-  <!-- style binding -->
+  <!-- stil bağlama -->
   <div :style="{ fontSize: size + 'px' }"></div>
   <div :style="[styleObjectA, styleObjectB]"></div>
 
-  <!-- binding an object of attributes -->
+  <!-- özniteliklerin nesnesini bağlama -->
   <div v-bind="{ id: someProp, 'other-attr': otherProp }"></div>
 
-  <!-- prop binding. "prop" must be declared in the child component. -->
+  <!-- prop bağlama. "prop", alt bileşende bildirilmelidir. -->
   <MyComponent :prop="someThing" />
 
-  <!-- pass down parent props in common with a child component -->
+  <!-- bir alt bileşenle ortak olan üst prop'ları aşağı aktar -->
   <MyComponent v-bind="$props" />
 
   <!-- XLink -->
   <svg><a :xlink:special="foo"></a></svg>
   ```
 
-  The `.prop` modifier also has a dedicated shorthand, `.`:
+  `.prop` değiştiricisinin özel bir kısa yolu da vardır: `.`:
 
   ```vue-html
   <div :someProperty.prop="someObject"></div>
 
-  <!-- equivalent to -->
+  <!-- eşdeğer -->
   <div .someProperty="someObject"></div>
   ```
 
-  The `.camel` modifier allows camelizing a `v-bind` attribute name when using in-DOM templates, e.g. the SVG `viewBox` attribute:
+  `.camel` değiştiricisi, DOM içi şablonlar kullanırken bir `v-bind` öznitelik adının, örn. SVG `viewBox` özniteliği:
 
   ```vue-html
   <svg :view-box.camel="viewBox"></svg>
   ```
 
-  `.camel` is not needed if you are using string templates, or pre-compiling the template with a build step.
+  Dize şablonları kullanıyorsanız veya şablonu bir derleme adımıyla önceden derliyorsanız, `.camel` gerekmez.
 
-- **See also**
-  - [Class and Style Bindings](/guide/essentials/class-and-style)
-  - [Components - Prop Passing Details](/guide/components/props#prop-passing-details)
+- **Ayrıca bakınız**
+  - [Sınıf ve Stil Bağlamaları](/guide/essentials/class-and-style)
+  - [Bileşenler - Prop Geçirme Ayrıntıları](/guide/components/props#prop-passing-details)
 
 ## v-model {#v-model}
 
-Create a two-way binding on a form input element or a component.
+Bir form giriş öğesinde veya bir bileşende çift yönlü bir bağlama oluşturun.
 
-- **Expects:** varies based on value of form inputs element or output of components
+- **Beklenen:** form girişleri öğesinin değerine veya bileşenlerin çıktısına bağlı olarak değişir
 
-- **Limited to:**
+- **Sınırlı olduğu yerler:**
 
   - `<input>`
   - `<select>`
   - `<textarea>`
-  - components
+  - bileşenler
 
-- **Modifiers**
+- **Değiştiriciler**
 
-  - [`.lazy`](/guide/essentials/forms#lazy) - listen to `change` events instead of `input`
-  - [`.number`](/guide/essentials/forms#number) - cast valid input string to numbers
-  - [`.trim`](/guide/essentials/forms#trim) - trim input
+  - [`.lazy`](/guide/essentials/forms#lazy) - `input` yerine `change` olaylarını dinleyin
+  - [`.number`](/guide/essentials/forms#number) - geçerli giriş dizelerini sayılara yayın
+  - [`.trim`](/guide/essentials/forms#trim) - girişi kırp
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Form Input Bindings](/guide/essentials/forms)
-  - [Component Events - Usage with `v-model`](/guide/components/v-model)
+  - [Form Giriş Bağlamaları](/guide/essentials/forms)
+  - [Bileşen Olayları - `v-model` ile Kullanım](/guide/components/v-model)
 
 ## v-slot {#v-slot}
 
-Denote named slots or scoped slots that expect to receive props.
+Prop'ları almayı bekleyen adlandırılmış yuvaları veya kapsamlı yuvaları belirtin.
 
-- **Shorthand:** `#`
+- **Kısa yol:** `#`
 
-- **Expects:** JavaScript expression that is valid in a function argument position, including support for destructuring. Optional - only needed if expecting props to be passed to the slot.
+- **Beklenen:** Yıkma desteği de dahil olmak üzere, bir fonksiyon argüman konumu için geçerli olan JavaScript ifadesi. İsteğe bağlı - yalnızca yuvaya props'ların iletilmesini bekliyorsanız gereklidir.
 
-- **Argument:** slot name (optional, defaults to `default`)
+- **Argüman:** yuva adı (isteğe bağlı, varsayılan olarak `default`)
 
-- **Limited to:**
+- **Sınırlı olduğu yerler:**
 
   - `<template>`
-  - [components](/guide/components/slots#scoped-slots) (for a lone default slot with props)
+  - [bileşenler](/guide/components/slots#scoped-slots) (prop'larla tek bir varsayılan yuva için)
 
-- **Example**
+- **Örnek**
 
   ```vue-html
-  <!-- Named slots -->
+  <!-- Adlandırılmış yuvalar -->
   <BaseLayout>
     <template v-slot:header>
-      Header content
+      Başlık içeriği
     </template>
 
     <template v-slot:default>
-      Default slot content
+      Varsayılan yuva içeriği
     </template>
 
     <template v-slot:footer>
-      Footer content
+      Alt bilgi içeriği
     </template>
   </BaseLayout>
 
-  <!-- Named slot that receives props -->
+  <!-- prop'ları alan adlandırılmış yuva -->
   <InfiniteScroll>
     <template v-slot:item="slotProps">
       <div class="item">
@@ -411,72 +411,72 @@ Denote named slots or scoped slots that expect to receive props.
     </template>
   </InfiniteScroll>
 
-  <!-- Default slot that receive props, with destructuring -->
+  <!-- Yıkma ile prop'ları alan varsayılan yuva -->
   <Mouse v-slot="{ x, y }">
-    Mouse position: {{ x }}, {{ y }}
+    Fare konumu: {{ x }}, {{ y }}
   </Mouse>
   ```
 
-- **See also**
-  - [Components - Slots](/guide/components/slots)
+- **Ayrıca bakınız**
+  - [Bileşenler - Yuvalar](/guide/components/slots)
 
 ## v-pre {#v-pre}
 
-Skip compilation for this element and all its children.
+Bu öğe ve tüm alt öğeleri için derlemeyi atlayın.
 
-- **Does not expect expression**
+- **İfade beklemez**
 
-- **Details**
+- **Detaylar**
 
-  Inside the element with `v-pre`, all Vue template syntax will be preserved and rendered as-is. The most common use case of this is displaying raw mustache tags.
+  `v-pre`'li öğenin içinde, tüm Vue şablon sözdizimi korunacak ve olduğu gibi render edilecektir. Bunun en yaygın kullanım örneği, ham bıyık etiketlerini görüntülemektir.
 
-- **Example**
+- **Örnek**
 
   ```vue-html
-  <span v-pre>{{ this will not be compiled }}</span>
+  <span v-pre>{{ bu derlenmeyecek }}</span>
   ```
 
 ## v-once {#v-once}
 
-Render the element and component once only, and skip future updates.
+Öğeyi ve bileşeni yalnızca bir kez render edin ve gelecekteki güncellemeleri atlayın.
 
-- **Does not expect expression**
+- **İfade beklemez**
 
-- **Details**
+- **Detaylar**
 
-  On subsequent re-renders, the element/component and all its children will be treated as static content and skipped. This can be used to optimize update performance.
+  Sonraki yeniden renderlamalarda, öğe/bileşen ve tüm alt öğeleri statik içerik olarak ele alınacak ve atlanacaktır. Bu, güncelleme performansını optimize etmek için kullanılabilir.
 
   ```vue-html
-  <!-- single element -->
-  <span v-once>This will never change: {{msg}}</span>
-  <!-- the element have children -->
+  <!-- tek öğe -->
+  <span v-once>Bu asla değişmeyecek: {{msg}}</span>
+  <!-- öğenin alt öğeleri var -->
   <div v-once>
-    <h1>Comment</h1>
+    <h1>Yorum</h1>
     <p>{{msg}}</p>
   </div>
-  <!-- component -->
+  <!-- bileşen -->
   <MyComponent v-once :comment="msg"></MyComponent>
-  <!-- `v-for` directive -->
+  <!-- `v-for` direktifi -->
   <ul>
     <li v-for="i in list" v-once>{{i}}</li>
   </ul>
   ```
 
-  Since 3.2, you can also memoize part of the template with invalidation conditions using [`v-memo`](#v-memo).
+  3.2'den itibaren, [`v-memo`](#v-memo) kullanarak geçersiz kılma koşullarıyla şablonun bir bölümünü de ezberleyebilirsiniz.
 
-- **See also**
-  - [Data Binding Syntax - interpolations](/guide/essentials/template-syntax#text-interpolation)
+- **Ayrıca bakınız**
+  - [Veri Bağlama Sözdizimi - enterpolasyonlar](/guide/essentials/template-syntax#text-interpolation)
   - [v-memo](#v-memo)
 
 ## v-memo {#v-memo}
 
-- Only supported in 3.2+
+- Yalnızca 3.2+ sürümlerinde desteklenir
 
-- **Expects:** `any[]`
+- **Beklenen:** `any[]`
 
-- **Details**
+- **Detaylar**
 
-  Memoize a sub-tree of the template. Can be used on both elements and components. The directive expects a fixed-length array of dependency values to compare for the memoization. If every value in the array was the same as last render, then updates for the entire sub-tree will be skipped. For example:
+  Şablonun bir alt ağacını ezberleyin. Hem öğeler hem de bileşenler üzerinde kullanılabilir. Direktif, ezberleme için karşılaştırmak üzere sabit uzunlukta bir bağımlılık değeri dizisi bekler. Dizideki her değer, son render ile aynıysa, tüm alt ağaç için güncellemeler atlanacaktır. Örneğin:
 
   ```vue-html
   <div v-memo="[valueA, valueB]">
@@ -484,47 +484,47 @@ Render the element and component once only, and skip future updates.
   </div>
   ```
 
-  When the component re-renders, if both `valueA` and `valueB` remain the same, all updates for this `<div>` and its children will be skipped. In fact, even the Virtual DOM VNode creation will also be skipped since the memoized copy of the sub-tree can be reused.
+  Bileşen yeniden render olduğunda, hem `valueA` hem de `valueB` aynı kalırsa, bu `<div>` ve alt öğeleri için tüm güncellemeler atlanacaktır. Aslında, alt ağacın ezberlenmiş kopyası yeniden kullanılabileceğinden, Sanal DOM VNode oluşturma da atlanacaktır.
 
-  It is important to specify the memoization array correctly, otherwise we may skip updates that should indeed be applied. `v-memo` with an empty dependency array (`v-memo="[]"`) would be functionally equivalent to `v-once`.
+  Ezberleme dizisini doğru şekilde belirtmek önemlidir, aksi takdirde aslında uygulanması gereken güncellemeleri atlayabiliriz. Boş bir bağımlılık dizisine sahip `v-memo` (`v-memo="[]"`) işlevsel olarak `v-once`'e eşdeğer olacaktır.
 
-  **Usage with `v-for`**
+  **`v-for` ile kullanım**
 
-  `v-memo` is provided solely for micro optimizations in performance-critical scenarios and should be rarely needed. The most common case where this may prove helpful is when rendering large `v-for` lists (where `length > 1000`):
+  `v-memo`, yalnızca performansa duyarlı senaryolarda mikro optimizasyonlar için sağlanır ve nadiren ihtiyaç duyulmalıdır. Bunun yararlı olabileceği en yaygın durum, büyük `v-for` listeleri (burada `length > 1000`) render ederken geçerlidir:
 
   ```vue-html
   <div v-for="item in list" :key="item.id" v-memo="[item.id === selected]">
-    <p>ID: {{ item.id }} - selected: {{ item.id === selected }}</p>
-    <p>...more child nodes</p>
+    <p>ID: {{ item.id }} - seçildi: {{ item.id === selected }}</p>
+    <p>...daha fazla alt düğüm</p>
   </div>
   ```
 
-  When the component's `selected` state changes, a large amount of VNodes will be created even though most of the items remained exactly the same. The `v-memo` usage here is essentially saying "only update this item if it went from non-selected to selected, or the other way around". This allows every unaffected item to reuse its previous VNode and skip diffing entirely. Note we don't need to include `item.id` in the memo dependency array here since Vue automatically infers it from the item's `:key`.
+  Bileşenin `selected` durumu değiştiğinde, öğelerin çoğu tam olarak aynı kalsa bile çok sayıda VNode oluşturulacaktır. Buradaki `v-memo` kullanımı temelde "yalnızca bu öğe seçili olmayan durumdan seçili duruma veya tam tersine geçtiyse güncelleyin" diyor. Bu, etkilenmeyen her öğenin önceki VNode'unu yeniden kullanmasına ve tamamen farklılaşmayı atlamasına olanak tanır. Burada `item.id`'yi ezberleme bağımlılık dizisine dahil etmemize gerek olmadığını unutmayın, çünkü Vue bunu öğenin `:key`'inden otomatik olarak çıkarır.
 
   :::warning
-  When using `v-memo` with `v-for`, make sure they are used on the same element. **`v-memo` does not work inside `v-for`.**
+  `v-for` ile `v-memo` kullanırken, aynı öğe üzerinde kullanıldığından emin olun. **`v-memo` `v-for` içinde çalışmaz.**
   :::
 
-  `v-memo` can also be used on components to manually prevent unwanted updates in certain edge cases where the child component update check has been de-optimized. But again, it is the developer's responsibility to specify correct dependency arrays to avoid skipping necessary updates.
+  `v-memo`, alt bileşen güncelleme kontrolünün optimize edildiği belirli uç durumlarda istenmeyen güncellemeleri manuel olarak önlemek için bileşenlerde de kullanılabilir. Ancak yine, gerekli güncellemeleri atlamaktan kaçınmak için doğru bağımlılık dizilerini belirtmek geliştiricinin sorumluluğundadır.
 
-- **See also**
+- **Ayrıca bakınız**
   - [v-once](#v-once)
 
 ## v-cloak {#v-cloak}
 
-Used to hide un-compiled template until it is ready.
+Derlenmemiş şablonu hazır olana kadar gizlemek için kullanılır.
 
-- **Does not expect expression**
+- **İfade beklemez**
 
-- **Details**
+- **Detaylar**
 
-  **This directive is only needed in no-build-step setups.**
+  **Bu direktif yalnızca derleme adımı olmayan kurulumlarda gereklidir.**
 
-  When using in-DOM templates, there can be a "flash of un-compiled templates": the user may see raw mustache tags until the mounted component replaces them with rendered content.
+  DOM içi şablonlar kullanırken, "derlenmemiş şablonların parlaması" olabilir: kullanıcı, monte edilmiş bileşen bunları render edilmiş içerikle değiştirene kadar ham bıyık etiketlerini görebilir.
 
-  `v-cloak` will remain on the element until the associated component instance is mounted. Combined with CSS rules such as `[v-cloak] { display: none }`, it can be used to hide the raw templates until the component is ready.
+  `v-cloak`, ilişkili bileşen örneği monte edilene kadar öğede kalacaktır. `[v-cloak] { display: none }` gibi CSS kurallarıyla birlikte, bileşen hazır olana kadar ham şablonları gizlemek için kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```css
   [v-cloak] {
@@ -538,4 +538,4 @@ Used to hide un-compiled template until it is ready.
   </div>
   ```
 
-  The `<div>` will not be visible until the compilation is done.
+  `<div>`, derleme tamamlanana kadar görünür olmayacaktır.

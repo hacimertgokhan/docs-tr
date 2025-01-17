@@ -1,12 +1,12 @@
-# Built-in Special Elements {#built-in-special-elements}
+# Dahili Özel Elemanlar {#dahili-ozel-elemanlar}
 
-:::info Not Components
-`<component>`, `<slot>` and `<template>` are component-like features and part of the template syntax. They are not true components and are compiled away during template compilation. As such, they are conventionally written with lowercase in templates.
+:::info Not Bileşenler
+`<component>`, `<slot>` ve `<template>` bileşen benzeri özelliklerdir ve şablon sözdiziminin bir parçasıdır. Gerçek bileşenler değillerdir ve şablon derlemesi sırasında derlenirler. Bu nedenle, şablonlarda geleneksel olarak küçük harflerle yazılırlar.
 :::
 
 ## `<component>` {#component}
 
-A "meta component" for rendering dynamic components or elements.
+Dinamik bileşenleri veya öğeleri render etmek için bir "meta bileşen".
 
 - **Props**
 
@@ -16,17 +16,17 @@ A "meta component" for rendering dynamic components or elements.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The actual component to render is determined by the `is` prop.
+  Render edilecek gerçek bileşen, `is` prop'u tarafından belirlenir.
 
-  - When `is` is a string, it could be either an HTML tag name or a component's registered name.
+  - `is` bir dize olduğunda, bir HTML etiket adı veya bir bileşenin kayıtlı adı olabilir.
 
-  - Alternatively, `is` can also be directly bound to the definition of a component.
+  - Alternatif olarak, `is` doğrudan bir bileşenin tanımına da bağlanabilir.
 
-- **Example**
+- **Örnek**
 
-  Rendering components by registered name (Options API):
+  Kayıtlı ada göre bileşenleri render etme (Options API):
 
   ```vue
   <script>
@@ -48,7 +48,7 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Rendering components by definition (Composition API with `<script setup>`):
+  Tanıma göre bileşenleri render etme ( `<script setup>` ile Composition API):
 
   ```vue
   <script setup>
@@ -61,13 +61,13 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Rendering HTML elements:
+  HTML öğelerini render etme:
 
   ```vue-html
   <component :is="href ? 'a' : 'span'"></component>
   ```
 
-  The [built-in components](./built-in-components) can all be passed to `is`, but you must register them if you want to pass them by name. For example:
+  [Dahili bileşenlerin](./built-in-components) tümü `is`'e geçirilebilir, ancak adıyla geçirmek istiyorsanız bunları kaydetmeniz gerekir. Örneğin:
 
   ```vue
   <script>
@@ -88,9 +88,9 @@ A "meta component" for rendering dynamic components or elements.
   </template>
   ```
 
-  Registration is not required if you pass the component itself to `is` rather than its name, e.g. in `<script setup>`.
+  Bileşeni adından ziyade kendisini `is`'e geçirirseniz, örneğin `<script setup>`'ta kayıt gerekli değildir.
 
-  If `v-model` is used on a `<component>` tag, the template compiler will expand it to a `modelValue` prop and `update:modelValue` event listener, much like it would for any other component. However, this won't be compatible with native HTML elements, such as `<input>` or `<select>`. As a result, using `v-model` with a dynamically created native element won't work:
+  `v-model` bir `<component>` etiketi üzerinde kullanılırsa, şablon derleyicisi onu diğer bileşenlerde olduğu gibi bir `modelValue` prop'una ve `update:modelValue` olay dinleyicisine genişletecektir. Ancak, bu `<input>` veya `<select>` gibi yerel HTML öğeleriyle uyumlu olmayacaktır. Sonuç olarak, dinamik olarak oluşturulmuş yerel bir öğeyle `v-model` kullanmak işe yaramaz:
 
   ```vue
   <script setup>
@@ -101,64 +101,64 @@ A "meta component" for rendering dynamic components or elements.
   </script>
 
   <template>
-    <!-- This won't work as 'input' is a native HTML element -->
+    <!-- Bu, 'input' yerel bir HTML öğesi olduğu için çalışmayacak -->
     <component :is="tag" v-model="username" />
   </template>
   ```
 
-  In practice, this edge case isn't common as native form fields are typically wrapped in components in real applications. If you do need to use a native element directly then you can split the `v-model` into an attribute and event manually.
+  Uygulamada, bu uç durum yaygın değildir, çünkü yerel form alanları genellikle gerçek uygulamalarda bileşenlere sarılır. Yerel bir öğeyi doğrudan kullanmanız gerekiyorsa, `v-model`'i manuel olarak bir öznitelik ve olaya ayırabilirsiniz.
 
-- **See also** [Dynamic Components](/guide/essentials/component-basics#dynamic-components)
+- **Ayrıca bakınız** [Dinamik Bileşenler](/guide/essentials/component-basics#dynamic-components)
 
 ## `<slot>` {#slot}
 
-Denotes slot content outlets in templates.
+Şablonlarda yuva içeriği çıkışlarını belirtir.
 
 - **Props**
 
   ```ts
   interface SlotProps {
     /**
-     * Any props passed to <slot> to passed as arguments
-     * for scoped slots
+     * Kapsamlı yuvalar için argümanlar olarak geçirilecek
+     * <slot> öğesine geçirilen herhangi bir prop
      */
     [key: string]: any
     /**
-     * Reserved for specifying slot name.
+     * Yuva adını belirtmek için ayrılmıştır.
      */
     name?: string
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The `<slot>` element can use the `name` attribute to specify a slot name. When no `name` is specified, it will render the default slot. Additional attributes passed to the slot element will be passed as slot props to the scoped slot defined in the parent.
+  `<slot>` öğesi, bir yuva adı belirtmek için `name` özniteliğini kullanabilir. `name` belirtilmediğinde, varsayılan yuva render edilecektir. Yuva öğesine iletilen ek öznitelikler, üst öğede tanımlanan kapsamlı yuvaya yuva prop'ları olarak geçirilecektir.
 
-  The element itself will be replaced by its matched slot content.
+  Öğenin kendisi, eşleşen yuva içeriğiyle değiştirilecektir.
 
-  `<slot>` elements in Vue templates are compiled into JavaScript, so they are not to be confused with [native `<slot>` elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
+  Vue şablonlarındaki `<slot>` öğeleri JavaScript'e derlenir, bu nedenle [yerel `<slot>` öğeleriyle](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) karıştırılmamalıdır.
 
-- **See also** [Component - Slots](/guide/components/slots)
+- **Ayrıca bakınız** [Bileşen - Yuvalar](/guide/components/slots)
 
 ## `<template>` {#template}
 
-The `<template>` tag is used as a placeholder when we want to use a built-in directive without rendering an element in the DOM.
+`<template>` etiketi, DOM'da bir öğeyi render etmeden dahili bir direktif kullanmak istediğimizde bir yer tutucu olarak kullanılır.
 
-- **Details**
+- **Detaylar**
 
-  The special handling for `<template>` is only triggered if it is used with one of these directives:
+  `<template>` için özel işleme, yalnızca şu direktiflerden biriyle birlikte kullanıldığında tetiklenir:
 
-  - `v-if`, `v-else-if`, or `v-else`
+  - `v-if`, `v-else-if` veya `v-else`
   - `v-for`
   - `v-slot`
 
-  If none of those directives are present then it will be rendered as a [native `<template>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) instead.
+  Bu direktiflerden hiçbiri yoksa, bunun yerine [yerel bir `<template>` öğesi](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) olarak render edilecektir.
 
-  A `<template>` with a `v-for` can also have a [`key` attribute](/api/built-in-special-attributes#key). All other attributes and directives will be discarded, as they aren't meaningful without a corresponding element.
+  `v-for`'a sahip bir `<template>`'te ayrıca bir [`key` özniteliği](/api/built-in-special-attributes#key) olabilir. Diğer tüm öznitelikler ve direktifler, karşılık gelen bir öğe olmadan anlamlı olmadıkları için atılacaktır.
 
-  Single-file components use a [top-level `<template>` tag](/api/sfc-spec#language-blocks) to wrap the entire template. That usage is separate from the use of `<template>` described above. That top-level tag is not part of the template itself and doesn't support template syntax, such as directives.
+  Tek dosyalı bileşenler, tüm şablonu sarmalamak için [üst düzey bir `<template>` etiketi](/api/sfc-spec#language-blocks) kullanır. Bu kullanım, yukarıda açıklanan `<template>` kullanımından ayrıdır. Bu üst düzey etiket, şablonun kendisinin bir parçası değildir ve direktifler gibi şablon sözdizimini desteklemez.
 
-- **See also**
-  - [Guide - `v-if` on `<template>`](/guide/essentials/conditional#v-if-on-template)
-  - [Guide - `v-for` on `<template>`](/guide/essentials/list#v-for-on-template)
-  - [Guide - Named slots](/guide/components/slots#named-slots)
+- **Ayrıca bakınız**
+  - [Rehber - `<template>`'te `v-if`](/guide/essentials/conditional#v-if-on-template)
+  - [Rehber - `<template>`'te `v-for`](/guide/essentials/list#v-for-on-template)
+  - [Rehber - Adlandırılmış yuvalar](/guide/components/slots#named-slots)

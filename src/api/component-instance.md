@@ -1,16 +1,16 @@
-# Component Instance {#component-instance}
+# Bileşen Örneği {#bilesen-ornegi}
 
 :::info
-This page documents the built-in properties and methods exposed on the component public instance, i.e. `this`.
+Bu sayfa, bileşen genel örneğinde, yani `this`'de kullanıma sunulan yerleşik özellikleri ve metotları belgeler.
 
-All properties listed on this page are readonly (except nested properties in `$data`).
+Bu sayfada listelenen tüm özellikler ( `$data` içindeki iç içe geçmiş özellikler hariç) salt okunurdur.
 :::
 
 ## $data {#data}
 
-The object returned from the [`data`](./options-state#data) option, made reactive by the component. The component instance proxies access to the properties on its data object.
+Bileşen tarafından reaktif hale getirilen [`data`](./options-state#data) seçeneğinden döndürülen nesne. Bileşen örneği, veri nesnesi üzerindeki özelliklere erişimi vekil eder.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -20,9 +20,9 @@ The object returned from the [`data`](./options-state#data) option, made reactiv
 
 ## $props {#props}
 
-An object representing the component's current, resolved props.
+Bileşenin mevcut, çözümlenmiş prop'larını temsil eden bir nesne.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -30,15 +30,15 @@ An object representing the component's current, resolved props.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  Only props declared via the [`props`](./options-state#props) option will be included. The component instance proxies access to the properties on its props object.
+  Yalnızca [`props`](./options-state#props) seçeneği aracılığıyla bildirilen prop'lar dahil edilecektir. Bileşen örneği, prop nesnesi üzerindeki özelliklere erişimi vekil eder.
 
 ## $el {#el}
 
-The root DOM node that the component instance is managing.
+Bileşen örneğinin yönettiği kök DOM düğümü.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -46,23 +46,23 @@ The root DOM node that the component instance is managing.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  `$el` will be `undefined` until the component is [mounted](./options-lifecycle#mounted).
+  `$el`, bileşen [monte edilene](./options-lifecycle#mounted) kadar `undefined` olacaktır.
 
-  - For components with a single root element, `$el` will point to that element.
-  - For components with text root, `$el` will point to the text node.
-  - For components with multiple root nodes, `$el` will be the placeholder DOM node that Vue uses to keep track of the component's position in the DOM (a text node, or a comment node in SSR hydration mode).
+  - Tek bir kök öğeye sahip bileşenler için, `$el` o öğeyi işaret edecektir.
+  - Metin köklü bileşenler için, `$el` metin düğümünü işaret edecektir.
+  - Birden çok kök düğüme sahip bileşenler için, `$el`, Vue'nun bileşenin DOM'daki konumunu takip etmek için kullandığı yer tutucu DOM düğümü olacaktır (metin düğümü veya SSR hidrasyon modunda bir yorum düğümü).
 
   :::tip
-  For consistency, it is recommended to use [template refs](/guide/essentials/template-refs) for direct access to elements instead of relying on `$el`.
+  Tutarlılık için, `$el`'e güvenmek yerine öğelere doğrudan erişim için [şablon referansları](/guide/essentials/template-refs) kullanmanız önerilir.
   :::
 
 ## $options {#options}
 
-The resolved component options used for instantiating the current component instance.
+Geçerli bileşen örneğini oluşturmak için kullanılan çözümlenmiş bileşen seçenekleri.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -70,15 +70,15 @@ The resolved component options used for instantiating the current component inst
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The `$options` object exposes the resolved options for the current component and is the merge result of these possible sources:
+  `$options` nesnesi, geçerli bileşen için çözümlenmiş seçenekleri sunar ve bu olası kaynakların birleştirme sonucudur:
 
-  - Global mixins
-  - Component `extends` base
-  - Component mixins
+  - Global mixin'ler
+  - Bileşen `extends` tabanı
+  - Bileşen mixin'leri
 
-  It is typically used to support custom component options:
+  Genellikle özel bileşen seçeneklerini desteklemek için kullanılır:
 
   ```js
   const app = createApp({
@@ -89,13 +89,13 @@ The resolved component options used for instantiating the current component inst
   })
   ```
 
-- **See also** [`app.config.optionMergeStrategies`](/api/application#app-config-optionmergestrategies)
+- **Ayrıca bakınız** [`app.config.optionMergeStrategies`](/api/application#app-config-optionmergestrategies)
 
 ## $parent {#parent}
 
-The parent instance, if the current instance has one. It will be `null` for the root instance itself.
+Geçerli örneğin bir üst örneği varsa. Kök örneğin kendisi için `null` olacaktır.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -105,9 +105,9 @@ The parent instance, if the current instance has one. It will be `null` for the 
 
 ## $root {#root}
 
-The root component instance of the current component tree. If the current instance has no parents this value will be itself.
+Geçerli bileşen ağacının kök bileşen örneği. Geçerli örneğin üst öğesi yoksa, bu değer kendisi olacaktır.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -117,9 +117,9 @@ The root component instance of the current component tree. If the current instan
 
 ## $slots {#slots}
 
-An object representing the [slots](/guide/components/slots) passed by the parent component.
+Üst bileşen tarafından geçirilen [yuvaları](/guide/components/slots) temsil eden bir nesne.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -129,21 +129,21 @@ An object representing the [slots](/guide/components/slots) passed by the parent
   type Slot = (...args: any[]) => VNode[]
   ```
 
-- **Details**
+- **Detaylar**
 
-  Typically used when manually authoring [render functions](/guide/extras/render-function), but can also be used to detect whether a slot is present.
+  Genellikle [render fonksiyonlarını](/guide/extras/render-function) manuel olarak yazarken kullanılır, ancak bir yuvanın mevcut olup olmadığını tespit etmek için de kullanılabilir.
 
-  Each slot is exposed on `this.$slots` as a function that returns an array of vnodes under the key corresponding to that slot's name. The default slot is exposed as `this.$slots.default`.
+  Her yuva, `this.$slots` üzerinde, o yuvanın adına karşılık gelen anahtar altında vnode'lardan oluşan bir dizi döndüren bir fonksiyon olarak kullanıma sunulur. Varsayılan yuva `this.$slots.default` olarak kullanıma sunulur.
 
-  If a slot is a [scoped slot](/guide/components/slots#scoped-slots), arguments passed to the slot functions are available to the slot as its slot props.
+  Bir yuva [kapsamlı bir yuva](/guide/components/slots#scoped-slots) ise, yuva fonksiyonlarına geçirilen argümanlar, yuva prop'ları olarak yuvada kullanılabilir.
 
-- **See also** [Render Functions - Rendering Slots](/guide/extras/render-function#rendering-slots)
+- **Ayrıca bakınız** [Render Fonksiyonları - Yuvaları Render Etme](/guide/extras/render-function#rendering-slots)
 
 ## $refs {#refs}
 
-An object of DOM elements and component instances, registered via [template refs](/guide/essentials/template-refs).
+[Şablon referansları](/guide/essentials/template-refs) aracılığıyla kaydedilen DOM öğelerinin ve bileşen örneklerinin bir nesnesi.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -151,16 +151,16 @@ An object of DOM elements and component instances, registered via [template refs
   }
   ```
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Template refs](/guide/essentials/template-refs)
-  - [Special Attributes - ref](./built-in-special-attributes.md#ref)
+  - [Şablon referansları](/guide/essentials/template-refs)
+  - [Özel Öznitelikler - ref](./built-in-special-attributes.md#ref)
 
 ## $attrs {#attrs}
 
-An object that contains the component's fallthrough attributes.
+Bileşenin geri gönderme özniteliklerini içeren bir nesne.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -168,21 +168,21 @@ An object that contains the component's fallthrough attributes.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  [Fallthrough Attributes](/guide/components/attrs) are attributes and event handlers passed by the parent component, but not declared as a prop or an emitted event by the child.
+  [Geri gönderme Öznitelikleri](/guide/components/attrs), üst bileşen tarafından geçirilen ancak alt öğe tarafından bir prop veya yayılmış bir olay olarak bildirilmemiş öznitelikler ve olay işleyicileridir.
 
-  By default, everything in `$attrs` will be automatically inherited on the component's root element if there is only a single root element. This behavior is disabled if the component has multiple root nodes, and can be explicitly disabled with the [`inheritAttrs`](./options-misc#inheritattrs) option.
+  Varsayılan olarak, `$attrs` içindeki her şey, yalnızca tek bir kök öğe varsa, bileşenin kök öğesinde otomatik olarak devralınacaktır. Bileşenin birden çok kök düğümü varsa bu davranış devre dışı bırakılır ve [`inheritAttrs`](./options-misc#inheritattrs) seçeneğiyle açıkça devre dışı bırakılabilir.
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Fallthrough Attributes](/guide/components/attrs)
+  - [Geri gönderme Öznitelikleri](/guide/components/attrs)
 
 ## $watch() {#watch}
 
-Imperative API for creating watchers.
+Gözlemciler oluşturmak için zorunlu API.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -200,9 +200,9 @@ Imperative API for creating watchers.
   ) => void
 
   interface WatchOptions {
-    immediate?: boolean // default: false
-    deep?: boolean // default: false
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    immediate?: boolean // varsayılan: false
+    deep?: boolean // varsayılan: false
+    flush?: 'pre' | 'post' | 'sync' // varsayılan: 'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
   }
@@ -210,62 +210,62 @@ Imperative API for creating watchers.
   type StopHandle = () => void
   ```
 
-- **Details**
+- **Detaylar**
 
-  The first argument is the watch source. It can be a component property name string, a simple dot-delimited path string, or a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description).
+  İlk argüman, gözlem kaynağıdır. Bir bileşen özelliği adı dizesi, basit nokta ile ayrılmış bir yol dizesi veya bir [getter fonksiyonu](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) olabilir.
 
-  The second argument is the callback function. The callback receives the new value and the old value of the watched source.
+  İkinci argüman, geri arama fonksiyonudur. Geri arama, gözlemlenen kaynağın yeni değerini ve eski değerini alır.
 
-  - **`immediate`**: trigger the callback immediately on watcher creation. Old value will be `undefined` on the first call.
-  - **`deep`**: force deep traversal of the source if it is an object, so that the callback fires on deep mutations. See [Deep Watchers](/guide/essentials/watchers#deep-watchers).
-  - **`flush`**: adjust the callback's flush timing. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) and [`watchEffect()`](/api/reactivity-core#watcheffect).
-  - **`onTrack / onTrigger`**: debug the watcher's dependencies. See [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging).
+  - **`immediate`**: Gözlemci oluşturulduğunda geri aramayı hemen tetikler. İlk çağrıda eski değer `undefined` olacaktır.
+  - **`deep`**: Kaynak bir nesne ise, geri aramanın derin mutasyonlarda tetiklenmesi için derin geçişi zorlar. [Derin Gözlemcilere](/guide/essentials/watchers#deep-watchers) bakın.
+  - **`flush`**: Geri aramanın temizleme zamanlamasını ayarlar. [Geri Arama Temizleme Zamanlamasına](/guide/essentials/watchers#callback-flush-timing) ve [`watchEffect()`](/api/reactivity-core#watcheffect) bakın.
+  - **`onTrack / onTrigger`**: Gözlemcinin bağımlılıklarında hata ayıklama. [Gözlemci Hata Ayıklamasına](/guide/extras/reactivity-in-depth#watcher-debugging) bakın.
 
-- **Example**
+- **Örnek**
 
-  Watch a property name:
+  Bir özellik adını gözlemleyin:
 
   ```js
   this.$watch('a', (newVal, oldVal) => {})
   ```
 
-  Watch a dot-delimited path:
+  Nokta ile ayrılmış bir yolu gözlemleyin:
 
   ```js
   this.$watch('a.b', (newVal, oldVal) => {})
   ```
 
-  Using getter for more complex expressions:
+  Daha karmaşık ifadeler için getter kullanma:
 
   ```js
   this.$watch(
-    // every time the expression `this.a + this.b` yields
-    // a different result, the handler will be called.
-    // It's as if we were watching a computed property
-    // without defining the computed property itself.
+    // `this.a + this.b` ifadesi her farklı bir sonuç verdiğinde,
+    // işleyici çağrılacaktır.
+    // Sanki hesaplanmış özelliği tanımlamadan
+    // hesaplanmış bir özelliği izliyor gibiydik.
     () => this.a + this.b,
     (newVal, oldVal) => {}
   )
   ```
 
-  Stopping the watcher:
+  Gözlemciyi durdurma:
 
   ```js
   const unwatch = this.$watch('a', cb)
 
-  // later...
+  // daha sonra...
   unwatch()
   ```
 
-- **See also**
-  - [Options - `watch`](/api/options-state#watch)
-  - [Guide - Watchers](/guide/essentials/watchers)
+- **Ayrıca bakınız**
+  - [Seçenekler - `watch`](/api/options-state#watch)
+  - [Rehber - Gözlemciler](/guide/essentials/watchers)
 
 ## $emit() {#emit}
 
-Trigger a custom event on the current instance. Any additional arguments will be passed into the listener's callback function.
+Geçerli örnekte özel bir olay tetikler. Ek argümanlar, dinleyicinin geri arama fonksiyonuna geçirilecektir.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -273,29 +273,29 @@ Trigger a custom event on the current instance. Any additional arguments will be
   }
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
     created() {
-      // only event
+      // yalnızca olay
       this.$emit('foo')
-      // with additional arguments
+      // ek argümanlarla
       this.$emit('bar', 1, 2, 3)
     }
   }
   ```
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Component - Events](/guide/components/events)
-  - [`emits` option](./options-state#emits)
+  - [Bileşen - Olaylar](/guide/components/events)
+  - [`emits` seçeneği](./options-state#emits)
 
 ## $forceUpdate() {#forceupdate}
 
-Force the component instance to re-render.
+Bileşen örneğini yeniden render etmeye zorlayın.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -303,15 +303,15 @@ Force the component instance to re-render.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  This should be rarely needed given Vue's fully automatic reactivity system. The only cases where you may need it is when you have explicitly created non-reactive component state using advanced reactivity APIs.
+  Vue'nun tam otomatik reaktivite sistemi göz önüne alındığında buna nadiren ihtiyaç duyulmalıdır. Buna ihtiyaç duyabileceğiniz tek durum, gelişmiş reaktivite API'lerini kullanarak açıkça reaktif olmayan bileşen durumu oluşturduğunuz zamandır.
 
 ## $nextTick() {#nexttick}
 
-Instance-bound version of the global [`nextTick()`](./general#nexttick).
+Global [`nextTick()`](./general#nexttick)'in örneğe bağlı sürümü.
 
-- **Type**
+- **Tip**
 
   ```ts
   interface ComponentPublicInstance {
@@ -319,8 +319,8 @@ Instance-bound version of the global [`nextTick()`](./general#nexttick).
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The only difference from the global version of `nextTick()` is that the callback passed to `this.$nextTick()` will have its `this` context bound to the current component instance.
+  `nextTick()`'in global sürümünden tek farkı, `this.$nextTick()`'e geçirilen geri aramanın `this` bağlamının geçerli bileşen örneğine bağlı olmasıdır.
 
-- **See also** [`nextTick()`](./general#nexttick)
+- **Ayrıca bakınız** [`nextTick()`](./general#nexttick)

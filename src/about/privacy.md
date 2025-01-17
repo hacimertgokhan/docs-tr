@@ -1,42 +1,40 @@
-# Vue.js Privacy Policy {#vue.js-privacy-policy}
+# Vue.js Gizlilik Politikası {#vue.js-gizlilik-politikası}
 
-> Effective Date: May 3, 2024
+> yürürlük tarihi: 3 Mayıs 2024
 
-This Privacy Policy describes the Vue.js organization ("Vue", "we", "us" or "our") practices for handling your information in connection with this website (https://vuejs.org) and our open source-related websites ("Websites") and any content, related documentation, information and services (e.g. tutorials, tools to support the developer workflow, access to resources, etc.) made available to you on this website (collectively, the "Services"). This Privacy Policy describes the personal information we process to support our Services.
+Bu Gizlilik Politikası, Vue.js kuruluşu ("Vue", "biz", "biz" veya "bizim") tarafından bu web sitesi (https://vuejs.org) ve açık kaynak kodlu web sitelerimiz ("Web Siteleri") ve size bu web sitesinde sunulan içerik, ilgili dokümantasyon, bilgi ve hizmetler (örneğin, öğreticiler, geliştirici iş akışını destekleyen araçlar, kaynaklara erişim vb.) ile bağlantılı olarak bilgilerinizi ele alma uygulamalarını açıklar (toplu olarak "Hizmetler"). Bu Gizlilik Politikası, Hizmetlerimizi desteklemek için işlediğimiz kişisel bilgileri açıklar.
 
-For clarity, this Privacy Policy does not apply to any:
+Açıklık getirmek için, bu Gizlilik Politikası aşağıdakilerden hiçbirine uygulanmaz:
 
-1. Use of open source code, documentation or specifications made available on GitHub (https://github.com/), which are governed by the terms of the applicable open source license;
+1. GitHub'da (https://github.com/) kullanıma sunulan açık kaynak kodun, dokümantasyonun veya şartların kullanımı, bunlar geçerli açık kaynak lisansının hükümleriyle yönetilir;
 
-2. Pull requests, issues and any other interactions or features related to participation in open source projects on GitHub, which are governed by GitHub's terms and conditions; or
+2. GitHub'daki açık kaynaklı projelere katılımla ilgili çekme istekleri, sorunlar ve diğer etkileşimler veya özellikler, bunlar GitHub'ın hüküm ve koşullarıyla yönetilir; veya
 
-3. Usage statistics of our published packages on NPM (https://npmjs.com/), which are governed by NPM's terms and conditions; or
+3. NPM'de (https://npmjs.com/) yayınlanan paketlerimizin kullanım istatistikleri, bunlar NPM'nin hüküm ve koşullarıyla yönetilir; veya
 
-4. Usage statistics of our published browser / IDE extensions collected by the browser / IDE vendors. Such statistics are governed by the vendors' respective terms and conditions.
+4. Tarayıcı/IDE satıcıları tarafından toplanan yayınlanmış tarayıcı/IDE uzantılarımızın kullanım istatistikleri. Bu istatistikler, satıcıların ilgili hüküm ve koşullarıyla yönetilir.
 
-## What Kinds of Information Do We Collect? {#what-kinds-of-information-do-we-collect}
+## Hangi Tür Bilgileri Topluyoruz? {#hangi-tür-bilgileri-topluyoruz}
 
-We do **not** collect or store any type of personal data, whether through our websites or through our published npm packages or browser / IDE extensions.
+Web sitelerimiz veya yayınladığımız npm paketleri veya tarayıcı/IDE uzantıları aracılığıyla herhangi bir türde kişisel veri toplamaz veya saklamazsak da, web sitelerimize entegre edilmiş üçüncü taraf hizmetleri aracılığıyla anonimleştirilmiş verileri toplayabiliriz:
 
-We may collect anonymized data via 3rd party services integrated in our websites:
+- **Web sitelerimize ziyaretçi verileri.** Web sitesi analizlerimiz, çerezci kullanmayan ve GDPR, ePrivacy (PECR dahil), COPPA ve CCPA ile uyumlu [Fathom Analytics](https://usefathom.com/) tarafından desteklenmektedir. Bu gizlilik dostu web sitesi analizi yazılımını kullanarak, IP adresiniz yalnızca kısa bir süre için işlenir ve biz (bu web sitesini çalıştıranlar) sizi tanımlamanın hiçbir yolu yoktur. CCPA uyarınca, kişisel bilgileriniz tanımlanabilir değildir. Bu konuda daha fazla bilgiyi Fathom Analytics web sitesinde okuyabilirsiniz.
 
-- **Visitor data to our websites.** Our website analytics is powered by [Fathom Analytics](https://usefathom.com/), which doesn't use cookies and complies with the GDPR, ePrivacy (including PECR), COPPA and CCPA. Using this privacy-friendly website analytics software, your IP address is only briefly processed, and we (running this website) have no way of identifying you. As per the CCPA, your personal information is de-identified. You can read more about this on Fathom Analytics' website.
+  - Fathom Analytics Gizlilik Politikası: https://usefathom.com/legal/privacy
 
-  - Fathom Analytics' Privacy Policy: https://usefathom.com/legal/privacy
+- **Arama işlevselliğinin kullanım verileri.** Arama işlevselliğimiz, herhangi bir türde kullanıcı takibi veya parmak izi oluşturmayan ve çerezci kullanmayan [Algolia DocSearch](https://docsearch.algolia.com/) tarafından desteklenmektedir. Algolia hizmetleri GDPR uyumlu, CCPA uyumlu ve TRUSTe Sertifikalıdır.
 
-- **Usage data of the search functionality.** Our search functionality is powered by [Algolia DocSearch](https://docsearch.algolia.com/), which does not perform any type of user tracking or fingerprinting, and does not use cookies. Algolia services are GPDR compliant, CCPA compliant, and TRUSTe Certified.
+  - Algolia'nın gizlilik politikası: https://www.algolia.com/policies/privacy/
+  - Algolia'nın güvenlik ve gizlilik uyumu: https://www.algolia.com/distributed-secure/security-compliance/
 
-  - Algolia's privacy policy: https://www.algolia.com/policies/privacy/
-  - Algolia's security and privacy compliance: https://www.algolia.com/distributed-secure/security-compliance/
+## Bilgileri Nasıl Kullanıyoruz? {#bilgileri-nasıl-kullanıyoruz}
 
-## How Do We Use Information? {#how-do-we-use-information}
+Yukarıda belirtilen verileri toplamanın tek amacı, web sitesi trafiğimizi ve kullanımımızı mümkün olan en gizlilik dostu şekilde anlayarak web sitesi ve dokümantasyon kalitemizi sürekli olarak iyileştirebilmektir. GDPR'ye göre yasal dayanak, "Madde 6(1)(f); meşru menfaatlerimizin web sitesini ve işletmemizi sürekli olarak iyileştirmek olmasıdır." Açıklamaya göre, zaman içinde hiçbir kişisel veri saklanmaz.
 
-The sole purpose of collecting the aforementioned data is to understand our website traffic and usage in the most privacy-friendly way possible so that we can continually improve our website and documentation quality. The lawful basis as per the GDPR is "Article 6(1)(f); where our legitimate interests are to improve our website and business continually." As per the explanation, no personal data is stored over time.
+## Veri Saklama {#veri-saklama}
 
-## Data Retention {#data-retention}
+Toplanan tüm veriler, yukarıda belirtilen üçüncü taraf hizmetlerde saklanır ve hizmetlerin ilgili veri saklama politikalarına tabidir.
 
-All data collected are stored on aforementioned 3rd party services and are subject to the services' respective data retention policies.
+## Sorular {#sorular}
 
-## Questions {#questions}
-
-If you have any questions about this Privacy Policy or our practices, please contact us via email at hello@vuejs.org.
+Eğer gizlilik politikamız hakkında bir şüphen ya da sorun var ise bizimle iletişime geçebilirsin.
