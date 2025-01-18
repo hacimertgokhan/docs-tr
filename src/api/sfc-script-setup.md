@@ -1,34 +1,34 @@
-# \<script setup> {#script-setup}
+# `<script setup>` {#script-setup}
 
-`<script setup>` is a compile-time syntactic sugar for using Composition API inside Single-File Components (SFCs). It is the recommended syntax if you are using both SFCs and Composition API. It provides a number of advantages over the normal `<script>` syntax:
+`<script setup>`, Tek Dosyalı Bileşenler (SFC'ler) içinde Composition API kullanmak için derleme zamanı sözdizimsel bir şekerdir. SFC'leri ve Composition API'yi birlikte kullanıyorsanız önerilen sözdizimidir. Normal `<script>` sözdizimine göre bir dizi avantaj sağlar:
 
-- More succinct code with less boilerplate
-- Ability to declare props and emitted events using pure TypeScript
-- Better runtime performance (the template is compiled into a render function in the same scope, without an intermediate proxy)
-- Better IDE type-inference performance (less work for the language server to extract types from code)
+- Daha az boilerplate ile daha özlü kod
+- Pure TypeScript kullanarak prop'ları ve yayınlanan olayları bildirme olanağı
+- Daha iyi çalışma zamanı performansı (şablon, ara proxy olmadan aynı kapsamda bir render fonksiyonuna derlenir)
+- Daha iyi IDE tür çıkarımı performansı (dil sunucusunun koddan türleri çıkarması için daha az iş)
 
-## Basic Syntax {#basic-syntax}
+## Temel Sözdizimi {#basic-syntax}
 
-To opt-in to the syntax, add the `setup` attribute to the `<script>` block:
+Sözdizimine katılmak için `<script>` bloğuna `setup` özelliğini ekleyin:
 
 ```vue
 <script setup>
-console.log('hello script setup')
+console.log('merhaba script setup')
 </script>
 ```
 
-The code inside is compiled as the content of the component's `setup()` function. This means that unlike normal `<script>`, which only executes once when the component is first imported, code inside `<script setup>` will **execute every time an instance of the component is created**.
+İçindeki kod, bileşenin `setup()` fonksiyonunun içeriği olarak derlenir. Bu, bileşen ilk içe aktarıldığında yalnızca bir kez yürütülen normal `<script>`'ten farklı olarak, `<script setup>` içindeki kodun **bileşenin bir örneği her oluşturulduğunda** yürütüleceği anlamına gelir.
 
-### Top-level bindings are exposed to template {#top-level-bindings-are-exposed-to-template}
+### Üst düzey bağlamalar şablona gösterilir {#top-level-bindings-are-exposed-to-template}
 
-When using `<script setup>`, any top-level bindings (including variables, function declarations, and imports) declared inside `<script setup>` are directly usable in the template:
+`<script setup>` kullanırken, `<script setup>` içinde bildirilen herhangi bir üst düzey bağlama (değişkenler, fonksiyon bildirimleri ve içe aktarmalar dahil) doğrudan şablonda kullanılabilir:
 
 ```vue
 <script setup>
-// variable
-const msg = 'Hello!'
+// değişken
+const msg = 'Merhaba!'
 
-// functions
+// fonksiyonlar
 function log() {
   console.log(msg)
 }
@@ -39,7 +39,7 @@ function log() {
 </template>
 ```
 
-Imports are exposed in the same fashion. This means you can directly use an imported helper function in template expressions without having to expose it via the `methods` option:
+İçe aktarmalar da aynı şekilde gösterilir. Bu, şablon ifadelerinde içe aktarılan bir yardımcı fonksiyonu, `methods` seçeneği aracılığıyla göstermek zorunda kalmadan doğrudan kullanabileceğiniz anlamına gelir:
 
 ```vue
 <script setup>
@@ -51,9 +51,9 @@ import { capitalize } from './helpers'
 </template>
 ```
 
-## Reactivity {#reactivity}
+## Reaktivite {#reactivity}
 
-Reactive state needs to be explicitly created using [Reactivity APIs](./reactivity-core). Similar to values returned from a `setup()` function, refs are automatically unwrapped when referenced in templates:
+Reaktif durumun, [Reaktivite API'leri](./reactivity-core) kullanılarak açıkça oluşturulması gerekir. `setup()` fonksiyonundan döndürülen değerlere benzer şekilde, ref'ler şablonlarda referans alındığında otomatik olarak sarılır:
 
 ```vue
 <script setup>
@@ -67,9 +67,9 @@ const count = ref(0)
 </template>
 ```
 
-## Using Components {#using-components}
+## Bileşenleri Kullanma {#using-components}
 
-Values in the scope of `<script setup>` can also be used directly as custom component tag names:
+`<script setup>` kapsamındaki değerler, doğrudan özel bileşen etiket adları olarak da kullanılabilir:
 
 ```vue
 <script setup>
@@ -81,11 +81,11 @@ import MyComponent from './MyComponent.vue'
 </template>
 ```
 
-Think of `MyComponent` as being referenced as a variable. If you have used JSX, the mental model is similar here. The kebab-case equivalent `<my-component>` also works in the template - however PascalCase component tags are strongly recommended for consistency. It also helps differentiating from native custom elements.
+`MyComponent`'i bir değişken olarak referans aldığınızı düşünün. JSX kullandıysanız, zihinsel model burada benzerdir. Kebab-case eşdeğeri `<my-component>` da şablonda çalışır; ancak tutarlılık için PascalCase bileşen etiketleri şiddetle tavsiye edilir. Ayrıca, yerel özel öğelerden ayrılmasına da yardımcı olur.
 
-### Dynamic Components {#dynamic-components}
+### Dinamik Bileşenler {#dynamic-components}
 
-Since components are referenced as variables instead of registered under string keys, we should use dynamic `:is` binding when using dynamic components inside `<script setup>`:
+Bileşenler, string anahtarları altında kaydedilmek yerine değişkenler olarak referans alındığından, `<script setup>` içinde dinamik bileşenler kullanırken dinamik `:is` bağlamasını kullanmalıyız:
 
 ```vue
 <script setup>
@@ -99,21 +99,21 @@ import Bar from './Bar.vue'
 </template>
 ```
 
-Note how the components can be used as variables in a ternary expression.
+Bileşenlerin bir üçlü ifadede nasıl değişken olarak kullanılabileceğine dikkat edin.
 
-### Recursive Components {#recursive-components}
+### Özyinelemeli Bileşenler {#recursive-components}
 
-An SFC can implicitly refer to itself via its filename. E.g. a file named `FooBar.vue` can refer to itself as `<FooBar/>` in its template.
+Bir SFC, dosya adı aracılığıyla dolaylı olarak kendisine başvurabilir. Örneğin, `FooBar.vue` adlı bir dosya, şablonunda kendisine `<FooBar/>` olarak başvurabilir.
 
-Note this has lower priority than imported components. If you have a named import that conflicts with the component's inferred name, you can alias the import:
+Bunun, içe aktarılan bileşenlerden daha düşük önceliğe sahip olduğuna dikkat edin. Bileşenin çıkarılan adıyla çakışan adlandırılmış bir içe aktarmanız varsa, içe aktarmaya takma ad verebilirsiniz:
 
 ```js
 import { FooBar as FooBarChild } from './components'
 ```
 
-### Namespaced Components {#namespaced-components}
+### Ad Alanlı Bileşenler {#namespaced-components}
 
-You can use component tags with dots like `<Foo.Bar>` to refer to components nested under object properties. This is useful when you import multiple components from a single file:
+Nesne özelliklerinin altına yerleştirilmiş bileşenlere başvurmak için `<Foo.Bar>` gibi nokta içeren bileşen etiketlerini kullanabilirsiniz. Bu, tek bir dosyadan birden çok bileşen içe aktardığınızda yararlıdır:
 
 ```vue
 <script setup>
@@ -122,29 +122,29 @@ import * as Form from './form-components'
 
 <template>
   <Form.Input>
-    <Form.Label>label</Form.Label>
+    <Form.Label>etiket</Form.Label>
   </Form.Input>
 </template>
 ```
 
-## Using Custom Directives {#using-custom-directives}
+## Özel Direktifleri Kullanma {#using-custom-directives}
 
-Globally registered custom directives just work as normal. Local custom directives don't need to be explicitly registered with `<script setup>`, but they must follow the naming scheme `vNameOfDirective`:
+Global olarak kaydedilen özel direktifler normal şekilde çalışır. Yerel özel direktiflerin `<script setup>` ile açıkça kaydedilmesi gerekmez, ancak `vNameOfDirective` adlandırma şemasını izlemeleri gerekir:
 
 ```vue
 <script setup>
 const vMyDirective = {
   beforeMount: (el) => {
-    // do something with the element
+    // element ile bir şeyler yap
   }
 }
 </script>
 <template>
-  <h1 v-my-directive>This is a Heading</h1>
+  <h1 v-my-directive>Bu bir Başlıktır</h1>
 </template>
 ```
 
-If you're importing a directive from elsewhere, it can be renamed to fit the required naming scheme:
+Başka bir yerden bir direktif içe aktarıyorsanız, gerekli adlandırma şemasına uyacak şekilde yeniden adlandırılabilir:
 
 ```vue
 <script setup>
@@ -154,7 +154,7 @@ import { myDirective as vMyDirective } from './MyDirective.js'
 
 ## defineProps() & defineEmits() {#defineprops-defineemits}
 
-To declare options like `props` and `emits` with full type inference support, we can use the `defineProps` and `defineEmits` APIs, which are automatically available inside `<script setup>`:
+Tam tür çıkarımı desteğiyle `props` ve `emits` gibi seçenekleri bildirmek için, `<script setup>` içinde otomatik olarak kullanılabilen `defineProps` ve `defineEmits` API'lerini kullanabiliriz:
 
 ```vue
 <script setup>
@@ -163,21 +163,21 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['change', 'delete'])
-// setup code
+// kurulum kodu
 </script>
 ```
 
-- `defineProps` and `defineEmits` are **compiler macros** only usable inside `<script setup>`. They do not need to be imported, and are compiled away when `<script setup>` is processed.
+- `defineProps` ve `defineEmits`, yalnızca `<script setup>` içinde kullanılabilen **derleyici makrolarıdır**. İçeri aktarılmaları gerekmez ve `<script setup>` işlenirken derlenirler.
 
-- `defineProps` accepts the same value as the `props` option, while `defineEmits` accepts the same value as the `emits` option.
+- `defineProps`, `props` seçeneğiyle aynı değeri kabul ederken, `defineEmits` `emits` seçeneğiyle aynı değeri kabul eder.
 
-- `defineProps` and `defineEmits` provide proper type inference based on the options passed.
+- `defineProps` ve `defineEmits`, geçirilen seçeneklere göre uygun tür çıkarımı sağlar.
 
-- The options passed to `defineProps` and `defineEmits` will be hoisted out of setup into module scope. Therefore, the options cannot reference local variables declared in setup scope. Doing so will result in a compile error. However, it _can_ reference imported bindings since they are in the module scope as well.
+- `defineProps` ve `defineEmits'e geçirilen seçenekler, kurulumdan modül kapsamına yükseltilir. Bu nedenle, seçenekler kurulum kapsamında bildirilen yerel değişkenlere referans veremez. Bunu yapmak bir derleme hatasıyla sonuçlanır. Ancak, modül kapsamında da oldukları için içe aktarılan bağlamalara referans verebilir.
 
-### Type-only props/emit declarations<sup class="vt-badge ts" /> {#type-only-props-emit-declarations}
+### Yalnızca tür prop/emit bildirimleri<sup class="vt-badge ts" /> {#type-only-props-emit-declarations}
 
-Props and emits can also be declared using pure-type syntax by passing a literal type argument to `defineProps` or `defineEmits`:
+Prop'lar ve emit'ler, `defineProps` veya `defineEmits`'e literal bir tür argümanı geçirilerek saf tür sözdizimi kullanılarak da bildirilebilir:
 
 ```ts
 const props = defineProps<{
@@ -190,51 +190,51 @@ const emit = defineEmits<{
   (e: 'update', value: string): void
 }>()
 
-// 3.3+: alternative, more succinct syntax
+// 3.3+: alternatif, daha özlü sözdizimi
 const emit = defineEmits<{
-  change: [id: number] // named tuple syntax
+  change: [id: number] // adlandırılmış tuple sözdizimi
   update: [value: string]
 }>()
 ```
 
-- `defineProps` or `defineEmits` can only use either runtime declaration OR type declaration. Using both at the same time will result in a compile error.
+- `defineProps` veya `defineEmits` yalnızca çalışma zamanı bildirimi VEYA tür bildirimini kullanabilir. Aynı anda her ikisini de kullanmak bir derleme hatasıyla sonuçlanır.
 
-- When using type declaration, the equivalent runtime declaration is automatically generated from static analysis to remove the need for double declaration and still ensure correct runtime behavior.
+- Tür bildirimi kullanılırken, çift bildirime gerek kalmadan ve yine de doğru çalışma zamanı davranışını sağlamak için statik analizden eşdeğer çalışma zamanı bildirimi otomatik olarak oluşturulur.
 
-  - In dev mode, the compiler will try to infer corresponding runtime validation from the types. For example here `foo: String` is inferred from the `foo: string` type. If the type is a reference to an imported type, the inferred result will be `foo: null` (equal to `any` type) since the compiler does not have information of external files.
+  - Geliştirme modunda, derleyici türlerden karşılık gelen çalışma zamanı doğrulamasını çıkarmaya çalışacaktır. Örneğin, burada `foo: string` türünden `foo: String` çıkarılır. Tür, içe aktarılan bir türe referans ise, derleyicinin harici dosyalar hakkında bilgisi olmadığından çıkarılan sonuç `foo: null` ( `any` türüne eşit) olacaktır.
 
-  - In prod mode, the compiler will generate the array format declaration to reduce bundle size (the props here will be compiled into `['foo', 'bar']`)
+  - Üretim modunda, derleyici paket boyutunu küçültmek için dizi biçimi bildirimi oluşturacaktır (buradaki prop'lar `['foo', 'bar']` olarak derlenecektir)
 
-- In version 3.2 and below, the generic type parameter for `defineProps()` were limited to a type literal or a reference to a local interface.
+- 3.2 ve altı sürümlerde, `defineProps()` için genel tür parametresi, bir tür değişmezi veya yerel bir arayüze referansla sınırlıydı.
 
-  This limitation has been resolved in 3.3. The latest version of Vue supports referencing imported and a limited set of complex types in the type parameter position. However, because the type to runtime conversion is still AST-based, some complex types that require actual type analysis, e.g. conditional types, are not supported. You can use conditional types for the type of a single prop, but not the entire props object.
+  Bu sınırlama 3.3'te çözülmüştür. Vue'nun en son sürümü, tür parametresi konumunda içe aktarılan ve sınırlı sayıda karmaşık tür referansını desteklemektedir. Ancak, türden çalışma zamanına dönüştürme hala AST tabanlı olduğundan, koşullu türler gibi gerçek tür analizi gerektiren bazı karmaşık türler desteklenmez. Tek bir prop'un türü için koşullu türler kullanabilirsiniz, ancak tüm prop'lar nesnesi için kullanamazsınız.
 
-### Reactive Props Destructure <sup class="vt-badge" data-text="3.5+" /> {#reactive-props-destructure}
+### Reaktif Prop Yapısını Bozma <sup class="vt-badge" data-text="3.5+" /> {#reactive-props-destructure}
 
-In Vue 3.5 and above, variables destructured from the return value of `defineProps` are reactive. Vue's compiler automatically prepends `props.` when code in the same `<script setup>` block accesses variables destructured from `defineProps`:
+Vue 3.5 ve üstü sürümlerde, `defineProps`'un dönüş değerinden yapısı bozulan değişkenler reaktiftir. Vue derleyicisi, aynı `<script setup>` bloğundaki kod `defineProps`'tan yapısı bozulan değişkenlere eriştiğinde otomatik olarak `props.`'u ön plana alır:
 
 ```ts
 const { foo } = defineProps(['foo'])
 
 watchEffect(() => {
-  // runs only once before 3.5
-  // re-runs when the "foo" prop changes in 3.5+
+  // 3.5'ten önce yalnızca bir kez çalışır
+  // 3.5+'da "foo" prop'u değiştiğinde yeniden çalışır
   console.log(foo)
 })
 ```
 
-The above is compiled to the following equivalent:
+Yukarıdaki, aşağıdaki eşdeğere derlenir:
 
 ```js {5}
 const props = defineProps(['foo'])
 
 watchEffect(() => {
-  // `foo` transformed to `props.foo` by the compiler
+  // Derleyici tarafından `foo` `props.foo` olarak dönüştürüldü
   console.log(props.foo)
 })
 ```
 
-In addition, you can use JavaScript's native default value syntax to declare default values for the props. This is particularly useful when using the type-based props declaration:
+Ek olarak, prop'lar için varsayılan değerleri bildirmek için JavaScript'in yerel varsayılan değer sözdizimini kullanabilirsiniz. Bu, özellikle tür tabanlı prop bildirimini kullanırken kullanışlıdır:
 
 ```ts
 interface Props {
@@ -242,12 +242,12 @@ interface Props {
   labels?: string[]
 }
 
-const { msg = 'hello', labels = ['one', 'two'] } = defineProps<Props>()
+const { msg = 'merhaba', labels = ['bir', 'iki'] } = defineProps<Props>()
 ```
 
-### Default props values when using type declaration <sup class="vt-badge ts" /> {#default-props-values-when-using-type-declaration}
+### Tür bildirimi kullanırken varsayılan prop değerleri <sup class="vt-badge ts" /> {#default-props-values-when-using-type-declaration}
 
-In 3.5 and above, default values can be naturally declared when using Reactive Props Destructure. But in 3.4 and below, Reactive Props Destructure is not enabled by default. In order to declare props default values with type-based declaration, the `withDefaults` compiler macro is needed:
+3.5 ve üstü sürümlerde, Reaktif Prop Yapısını Bozma kullanılırken varsayılan değerler doğal olarak bildirilebilir. Ancak 3.4 ve altı sürümlerde, Reaktif Prop Yapısını Bozma varsayılan olarak etkin değildir. Tür tabanlı bildirimle prop varsayılan değerlerini bildirmek için `withDefaults` derleyici makrosuna ihtiyaç vardır:
 
 ```ts
 interface Props {
@@ -256,53 +256,53 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  msg: 'hello',
-  labels: () => ['one', 'two']
+  msg: 'merhaba',
+  labels: () => ['bir', 'iki']
 })
 ```
 
-This will be compiled to equivalent runtime props `default` options. In addition, the `withDefaults` helper provides type checks for the default values, and ensures the returned `props` type has the optional flags removed for properties that do have default values declared.
+Bu, eşdeğer çalışma zamanı prop `default` seçeneklerine derlenecektir. Ek olarak, `withDefaults` yardımcı programı varsayılan değerler için tür kontrolleri sağlar ve döndürülen `props` türünün, varsayılan değerleri bildirilen özellikler için isteğe bağlı işaretlerin kaldırılmasını sağlar.
 
 :::info
-Note that default values for mutable reference types (like arrays or objects) should be wrapped in functions when using `withDefaults` to avoid accidental modification and external side effects. This ensures each component instance gets its own copy of the default value. This is **not** necessary when using default values with destructure.
+Değiştirilebilir referans türleri (diziler veya nesneler gibi) için varsayılan değerlerin, kazara değişiklik ve harici yan etkilerden kaçınmak için `withDefaults` kullanılırken fonksiyonlara sarılması gerektiğine dikkat edin. Bu, her bileşen örneğinin varsayılan değerin kendi kopyasını almasını sağlar. Yapı bozma ile varsayılan değerler kullanılırken bu gerekli **değildir**.
 :::
 
 ## defineModel() {#definemodel}
 
-- Only available in 3.4+
+- Yalnızca 3.4+ sürümünde kullanılabilir
 
-This macro can be used to declare a two-way binding prop that can be consumed via `v-model` from the parent component. Example usage is also discussed in the [Component `v-model`](/guide/components/v-model) guide.
+Bu makro, üst bileşenden `v-model` aracılığıyla tüketilebilen iki yönlü bir bağlama prop'u bildirmek için kullanılabilir. Örnek kullanım [Bileşen `v-model`](/guide/components/v-model) kılavuzunda da tartışılmıştır.
 
-Under the hood, this macro declares a model prop and a corresponding value update event. If the first argument is a literal string, it will be used as the prop name; Otherwise the prop name will default to `"modelValue"`. In both cases, you can also pass an additional object which can include the prop's options and the model ref's value transform options.
+Kamera arkasında, bu makro bir model prop ve karşılık gelen bir değer güncelleme olayı bildirir. İlk argüman bir literal string ise, prop adı olarak kullanılacaktır; Aksi takdirde, prop adı varsayılan olarak `"modelValue"` olur. Her iki durumda da, prop'un seçeneklerini ve model ref'inin değer dönüştürme seçeneklerini içerebilen ek bir nesne de geçirebilirsiniz.
 
 ```js
-// declares "modelValue" prop, consumed by parent via v-model
+// üst öğe tarafından v-model aracılığıyla tüketilen "modelValue" prop'unu bildirir
 const model = defineModel()
-// OR: declares "modelValue" prop with options
+// VEYA: seçeneklerle "modelValue" prop'unu bildirir
 const model = defineModel({ type: String })
 
-// emits "update:modelValue" when mutated
-model.value = 'hello'
+// değiştirildiğinde "update:modelValue" yayınlar
+model.value = 'merhaba'
 
-// declares "count" prop, consumed by parent via v-model:count
+// üst bileşen tarafından v-model:count aracılığıyla tüketilen "count" prop'unu bildirir
 const count = defineModel('count')
-// OR: declares "count" prop with options
+// VEYA: seçeneklerle "count" prop'unu bildirir
 const count = defineModel('count', { type: Number, default: 0 })
 
 function inc() {
-  // emits "update:count" when mutated
+  // değiştirildiğinde "update:count" yayınlar
   count.value++
 }
 ```
 
 :::warning
-If you have a `default` value for `defineModel` prop and you don't provide any value for this prop from the parent component, it can cause a de-synchronization between parent and child components. In the example below, the parent's `myRef` is undefined, but the child's `model` is 1:
+`defineModel` prop'u için bir `default` değeriniz varsa ve üst bileşenden bu prop için herhangi bir değer sağlamıyorsanız, üst ve alt bileşenler arasında bir senkronizasyon bozulmasına neden olabilir. Aşağıdaki örnekte, üst öğenin `myRef`'i tanımsızdır, ancak alt öğenin `model`'i 1'dir:
 
 ```js
-// child component:
+// alt bileşen:
 const model = defineModel({ default: 1 })
 
-// parent component:
+// üst bileşen:
 const myRef = ref()
 ```
 
@@ -312,44 +312,44 @@ const myRef = ref()
 
 :::
 
-### Modifiers and Transformers {#modifiers-and-transformers}
+### Değiştiriciler ve Dönüştürücüler {#modifiers-and-transformers}
 
-To access modifiers used with the `v-model` directive, we can destructure the return value of `defineModel()` like this:
+`v-model` direktifiyle kullanılan değiştiricilere erişmek için, `defineModel()`'in dönüş değerini aşağıdaki gibi bozabiliriz:
 
 ```js
 const [modelValue, modelModifiers] = defineModel()
 
-// corresponds to v-model.trim
+// v-model.trim'e karşılık gelir
 if (modelModifiers.trim) {
   // ...
 }
 ```
 
-When a modifier is present, we likely need to transform the value when reading or syncing it back to the parent. We can achieve this by using the `get` and `set` transformer options:
+Bir değiştirici mevcut olduğunda, okurken veya üst öğeye geri senkronize ederken değeri dönüştürmemiz gerekir. `get` ve `set` dönüştürücü seçeneklerini kullanarak bunu başarabiliriz:
 
 ```js
 const [modelValue, modelModifiers] = defineModel({
-  // get() omitted as it is not needed here
+  // burada gerekmediğinden get() atlandı
   set(value) {
-    // if the .trim modifier is used, return trimmed value
+    // .trim değiştiricisi kullanılıyorsa, kırpılmış değer döndür
     if (modelModifiers.trim) {
       return value.trim()
     }
-    // otherwise, return the value as-is
+    // aksi takdirde, değeri olduğu gibi döndür
     return value
   }
 })
 ```
 
-### Usage with TypeScript <sup class="vt-badge ts" /> {#usage-with-typescript}
+### TypeScript ile Kullanım <sup class="vt-badge ts" /> {#usage-with-typescript}
 
-Like `defineProps` and `defineEmits`, `defineModel` can also receive type arguments to specify the types of the model value and the modifiers:
+`defineProps` ve `defineEmits` gibi `defineModel` de model değerinin ve değiştiricilerin türlerini belirtmek için tür argümanları alabilir:
 
 ```ts
 const modelValue = defineModel<string>()
 //    ^? Ref<string | undefined>
 
-// default model with options, required removes possible undefined values
+// seçeneklerle varsayılan model, gerekli olası tanımsız değerleri kaldırır
 const modelValue = defineModel<string>({ required: true })
 //    ^? Ref<string>
 
@@ -359,9 +359,9 @@ const [modelValue, modifiers] = defineModel<string, 'trim' | 'uppercase'>()
 
 ## defineExpose() {#defineexpose}
 
-Components using `<script setup>` are **closed by default** - i.e. the public instance of the component, which is retrieved via template refs or `$parent` chains, will **not** expose any of the bindings declared inside `<script setup>`.
+`<script setup>` kullanan bileşenler **varsayılan olarak kapalıdır**; yani şablon ref'leri veya `$parent` zincirleri aracılığıyla alınan bileşenin genel örneği, `<script setup>` içinde bildirilen bağlamalardan hiçbirini **göstermez**.
 
-To explicitly expose properties in a `<script setup>` component, use the `defineExpose` compiler macro:
+`<script setup>` bileşeninde özellikleri açıkça göstermek için `defineExpose` derleyici makrosunu kullanın:
 
 ```vue
 <script setup>
@@ -377,13 +377,13 @@ defineExpose({
 </script>
 ```
 
-When a parent gets an instance of this component via template refs, the retrieved instance will be of the shape `{ a: number, b: number }` (refs are automatically unwrapped just like on normal instances).
+Bir üst öğe, bu bileşenin bir örneğini şablon ref'leri aracılığıyla aldığında, alınan örnek `{ a: number, b: number }` şeklinde olacaktır (ref'ler, normal örneklerde olduğu gibi otomatik olarak sarılır).
 
 ## defineOptions() {#defineoptions}
 
-- Only supported in 3.3+
+- Yalnızca 3.3+ sürümünde desteklenir
 
-This macro can be used to declare component options directly inside `<script setup>` without having to use a separate `<script>` block:
+Bu makro, ayrı bir `<script>` bloğu kullanmak zorunda kalmadan bileşen seçeneklerini doğrudan `<script setup>` içinde bildirmek için kullanılabilir:
 
 ```vue
 <script setup>
@@ -396,17 +396,17 @@ defineOptions({
 </script>
 ```
 
-- This is a macro. The options will be hoisted to module scope and cannot access local variables in `<script setup>` that are not literal constants.
+- Bu bir makrodur. Seçenekler modül kapsamına yükseltilecek ve literal sabitler olmayan `<script setup>` içindeki yerel değişkenlere erişemez.
 
 ## defineSlots()<sup class="vt-badge ts"/> {#defineslots}
 
-- Only supported in 3.3+
+- Yalnızca 3.3+ sürümünde desteklenir
 
-This macro can be used to provide type hints to IDEs for slot name and props type checking.
+Bu makro, slot adı ve prop türü denetimi için IDE'lere tür ipuçları sağlamak için kullanılabilir.
 
-`defineSlots()` only accepts a type parameter and no runtime arguments. The type parameter should be a type literal where the property key is the slot name, and the value type is the slot function. The first argument of the function is the props the slot expects to receive, and its type will be used for slot props in the template. The return type is currently ignored and can be `any`, but we may leverage it for slot content checking in the future.
+`defineSlots()`, yalnızca bir tür parametresi kabul eder ve çalışma zamanı argümanı kabul etmez. Tür parametresi, özellik anahtarının slot adı olduğu ve değer türünün slot fonksiyonu olduğu bir tür değişmezi olmalıdır. Fonksiyonun ilk argümanı, slotun almayı beklediği prop'lardır ve türü şablondaki slot prop'ları için kullanılacaktır. Dönüş türü şu anda yok sayılır ve `any` olabilir, ancak gelecekte slot içeriği kontrolü için bundan yararlanabiliriz.
 
-It also returns the `slots` object, which is equivalent to the `slots` object exposed on the setup context or returned by `useSlots()`.
+Ayrıca, kurulum bağlamında gösterilen veya `useSlots()` tarafından döndürülen `slots` nesnesine eşdeğer olan `slots` nesnesini de döndürür.
 
 ```vue
 <script setup lang="ts">
@@ -418,7 +418,7 @@ const slots = defineSlots<{
 
 ## `useSlots()` & `useAttrs()` {#useslots-useattrs}
 
-Usage of `slots` and `attrs` inside `<script setup>` should be relatively rare, since you can access them directly as `$slots` and `$attrs` in the template. In the rare case where you do need them, use the `useSlots` and `useAttrs` helpers respectively:
+Şablonda doğrudan `$slots` ve `$attrs` olarak erişebileceğiniz için `<script setup>` içinde `slots` ve `attrs` kullanımı nispeten nadir olmalıdır. Onlara gerçekten ihtiyacınız olan nadir durumlarda, sırasıyla `useSlots` ve `useAttrs` yardımcılarını kullanın:
 
 ```vue
 <script setup>
@@ -429,22 +429,22 @@ const attrs = useAttrs()
 </script>
 ```
 
-`useSlots` and `useAttrs` are actual runtime functions that return the equivalent of `setupContext.slots` and `setupContext.attrs`. They can be used in normal composition API functions as well.
+`useSlots` ve `useAttrs`, `setupContext.slots` ve `setupContext.attrs`'a eşdeğer olanı döndüren gerçek çalışma zamanı fonksiyonlarıdır. Normal composable API fonksiyonlarında da kullanılabilirler.
 
-## Usage alongside normal `<script>` {#usage-alongside-normal-script}
+## Normal `<script>` ile birlikte kullanım {#usage-alongside-normal-script}
 
-`<script setup>` can be used alongside normal `<script>`. A normal `<script>` may be needed in cases where we need to:
+`<script setup>`, normal `<script>` ile birlikte kullanılabilir. Aşağıdaki durumlarda normal bir `<script>` gerekebilir:
 
-- Declare options that cannot be expressed in `<script setup>`, for example `inheritAttrs` or custom options enabled via plugins (Can be replaced by [`defineOptions`](/api/sfc-script-setup#defineoptions) in 3.3+).
-- Declaring named exports.
-- Run side effects or create objects that should only execute once.
+- `<script setup>` içinde ifade edilemeyen seçenekleri bildirme; örneğin `inheritAttrs` veya eklentiler aracılığıyla etkinleştirilen özel seçenekler (3.3+'da [`defineOptions`](/api/sfc-script-setup#defineoptions) ile değiştirilebilir).
+- Adlandırılmış dışa aktarmaları bildirme.
+- Yalnızca bir kez yürütülmesi gereken yan etkileri çalıştırma veya nesneler oluşturma.
 
 ```vue
 <script>
-// normal <script>, executed in module scope (only once)
+// normal <script>, modül kapsamında yürütülür (yalnızca bir kez)
 runSideEffectOnce()
 
-// declare additional options
+// ek seçenekleri bildir
 export default {
   inheritAttrs: false,
   customOptions: {}
@@ -452,20 +452,20 @@ export default {
 </script>
 
 <script setup>
-// executed in setup() scope (for each instance)
+// setup() kapsamında yürütülür (her örnek için)
 </script>
 ```
 
-Support for combining `<script setup>` and `<script>` in the same component is limited to the scenarios described above. Specifically:
+Aynı bileşende `<script setup>` ve `<script>`'i birleştirme desteği, yukarıda açıklanan senaryolarla sınırlıdır. Özellikle:
 
-- Do **NOT** use a separate `<script>` section for options that can already be defined using `<script setup>`, such as `props` and `emits`.
-- Variables created inside `<script setup>` are not added as properties to the component instance, making them inaccessible from the Options API. Mixing APIs in this way is strongly discouraged.
+- `props` ve `emits` gibi `<script setup>` kullanılarak zaten tanımlanabilen seçenekler için ayrı bir `<script>` bölümü **KULLANMAYIN**.
+- `<script setup>` içinde oluşturulan değişkenler, Options API'den erişilemez hale getirerek bileşen örneğine özellik olarak eklenmez. API'leri bu şekilde karıştırmak kesinlikle önerilmez.
 
-If you find yourself in one of the scenarios that is not supported then you should consider switching to an explicit [`setup()`](/api/composition-api-setup) function, instead of using `<script setup>`.
+Kendinizi desteklenmeyen senaryolardan birinde bulursanız, `<script setup>` kullanmak yerine açık bir [`setup()`](/api/composition-api-setup) fonksiyonuna geçmeyi düşünmelisiniz.
 
-## Top-level `await` {#top-level-await}
+## Üst düzey `await` {#top-level-await}
 
-Top-level `await` can be used inside `<script setup>`. The resulting code will be compiled as `async setup()`:
+Üst düzey `await` `<script setup>` içinde kullanılabilir. Elde edilen kod, `async setup()` olarak derlenecektir:
 
 ```vue
 <script setup>
@@ -473,16 +473,16 @@ const post = await fetch(`/api/post/1`).then((r) => r.json())
 </script>
 ```
 
-In addition, the awaited expression will be automatically compiled in a format that preserves the current component instance context after the `await`.
+Ek olarak, beklenen ifade, `await`'ten sonra geçerli bileşen örneği bağlamını koruyan bir biçimde otomatik olarak derlenecektir.
 
-:::warning Note
-`async setup()` must be used in combination with [`Suspense`](/guide/built-ins/suspense.html), which is currently still an experimental feature. We plan to finalize and document it in a future release - but if you are curious now, you can refer to its [tests](https://github.com/vuejs/core/blob/main/packages/runtime-core/__tests__/components/Suspense.spec.ts) to see how it works.
+:::warning Not
+`async setup()`, şu anda hala deneysel bir özellik olan [`Suspense`](/guide/built-ins/suspense.html) ile birlikte kullanılmalıdır. Bunu gelecekteki bir sürümde tamamlayıp belgelemeyi planlıyoruz; ancak şu anda merak ediyorsanız, nasıl çalıştığını görmek için [testlerine](https://github.com/vuejs/core/blob/main/packages/runtime-core/__tests__/components/Suspense.spec.ts) başvurabilirsiniz.
 :::
 
-## Import Statements {#imports-statements}
+## İçe Aktarma Bildirimleri {#imports-statements}
 
-Import statements in vue follow [ECMAScript module specification](https://nodejs.org/api/esm.html).
-In addition, you can use aliases defined in your build tool configuration:
+Vue'daki içe aktarma bildirimleri, [ECMAScript modül belirtimini](https://nodejs.org/api/esm.html) izler.
+Ek olarak, derleme aracı yapılandırmanızda tanımlanan takma adları kullanabilirsiniz:
 
 ```vue
 <script setup>
@@ -495,7 +495,7 @@ import { componentC } from '~/Components'
 
 ## Generics <sup class="vt-badge ts" /> {#generics}
 
-Generic type parameters can be declared using the `generic` attribute on the `<script>` tag:
+Genel tür parametreleri, `<script>` etiketindeki `generic` özelliği kullanılarak bildirilebilir:
 
 ```vue
 <script setup lang="ts" generic="T">
@@ -506,7 +506,7 @@ defineProps<{
 </script>
 ```
 
-The value of `generic` works exactly the same as the parameter list between `<...>` in TypeScript. For example, you can use multiple parameters, `extends` constraints, default types, and reference imported types:
+`generic`'in değeri, TypeScript'teki `<...>` arasındaki parametre listesiyle tamamen aynı şekilde çalışır. Örneğin, birden çok parametre, `extends` kısıtlamaları, varsayılan türler kullanabilir ve içe aktarılan türlere referans verebilirsiniz:
 
 ```vue
 <script
@@ -522,7 +522,7 @@ defineProps<{
 </script>
 ```
 
-In order to use a reference to a generic component in a `ref` you need to use the [`vue-component-type-helpers`](https://www.npmjs.com/package/vue-component-type-helpers) library as `InstanceType` won't work.
+`ref`'te genel bir bileşene referans kullanmak için, [`vue-component-type-helpers`](https://www.npmjs.com/package/vue-component-type-helpers) kitaplığını kullanmanız gerekir, çünkü `InstanceType` çalışmaz.
 
 ```vue
 <script
@@ -534,13 +534,13 @@ import genericComponent from '../generic-component.vue';
 
 import type { ComponentExposed } from 'vue-component-type-helpers';
 
-// Works for a component without generics
+// Jenerik olmayan bir bileşen için çalışır
 ref<InstanceType<typeof componentWithoutGenerics>>();
 
 ref<ComponentExposed<typeof genericComponent>>();
 ```
 
-## Restrictions {#restrictions}
+## Kısıtlamalar {#restrictions}
 
-- Due to the difference in module execution semantics, code inside `<script setup>` relies on the context of an SFC. When moved into external `.js` or `.ts` files, it may lead to confusion for both developers and tools. Therefore, **`<script setup>`** cannot be used with the `src` attribute.
-- `<script setup>` does not support In-DOM Root Component Template.([Related Discussion](https://github.com/vuejs/core/issues/8391))
+- Modül yürütme semantiğindeki farklılık nedeniyle, `<script setup>` içindeki kod bir SFC'nin bağlamına dayanır. Harici `.js` veya `.ts` dosyalarına taşındığında, hem geliştiriciler hem de araçlar için kafa karışıklığına yol açabilir. Bu nedenle, **`<script setup>`**, `src` özelliğiyle kullanılamaz.
+- `<script setup>` In-DOM Kök Bileşen Şablonunu desteklemez.([İlgili Tartışma](https://github.com/vuejs/core/issues/8391))

@@ -1,10 +1,10 @@
-# Server-Side Rendering API {#server-side-rendering-api}
+# Sunucu Tarafı Render Etme API'si {#server-side-rendering-api}
 
 ## renderToString() {#rendertostring}
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function renderToString(
@@ -13,14 +13,14 @@
   ): Promise<string>
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   import { createSSRApp } from 'vue'
   import { renderToString } from 'vue/server-renderer'
 
   const app = createSSRApp({
-    data: () => ({ msg: 'hello' }),
+    data: () => ({ msg: 'merhaba' }),
     template: `<div>{{ msg }}</div>`
   })
 
@@ -30,28 +30,28 @@
   })()
   ```
 
-  ### SSR Context {#ssr-context}
+  ### SSR Bağlamı {#ssr-context}
 
-  You can pass an optional context object, which can be used to record additional data during the render, for example [accessing content of Teleports](/guide/scaling-up/ssr#teleports):
+  İsteğe bağlı bir bağlam nesnesi geçirebilirsiniz. Bu nesne, örneğin [Teleport'ların içeriğine erişme](/guide/scaling-up/ssr#teleports) gibi render sırasında ek verileri kaydetmek için kullanılabilir:
 
   ```js
   const ctx = {}
   const html = await renderToString(app, ctx)
 
-  console.log(ctx.teleports) // { '#teleported': 'teleported content' }
+  console.log(ctx.teleports) // { '#teleported': 'teleported içerik' }
   ```
 
-  Most other SSR APIs on this page also optionally accept a context object. The context object can be accessed in component code via the [useSSRContext](#usessrcontext) helper.
+  Bu sayfadaki diğer SSR API'lerinin çoğu da isteğe bağlı olarak bir bağlam nesnesi kabul eder. Bağlam nesnesine, bileşen kodunda [useSSRContext](#usessrcontext) yardımcı programı aracılığıyla erişilebilir.
 
-- **See also** [Guide - Server-Side Rendering](/guide/scaling-up/ssr)
+- **Ayrıca bakınız** [Rehber - Sunucu Tarafı Render Etme](/guide/scaling-up/ssr)
 
 ## renderToNodeStream() {#rendertonodestream}
 
-Renders input as a [Node.js Readable stream](https://nodejs.org/api/stream.html#stream_class_stream_readable).
+Girişi bir [Node.js Okunabilir akış](https://nodejs.org/api/stream.html#stream_class_stream_readable) olarak render eder.
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function renderToNodeStream(
@@ -60,24 +60,24 @@ Renders input as a [Node.js Readable stream](https://nodejs.org/api/stream.html#
   ): Readable
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
-  // inside a Node.js http handler
+  // bir Node.js http işleyicisi içinde
   renderToNodeStream(app).pipe(res)
   ```
 
-  :::tip Note
-  This method is not supported in the ESM build of `vue/server-renderer`, which is decoupled from Node.js environments. Use [`pipeToNodeWritable`](#pipetonodewritable) instead.
+  :::tip Not
+  Bu yöntem, Node.js ortamlarından ayrılmış `vue/server-renderer`'ın ESM yapısında desteklenmez. Bunun yerine [`pipeToNodeWritable`](#pipetonodewritable) kullanın.
   :::
 
 ## pipeToNodeWritable() {#pipetonodewritable}
 
-Render and pipe to an existing [Node.js Writable stream](https://nodejs.org/api/stream.html#stream_writable_streams) instance.
+Mevcut bir [Node.js Yazılabilir akış](https://nodejs.org/api/stream.html#stream_writable_streams) örneğine render edin ve akış sağlayın.
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function pipeToNodeWritable(
@@ -87,20 +87,20 @@ Render and pipe to an existing [Node.js Writable stream](https://nodejs.org/api/
   ): void
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
-  // inside a Node.js http handler
+  // bir Node.js http işleyicisi içinde
   pipeToNodeWritable(app, {}, res)
   ```
 
 ## renderToWebStream() {#rendertowebstream}
 
-Renders input as a [Web ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API).
+Girişi bir [Web OkunabilirAkışı](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) olarak render eder.
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function renderToWebStream(
@@ -109,24 +109,24 @@ Renders input as a [Web ReadableStream](https://developer.mozilla.org/en-US/docs
   ): ReadableStream
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
-  // inside an environment with ReadableStream support
+  // ReadableStream desteği olan bir ortam içinde
   return new Response(renderToWebStream(app))
   ```
 
-  :::tip Note
-  In environments that do not expose `ReadableStream` constructor in the global scope, [`pipeToWebWritable()`](#pipetowebwritable) should be used instead.
+  :::tip Not
+  Global kapsamda `ReadableStream` oluşturucusunu göstermeyen ortamlarda, bunun yerine [`pipeToWebWritable()`](#pipetowebwritable) kullanılmalıdır.
   :::
 
 ## pipeToWebWritable() {#pipetowebwritable}
 
-Render and pipe to an existing [Web WritableStream](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) instance.
+Mevcut bir [Web YazılabilirAkışı](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) örneğine render edin ve akış sağlayın.
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function pipeToWebWritable(
@@ -136,13 +136,13 @@ Render and pipe to an existing [Web WritableStream](https://developer.mozilla.or
   ): void
   ```
 
-- **Example**
+- **Örnek**
 
-  This is typically used in combination with [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream):
+  Bu, tipik olarak [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) ile birlikte kullanılır:
 
   ```js
-  // TransformStream is available in environments such as CloudFlare workers.
-  // in Node.js, TransformStream needs to be explicitly imported from 'stream/web'
+  // TransformStream, CloudFlare worker'ları gibi ortamlarda kullanılabilir.
+  // Node.js'de, TransformStream'in 'stream/web'den açıkça içe aktarılması gerekir
   const { readable, writable } = new TransformStream()
   pipeToWebWritable(app, {}, writable)
 
@@ -151,11 +151,11 @@ Render and pipe to an existing [Web WritableStream](https://developer.mozilla.or
 
 ## renderToSimpleStream() {#rendertosimplestream}
 
-Renders input in streaming mode using a simple readable interface.
+Basit bir okunabilir arabirim kullanarak girişi akış modunda render eder.
 
-- **Exported from `vue/server-renderer`**
+- **`vue/server-renderer`'dan dışa aktarılmıştır**
 
-- **Type**
+- **Tür**
 
   ```ts
   function renderToSimpleStream(
@@ -170,7 +170,7 @@ Renders input in streaming mode using a simple readable interface.
   }
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   let res = ''
@@ -181,14 +181,14 @@ Renders input in streaming mode using a simple readable interface.
     {
       push(chunk) {
         if (chunk === null) {
-          // done
-          console(`render complete: ${res}`)
+          // tamamlandı
+          console(`render tamamlandı: ${res}`)
         } else {
           res += chunk
         }
       },
       destroy(err) {
-        // error encountered
+        // hatayla karşılaşıldı
       }
     }
   )
@@ -196,47 +196,47 @@ Renders input in streaming mode using a simple readable interface.
 
 ## useSSRContext() {#usessrcontext}
 
-A runtime API used to retrieve the context object passed to `renderToString()` or other server render APIs.
+`renderToString()` veya diğer sunucu render API'lerine geçirilen bağlam nesnesini almak için kullanılan bir çalışma zamanı API'si.
 
-- **Type**
+- **Tür**
 
   ```ts
   function useSSRContext<T = Record<string, any>>(): T | undefined
   ```
 
-- **Example**
+- **Örnek**
 
-  The retrieved context can be used to attach information that is needed for rendering the final HTML (e.g. head metadata).
+  Alınan bağlam, son HTML'i render etmek için gereken bilgileri (örneğin, başlık meta verileri) eklemek için kullanılabilir.
 
   ```vue
   <script setup>
   import { useSSRContext } from 'vue'
 
-  // make sure to only call it during SSR
+  // yalnızca SSR sırasında çağrıldığından emin olun
   // https://vitejs.dev/guide/ssr.html#conditional-logic
   if (import.meta.env.SSR) {
     const ctx = useSSRContext()
-    // ...attach properties to the context
+    // ...bağlama özelliklerini bağlama
   }
   </script>
   ```
 
 ## data-allow-mismatch <sup class="vt-badge" data-text="3.5+" /> {#data-allow-mismatch}
 
-A special attribute that can be used to suppress [hydration mismatch](/guide/scaling-up/ssr#hydration-mismatch) warnings.
+[Hidrasyon uyuşmazlığı](/guide/scaling-up/ssr#hydration-mismatch) uyarılarını bastırmak için kullanılabilen özel bir öznitelik.
 
-- **Example**
+- **Örnek**
 
   ```html
   <div data-allow-mismatch="text">{{ data.toLocaleString() }}</div>
   ```
 
-  The value can limit the allowed mismatch to a specific type. Allowed values are:
+  Değer, izin verilen uyuşmazlığı belirli bir türe sınırlayabilir. İzin verilen değerler şunlardır:
 
   - `text`
-  - `children` (only allows mismatch for direct children)
+  - `children` (yalnızca doğrudan çocuklar için uyuşmazlığa izin verir)
   - `class`
   - `style`
   - `attribute`
 
-  If no value is provided, all types of mismatches will be allowed.
+  Değer sağlanmazsa, tüm uyuşmazlık türlerine izin verilir.

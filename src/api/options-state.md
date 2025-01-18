@@ -1,10 +1,10 @@
-# Options: State {#options-state}
+# Seçenekler: Durum {#options-state}
 
 ## data {#data}
 
-A function that returns the initial reactive state for the component instance.
+Bileşen örneği için ilk reaktif durumu döndüren bir fonksiyon.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -15,17 +15,17 @@ A function that returns the initial reactive state for the component instance.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The function is expected to return a plain JavaScript object, which will be made reactive by Vue. After the instance is created, the reactive data object can be accessed as `this.$data`. The component instance also proxies all the properties found on the data object, so `this.a` will be equivalent to `this.$data.a`.
+  Fonksiyonun, Vue tarafından reaktif hale getirilecek düz bir JavaScript nesnesi döndürmesi beklenir. Örnek oluşturulduktan sonra, reaktif veri nesnesine `this.$data` olarak erişilebilir. Bileşen örneği ayrıca veri nesnesinde bulunan tüm özellikleri vekil olarak kullanır, bu nedenle `this.a`, `this.$data.a` ile eşdeğer olacaktır.
 
-  All top-level data properties must be included in the returned data object. Adding new properties to `this.$data` is possible, but it is **not** recommended. If the desired value of a property is not yet available then an empty value such as `undefined` or `null` should be included as a placeholder to ensure that Vue knows that the property exists.
+  Tüm üst düzey veri özellikleri, döndürülen veri nesnesine dahil edilmelidir. `this.$data`'ya yeni özellikler eklemek mümkündür, ancak **tavsiye edilmez**. Bir özelliğin istenen değeri henüz kullanılamıyorsa, Vue'nun özelliğin var olduğunu bilmesini sağlamak için `undefined` veya `null` gibi boş bir değer bir yer tutucu olarak dahil edilmelidir.
 
-  Properties that start with `_` or `$` will **not** be proxied on the component instance because they may conflict with Vue's internal properties and API methods. You will have to access them as `this.$data._property`.
+  `_` veya `$` ile başlayan özellikler, Vue'nun dahili özellikleri ve API metotlarıyla çakışabileceği için bileşen örneğinde vekil olarak **kullanılmaz**. Onlara `this.$data._property` olarak erişmeniz gerekecektir.
 
-  It is **not** recommended to return objects with their own stateful behavior like browser API objects and prototype properties. The returned object should ideally be a plain object that only represents the state of the component.
+  Tarayıcı API nesneleri ve prototip özellikleri gibi kendi durumlu davranışlarına sahip nesneler döndürmek **tavsiye edilmez**. Döndürülen nesne ideal olarak yalnızca bileşenin durumunu temsil eden düz bir nesne olmalıdır.
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -39,19 +39,19 @@ A function that returns the initial reactive state for the component instance.
   }
   ```
 
-  Note that if you use an arrow function with the `data` property, `this` won't be the component's instance, but you can still access the instance as the function's first argument:
+  `data` özelliğiyle bir ok fonksiyonu kullanırsanız, `this`'in bileşenin örneği olmayacağını, ancak yine de örneğe fonksiyonun ilk argümanı olarak erişebileceğinizi unutmayın:
 
   ```js
   data: (vm) => ({ a: vm.myProp })
   ```
 
-- **See also** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- **Ayrıca bakınız** [Reaktivite Derinlemesine](/guide/extras/reactivity-in-depth)
 
 ## props {#props}
 
-Declare the props of a component.
+Bir bileşenin prop'larını bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -74,30 +74,30 @@ Declare the props of a component.
   type PropType<T> = { new (): T } | { new (): T }[]
   ```
 
-  > Types are simplified for readability.
+  > Türler, okunabilirlik için basitleştirilmiştir.
 
-- **Details**
+- **Detaylar**
 
-  In Vue, all component props need to be explicitly declared. Component props can be declared in two forms:
+  Vue'da, tüm bileşen prop'larının açıkça bildirilmesi gerekir. Bileşen prop'ları iki biçimde bildirilebilir:
 
-  - Simple form using an array of strings
-  - Full form using an object where each property key is the name of the prop, and the value is the prop's type (a constructor function) or advanced options.
+  - Bir string dizisi kullanan basit form
+  - Her özellik anahtarının prop'un adı olduğu ve değerin prop'un türü (bir oluşturucu fonksiyonu) veya gelişmiş seçenekler olduğu bir nesne kullanan tam form.
 
-  With object-based syntax, each prop can further define the following options:
+  Nesne tabanlı sözdizimiyle, her prop aşağıdaki seçenekleri daha da tanımlayabilir:
 
-  - **`type`**: Can be one of the following native constructors: `String`, `Number`, `Boolean`, `Array`, `Object`, `Date`, `Function`, `Symbol`, any custom constructor function or an array of those. In development mode, Vue will check if a prop's value matches the declared type, and will throw a warning if it doesn't. See [Prop Validation](/guide/components/props#prop-validation) for more details.
+  - **`type`**: Aşağıdaki yerel oluşturuculardan biri olabilir: `String`, `Number`, `Boolean`, `Array`, `Object`, `Date`, `Function`, `Symbol`, herhangi bir özel oluşturucu fonksiyonu veya bunların bir dizisi. Geliştirme modunda, Vue bir prop'un değerinin bildirilen türle eşleşip eşleşmediğini kontrol edecek ve eşleşmiyorsa bir uyarı verecektir. Daha fazla ayrıntı için [Prop Doğrulaması](/guide/components/props#prop-validation) bölümüne bakın.
 
-    Also note that a prop with `Boolean` type affects its value casting behavior in both development and production. See [Boolean Casting](/guide/components/props#boolean-casting) for more details.
+    Ayrıca `Boolean` türüne sahip bir prop'un değer dönüştürme davranışını hem geliştirme hem de üretimde etkilediğini unutmayın. Daha fazla ayrıntı için [Boolean Dönüştürme](/guide/components/props#boolean-casting) bölümüne bakın.
 
-  - **`default`**: Specifies a default value for the prop when it is not passed by the parent or has `undefined` value. Object or array defaults must be returned using a factory function. The factory function also receives the raw props object as the argument.
+  - **`default`**: Prop üst öğe tarafından geçirilmediğinde veya `undefined` değerine sahip olduğunda prop için bir varsayılan değer belirtir. Nesne veya dizi varsayılanları, bir fabrika fonksiyonu kullanılarak döndürülmelidir. Fabrika fonksiyonu ayrıca ham prop'lar nesnesini argüman olarak alır.
 
-  - **`required`**: Defines if the prop is required. In a non-production environment, a console warning will be thrown if this value is truthy and the prop is not passed.
+  - **`required`**: Prop'un gerekli olup olmadığını tanımlar. Üretim dışı bir ortamda, bu değer doğruysa ve prop geçirilmemişse bir konsol uyarısı verilir.
 
-  - **`validator`**: Custom validator function that takes the prop value as the sole argument. In development mode, a console warning will be thrown if this function returns a falsy value (i.e. the validation fails).
+  - **`validator`**: Tek argüman olarak prop değerini alan özel doğrulayıcı fonksiyon. Geliştirme modunda, bu fonksiyon yanlış bir değer döndürürse (yani doğrulama başarısız olursa) bir konsol uyarısı verilir.
 
-- **Example**
+- **Örnek**
 
-  Simple declaration:
+  Basit bildirim:
 
   ```js
   export default {
@@ -105,14 +105,14 @@ Declare the props of a component.
   }
   ```
 
-  Object declaration with validations:
+  Doğrulamalarla nesne bildirimi:
 
   ```js
   export default {
     props: {
-      // type check
+      // tür kontrolü
       height: Number,
-      // type check plus other validations
+      // tür kontrolü artı diğer doğrulamalar
       age: {
         type: Number,
         default: 0,
@@ -125,15 +125,15 @@ Declare the props of a component.
   }
   ```
 
-- **See also**
-  - [Guide - Props](/guide/components/props)
-  - [Guide - Typing Component Props](/guide/typescript/options-api#typing-component-props) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - Prop'lar](/guide/components/props)
+  - [Rehber - Bileşen Prop'larını Türlendirme](/guide/typescript/options-api#typing-component-props) <sup class="vt-badge ts" />
 
 ## computed {#computed}
 
-Declare computed properties to be exposed on the component instance.
+Bileşen örneğinde gösterilecek hesaplanmış özellikleri bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -158,13 +158,13 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The option accepts an object where the key is the name of the computed property, and the value is either a computed getter, or an object with `get` and `set` methods (for writable computed properties).
+  Seçenek, anahtarın hesaplanan özelliğin adı olduğu ve değerin bir hesaplanan alıcı veya yazılabilir hesaplanan özellikler için `get` ve `set` metotlarına sahip bir nesne olduğu bir nesne kabul eder.
 
-  All getters and setters have their `this` context automatically bound to the component instance.
+  Tüm alıcılar ve ayarlayıcıların `this` bağlamı otomatik olarak bileşen örneğine bağlanır.
 
-  Note that if you use an arrow function with a computed property, `this` won't point to the component's instance, but you can still access the instance as the function's first argument:
+  Hesaplanmış bir özellikle bir ok fonksiyonu kullanırsanız, `this`'in bileşenin örneğini göstermeyeceğini, ancak yine de örneğe fonksiyonun ilk argümanı olarak erişebileceğinizi unutmayın:
 
   ```js
   export default {
@@ -174,7 +174,7 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -182,11 +182,11 @@ Declare computed properties to be exposed on the component instance.
       return { a: 1 }
     },
     computed: {
-      // readonly
+      // salt okunur
       aDouble() {
         return this.a * 2
       },
-      // writable
+      // yazılabilir
       aPlus: {
         get() {
           return this.a + 1
@@ -207,15 +207,15 @@ Declare computed properties to be exposed on the component instance.
   }
   ```
 
-- **See also**
-  - [Guide - Computed Properties](/guide/essentials/computed)
-  - [Guide - Typing Computed Properties](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - Hesaplanan Özellikler](/guide/essentials/computed)
+  - [Rehber - Hesaplanan Özellikleri Türlendirme](/guide/typescript/options-api#typing-computed-properties) <sup class="vt-badge ts" />
 
 ## methods {#methods}
 
-Declare methods to be mixed into the component instance.
+Bileşen örneğine karıştırılacak metotları bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -225,13 +225,13 @@ Declare methods to be mixed into the component instance.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  Declared methods can be directly accessed on the component instance, or used in template expressions. All methods have their `this` context automatically bound to the component instance, even when passed around.
+  Bildirilen metotlara doğrudan bileşen örneğinden erişilebilir veya şablon ifadelerinde kullanılabilir. Tüm metotların `this` bağlamı, çevrede geçirilse bile otomatik olarak bileşen örneğine bağlanır.
 
-  Avoid using arrow functions when declaring methods, as they will not have access to the component instance via `this`.
+  Metotları bildirirken ok fonksiyonları kullanmaktan kaçının, çünkü `this` aracılığıyla bileşen örneğine erişemezler.
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -250,13 +250,13 @@ Declare methods to be mixed into the component instance.
   }
   ```
 
-- **See also** [Event Handling](/guide/essentials/event-handling)
+- **Ayrıca bakınız** [Olay İşleme](/guide/essentials/event-handling)
 
 ## watch {#watch}
 
-Declare watch callbacks to be invoked on data change.
+Veri değişikliğinde çağrılacak izleme geri çağrılarını bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -275,32 +275,32 @@ Declare watch callbacks to be invoked on data change.
 
   type ObjectWatchOptionItem = {
     handler: WatchCallback | string
-    immediate?: boolean // default: false
-    deep?: boolean // default: false
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    immediate?: boolean // varsayılan: false
+    deep?: boolean // varsayılan: false
+    flush?: 'pre' | 'post' | 'sync' // varsayılan: 'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
   }
   ```
 
-  > Types are simplified for readability.
+  > Türler, okunabilirlik için basitleştirilmiştir.
 
-- **Details**
+- **Detaylar**
 
-  The `watch` option expects an object where keys are the reactive component instance properties to watch (e.g. properties declared via `data` or `computed`) — and values are the corresponding callbacks. The callback receives the new value and the old value of the watched source.
+  `watch` seçeneği, anahtarların izlenecek reaktif bileşen örneği özellikleri (örneğin, `data` veya `computed` aracılığıyla bildirilen özellikler) olduğu ve değerlerin karşılık gelen geri çağrılar olduğu bir nesne bekler. Geri çağrı, izlenen kaynağın yeni değerini ve eski değerini alır.
 
-  In addition to a root-level property, the key can also be a simple dot-delimited path, e.g. `a.b.c`. Note that this usage does **not** support complex expressions - only dot-delimited paths are supported. If you need to watch complex data sources, use the imperative [`$watch()`](/api/component-instance#watch) API instead.
+  Kök düzeyinde bir özelliğe ek olarak, anahtar basit bir nokta ile ayrılmış yol da olabilir, örn. `a.b.c`. Bu kullanımın karmaşık ifadeleri desteklemediğini unutmayın; yalnızca nokta ile ayrılmış yollar desteklenir. Karmaşık veri kaynaklarını izlemeniz gerekiyorsa, bunun yerine zorunlu [`$watch()`](/api/component-instance#watch) API'sini kullanın.
 
-  The value can also be a string of a method name (declared via `methods`), or an object that contains additional options. When using the object syntax, the callback should be declared under the `handler` field. Additional options include:
+  Değer, bir metot adının ( `methods` aracılığıyla bildirilen) stringi veya ek seçenekler içeren bir nesne de olabilir. Nesne sözdizimini kullanırken, geri çağrı `handler` alanı altında bildirilmelidir. Ek seçenekler şunları içerir:
 
-  - **`immediate`**: trigger the callback immediately on watcher creation. Old value will be `undefined` on the first call.
-  - **`deep`**: force deep traversal of the source if it is an object or an array, so that the callback fires on deep mutations. See [Deep Watchers](/guide/essentials/watchers#deep-watchers).
-  - **`flush`**: adjust the callback's flush timing. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) and [`watchEffect()`](/api/reactivity-core#watcheffect).
-  - **`onTrack / onTrigger`**: debug the watcher's dependencies. See [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging).
+  - **`immediate`**: izleyici oluşturulduğunda geri çağrıyı hemen tetikler. Eski değer, ilk çağrıda `undefined` olacaktır.
+  - **`deep`**: bir nesne veya dizi ise, geri çağrının derin mutasyonlarda tetiklenmesi için kaynağın derin geçişini zorlar. [Derin İzleyiciler](/guide/essentials/watchers#deep-watchers) bölümüne bakın.
+  - **`flush`**: geri çağrının akış zamanlamasını ayarlayın. [Geri Çağrı Akış Zamanlaması](/guide/essentials/watchers#callback-flush-timing) ve [`watchEffect()`](/api/reactivity-core#watcheffect) bölümüne bakın.
+  - **`onTrack / onTrigger`**: izleyicinin bağımlılıklarında hata ayıklayın. [İzleyici Hata Ayıklama](/guide/extras/reactivity-in-depth#watcher-debugging) bölümüne bakın.
 
-  Avoid using arrow functions when declaring watch callbacks as they will not have access to the component instance via `this`.
+  İzleme geri çağrılarını bildirirken ok fonksiyonlarını kullanmaktan kaçının, çünkü `this` aracılığıyla bileşen örneğine erişemezler.
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -316,39 +316,39 @@ Declare watch callbacks to be invoked on data change.
       }
     },
     watch: {
-      // watching top-level property
+      // üst düzey özelliği izleme
       a(val, oldVal) {
-        console.log(`new: ${val}, old: ${oldVal}`)
+        console.log(`yeni: ${val}, eski: ${oldVal}`)
       },
-      // string method name
+      // string metot adı
       b: 'someMethod',
-      // the callback will be called whenever any of the watched object properties change regardless of their nested depth
+      // izlenen nesne özelliklerinden herhangi biri iç içe derinliklerinden bağımsız olarak değiştiğinde geri çağrı çağrılır
       c: {
         handler(val, oldVal) {
-          console.log('c changed')
+          console.log('c değişti')
         },
         deep: true
       },
-      // watching a single nested property:
+      // tek bir iç içe geçmiş özelliği izleme:
       'c.d': function (val, oldVal) {
-        // do something
+        // bir şeyler yap
       },
-      // the callback will be called immediately after the start of the observation
+      // gözlemin başlangıcından hemen sonra geri çağrı çağrılacaktır
       e: {
         handler(val, oldVal) {
-          console.log('e changed')
+          console.log('e değişti')
         },
         immediate: true
       },
-      // you can pass array of callbacks, they will be called one-by-one
+      // geri çağrılardan oluşan dizi geçirebilirsiniz, bunlar tek tek çağrılacaktır
       f: [
         'handle1',
         function handle2(val, oldVal) {
-          console.log('handle2 triggered')
+          console.log('handle2 tetiklendi')
         },
         {
           handler: function handle3(val, oldVal) {
-            console.log('handle3 triggered')
+            console.log('handle3 tetiklendi')
           }
           /* ... */
         }
@@ -356,10 +356,10 @@ Declare watch callbacks to be invoked on data change.
     },
     methods: {
       someMethod() {
-        console.log('b changed')
+        console.log('b değişti')
       },
       handle1() {
-        console.log('handle 1 triggered')
+        console.log('handle 1 tetiklendi')
       }
     },
     created() {
@@ -368,13 +368,13 @@ Declare watch callbacks to be invoked on data change.
   }
   ```
 
-- **See also** [Watchers](/guide/essentials/watchers)
+- **Ayrıca bakınız** [İzleyiciler](/guide/essentials/watchers)
 
 ## emits {#emits}
 
-Declare the custom events emitted by the component.
+Bileşen tarafından yayınlanan özel olayları bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -388,20 +388,20 @@ Declare the custom events emitted by the component.
   type EmitValidator = (...args: unknown[]) => boolean
   ```
 
-- **Details**
+- **Detaylar**
 
-  Emitted events can be declared in two forms:
+  Yayınlanan olaylar iki biçimde bildirilebilir:
 
-  - Simple form using an array of strings
-  - Full form using an object where each property key is the name of the event, and the value is either `null` or a validator function.
+  - Bir string dizisi kullanan basit form
+  - Her özellik anahtarının olayın adı olduğu ve değerin `null` veya bir doğrulayıcı fonksiyonu olduğu bir nesne kullanan tam form.
 
-  The validation function will receive the additional arguments passed to the component's `$emit` call. For example, if `this.$emit('foo', 1)` is called, the corresponding validator for `foo` will receive the argument `1`. The validator function should return a boolean to indicate whether the event arguments are valid.
+  Doğrulama fonksiyonu, bileşenin `$emit` çağrısına geçirilen ek argümanları alacaktır. Örneğin, `this.$emit('foo', 1)` çağrılırsa, `foo` için karşılık gelen doğrulayıcı `1` argümanını alacaktır. Doğrulayıcı fonksiyonu, olay argümanlarının geçerli olup olmadığını belirtmek için bir boolean döndürmelidir.
 
-  Note that the `emits` option affects which event listeners are considered component event listeners, rather than native DOM event listeners. The listeners for declared events will be removed from the component's `$attrs` object, so they will not be passed through to the component's root element. See [Fallthrough Attributes](/guide/components/attrs) for more details.
+  `emits` seçeneğinin, hangi olay dinleyicilerinin yerel DOM olay dinleyicilerinden ziyade bileşen olay dinleyicileri olarak kabul edildiğini etkilediğini unutmayın. Bildirilen olayların dinleyicileri, bileşenin `$attrs` nesnesinden kaldırılacak, bu nedenle bileşenin kök öğesine aktarılmayacaklardır. Daha fazla ayrıntı için [Geçiş Özellikleri](/guide/components/attrs) bölümüne bakın.
 
-- **Example**
+- **Örnek**
 
-  Array syntax:
+  Dizi sözdizimi:
 
   ```js
   export default {
@@ -412,20 +412,20 @@ Declare the custom events emitted by the component.
   }
   ```
 
-  Object syntax:
+  Nesne sözdizimi:
 
   ```js
   export default {
     emits: {
-      // no validation
+      // doğrulama yok
       click: null,
 
-      // with validation
+      // doğrulama ile
       submit: (payload) => {
         if (payload.email && payload.password) {
           return true
         } else {
-          console.warn(`Invalid submit event payload!`)
+          console.warn(`Geçersiz gönder olay yükü!`)
           return false
         }
       }
@@ -433,15 +433,15 @@ Declare the custom events emitted by the component.
   }
   ```
 
-- **See also**
-  - [Guide - Fallthrough Attributes](/guide/components/attrs)
-  - [Guide - Typing Component Emits](/guide/typescript/options-api#typing-component-emits) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - Geçiş Özellikleri](/guide/components/attrs)
+  - [Rehber - Bileşen Emit'lerini Türlendirme](/guide/typescript/options-api#typing-component-emits) <sup class="vt-badge ts" />
 
 ## expose {#expose}
 
-Declare exposed public properties when the component instance is accessed by a parent via template refs.
+Bileşen örneğine bir üst öğe tarafından şablon referansları aracılığıyla erişildiğinde gösterilen genel özellikleri bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -449,19 +449,19 @@ Declare exposed public properties when the component instance is accessed by a p
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  By default, a component instance exposes all instance properties to the parent when accessed via `$parent`, `$root`, or template refs. This can be undesirable, since a component most likely has internal state or methods that should be kept private to avoid tight coupling.
+  Varsayılan olarak, bir bileşen örneği, `$parent`, `$root` veya şablon referansları aracılığıyla erişildiğinde tüm örnek özelliklerini üst öğeye gösterir. Bir bileşenin, sıkı bağlanmayı önlemek için özel tutulması gereken dahili durumu veya metotları olduğundan, bu istenmeyen bir durum olabilir.
 
-  The `expose` option expects a list of property name strings. When `expose` is used, only the properties explicitly listed will be exposed on the component's public instance.
+  `expose` seçeneği, bir özellik adı stringi listesi bekler. `expose` kullanıldığında, bileşenin genel örneğinde yalnızca açıkça listelenen özellikler gösterilecektir.
 
-  `expose` only affects user-defined properties - it does not filter out built-in component instance properties.
+  `expose`, yalnızca kullanıcı tanımlı özellikleri etkiler; yerleşik bileşen örneği özelliklerini filtrelemez.
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
-    // only `publicMethod` will be available on the public instance
+    // yalnızca `publicMethod` genel örnekte kullanılabilir olacaktır
     expose: ['publicMethod'],
     methods: {
       publicMethod() {

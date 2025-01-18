@@ -1,14 +1,14 @@
-# Utility Types {#utility-types}
+# Yardımcı Türler {#utility-types}
 
 :::info
-This page only lists a few commonly used utility types that may need explanation for their usage. For a full list of exported types, consult the [source code](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/index.ts#L131).
+Bu sayfa yalnızca kullanımları için açıklamaya ihtiyaç duyabilecek yaygın olarak kullanılan birkaç yardımcı türü listeler. Dışa aktarılan türlerin tam listesi için [kaynak koduna](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/index.ts#L131) bakın.
 :::
 
 ## PropType\<T> {#proptype-t}
 
-Used to annotate a prop with more advanced types when using runtime props declarations.
+Çalışma zamanı prop bildirimleri kullanılırken bir prop'u daha gelişmiş türlerle açıklamak için kullanılır.
 
-- **Example**
+- **Örnek**
 
   ```ts
   import type { PropType } from 'vue'
@@ -22,7 +22,7 @@ Used to annotate a prop with more advanced types when using runtime props declar
   export default {
     props: {
       book: {
-        // provide more specific type to `Object`
+        // `Object`'e daha özel bir tür sağla
         type: Object as PropType<Book>,
         required: true
       }
@@ -30,27 +30,27 @@ Used to annotate a prop with more advanced types when using runtime props declar
   }
   ```
 
-- **See also** [Guide - Typing Component Props](/guide/typescript/options-api#typing-component-props)
+- **Ayrıca bakınız** [Rehber - Bileşen Prop'larını Türlendirme](/guide/typescript/options-api#typing-component-props)
 
 ## MaybeRef\<T> {#mayberef}
 
-- Only supported in 3.3+
+- Yalnızca 3.3+ sürümünde desteklenir
 
-Alias for `T | Ref<T>`. Useful for annotating arguments of [Composables](/guide/reusability/composables.html).
+`T | Ref<T>` için takma ad. [Composable'ların](/guide/reusability/composables.html) argümanlarını açıklamak için kullanışlıdır.
 
 ## MaybeRefOrGetter\<T> {#maybereforgetter}
 
-- Only supported in 3.3+
+- Yalnızca 3.3+ sürümünde desteklenir
 
-Alias for `T | Ref<T> | (() => T)`. Useful for annotating arguments of [Composables](/guide/reusability/composables.html).
+`T | Ref<T> | (() => T)` için takma ad. [Composable'ların](/guide/reusability/composables.html) argümanlarını açıklamak için kullanışlıdır.
 
 ## ExtractPropTypes\<T> {#extractproptypes}
 
-Extract prop types from a runtime props options object. The extracted types are internal facing - i.e. the resolved props received by the component. This means boolean props and props with default values are always defined, even if they are not required.
+Bir çalışma zamanı prop seçenekleri nesnesinden prop türlerini çıkarın. Çıkarılan türler içe dönüktür; yani bileşen tarafından alınan çözümlenmiş prop'lar. Bu, boolean prop'ların ve varsayılan değerlere sahip prop'ların gerekli olmasalar bile her zaman tanımlandığı anlamına gelir.
 
-To extract public facing props, i.e. props that the parent is allowed to pass, use [`ExtractPublicPropTypes`](#extractpublicproptypes).
+Genel kullanıma dönük prop'ları, yani üst öğenin geçirmesine izin verilen prop'ları çıkarmak için [`ExtractPublicPropTypes`](#extractpublicproptypes) kullanın.
 
-- **Example**
+- **Örnek**
 
   ```ts
   const propsOptions = {
@@ -77,11 +77,11 @@ To extract public facing props, i.e. props that the parent is allowed to pass, u
 
 ## ExtractPublicPropTypes\<T> {#extractpublicproptypes}
 
-- Only supported in 3.3+
+- Yalnızca 3.3+ sürümünde desteklenir
 
-Extract prop types from a runtime props options object. The extracted types are public facing - i.e. the props that the parent is allowed to pass.
+Bir çalışma zamanı prop seçenekleri nesnesinden prop türlerini çıkarın. Çıkarılan türler genel kullanıma yöneliktir; yani üst öğenin geçirmesine izin verilen prop'lar.
 
-- **Example**
+- **Örnek**
 
   ```ts
   const propsOptions = {
@@ -108,9 +108,9 @@ Extract prop types from a runtime props options object. The extracted types are 
 
 ## ComponentCustomProperties {#componentcustomproperties}
 
-Used to augment the component instance type to support custom global properties.
+Özel genel özellikleri desteklemek için bileşen örneği türünü artırmak için kullanılır.
 
-- **Example**
+- **Örnek**
 
   ```ts
   import axios from 'axios'
@@ -124,16 +124,16 @@ Used to augment the component instance type to support custom global properties.
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  Artırmalar, bir modül `.ts` veya `.d.ts` dosyasına yerleştirilmelidir. Daha fazla ayrıntı için [Tür Artırma Yerleşimi](/guide/typescript/options-api#augmenting-global-properties) bölümüne bakın.
   :::
 
-- **See also** [Guide - Augmenting Global Properties](/guide/typescript/options-api#augmenting-global-properties)
+- **Ayrıca bakınız** [Rehber - Global Özellikleri Artırma](/guide/typescript/options-api#augmenting-global-properties)
 
 ## ComponentCustomOptions {#componentcustomoptions}
 
-Used to augment the component options type to support custom options.
+Özel seçenekleri desteklemek için bileşen seçenekleri türünü artırmak için kullanılır.
 
-- **Example**
+- **Örnek**
 
   ```ts
   import { Route } from 'vue-router'
@@ -146,16 +146,16 @@ Used to augment the component options type to support custom options.
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  Artırmalar, bir modül `.ts` veya `.d.ts` dosyasına yerleştirilmelidir. Daha fazla ayrıntı için [Tür Artırma Yerleşimi](/guide/typescript/options-api#augmenting-global-properties) bölümüne bakın.
   :::
 
-- **See also** [Guide - Augmenting Custom Options](/guide/typescript/options-api#augmenting-custom-options)
+- **Ayrıca bakınız** [Rehber - Özel Seçenekleri Artırma](/guide/typescript/options-api#augmenting-custom-options)
 
 ## ComponentCustomProps {#componentcustomprops}
 
-Used to augment allowed TSX props in order to use non-declared props on TSX elements.
+TSX öğelerinde bildirilmemiş prop'ları kullanmak için izin verilen TSX prop'larını artırmak için kullanılır.
 
-- **Example**
+- **Örnek**
 
   ```ts
   declare module 'vue' {
@@ -168,21 +168,21 @@ Used to augment allowed TSX props in order to use non-declared props on TSX elem
   ```
 
   ```tsx
-  // now works even if hello is not a declared prop
-  <MyComponent hello="world" />
+  // artık hello bildirilen bir prop olmasa bile çalışıyor
+  <MyComponent hello="dünya" />
   ```
 
   :::tip
-  Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+  Artırmalar, bir modül `.ts` veya `.d.ts` dosyasına yerleştirilmelidir. Daha fazla ayrıntı için [Tür Artırma Yerleşimi](/guide/typescript/options-api#augmenting-global-properties) bölümüne bakın.
   :::
 
 ## CSSProperties {#cssproperties}
 
-Used to augment allowed values in style property bindings.
+Stil özelliği bağlamalarında izin verilen değerleri artırmak için kullanılır.
 
-- **Example**
+- **Örnek**
 
-  Allow any custom CSS property
+  Herhangi bir özel CSS özelliğine izin verin
 
   ```ts
   declare module 'vue' {
@@ -201,11 +201,11 @@ Used to augment allowed values in style property bindings.
   ```
 
 :::tip
-Augmentations must be placed in a module `.ts` or `.d.ts` file. See [Type Augmentation Placement](/guide/typescript/options-api#augmenting-global-properties) for more details.
+Artırmalar, bir modül `.ts` veya `.d.ts` dosyasına yerleştirilmelidir. Daha fazla ayrıntı için [Tür Artırma Yerleşimi](/guide/typescript/options-api#augmenting-global-properties) bölümüne bakın.
 :::
 
-:::info See also
-SFC `<style>` tags support linking CSS values to dynamic component state using the `v-bind` CSS function. This allows for custom properties without type augmentation.
+:::info Ayrıca bakınız
+SFC `<style>` etiketleri, CSS değerlerini `v-bind` CSS fonksiyonunu kullanarak dinamik bileşen durumuna bağlamayı destekler. Bu, tür artırmaya gerek kalmadan özel özelliklere izin verir.
 
-- [v-bind() in CSS](/api/sfc-css-features#v-bind-in-css)
+- [CSS'de v-bind()](/api/sfc-css-features#v-bind-in-css)
   :::

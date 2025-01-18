@@ -1,26 +1,26 @@
-# Accessibility {#accessibility}
+# Erişilebilirlik {#erişilebilirlik}
 
-Web accessibility (also known as a11y) refers to the practice of creating websites that can be used by anyone — be that a person with a disability, a slow connection, outdated or broken hardware or simply someone in an unfavorable environment. For example, adding subtitles to a video would help both your deaf and hard-of-hearing users and your users who are in a loud environment and can't hear their phone. Similarly, making sure your text isn't too low contrast will help both your low-vision users and your users who are trying to use their phone in bright sunlight.
+Web erişilebilirliği (a11y olarak da bilinir), engelli bir kişi, yavaş bir bağlantı, eski veya bozuk donanım veya sadece olumsuz bir ortamda bulunan biri olsun, herkes tarafından kullanılabilen web siteleri oluşturma uygulamasına atıfta bulunur. Örneğin, bir videoya altyazı eklemek hem sağır ve işitme güçlüğü olan kullanıcılarınıza hem de gürültülü bir ortamda bulunan ve telefonlarını duyamayan kullanıcılarınıza yardımcı olacaktır. Benzer şekilde, metninizin çok düşük kontrastlı olmadığından emin olmak, hem az gören kullanıcılarınıza hem de parlak güneş ışığında telefonlarını kullanmaya çalışan kullanıcılarınıza yardımcı olacaktır.
 
-Ready to start but aren’t sure where?
+Başlamaya hazır ama nereden başlayacağınızı bilmiyor musunuz?
 
-Checkout the [Planning and managing web accessibility guide](https://www.w3.org/WAI/planning-and-managing/) provided by [World Wide Web Consortium (W3C)](https://www.w3.org/)
+[World Wide Web Consortium (W3C)](https://www.w3.org/) tarafından sağlanan [Web erişilebilirliğini planlama ve yönetme kılavuzuna](https://www.w3.org/WAI/planning-and-managing/) göz atın.
 
-## Skip link {#skip-link}
+## Atla bağlantısı {#atla-bağlantısı}
 
-You should add a link at the top of each page that goes directly to the main content area so users can skip content that is repeated on multiple Web pages.
+Kullanıcıların birden fazla web sayfasında tekrarlanan içeriği atlaması için her sayfanın en üstüne doğrudan ana içerik alanına giden bir bağlantı eklemelisiniz.
 
-Typically this is done on the top of `App.vue` as it will be the first focusable element on all your pages:
+Tipik olarak bu, tüm sayfalarınızda ilk odaklanılabilir öğe olacağından `App.vue` üstünde yapılır:
 
 ```vue-html
 <ul class="skip-links">
   <li>
-    <a href="#main" ref="skipLink" class="skip-link">Skip to main content</a>
+    <a href="#main" ref="skipLink" class="skip-link">Ana içeriğe atla</a>
   </li>
 </ul>
 ```
 
-To hide the link unless it is focused, you can add the following style:
+Odaklanılmadığı sürece bağlantıyı gizlemek için aşağıdaki stili ekleyebilirsiniz:
 
 ```css
 .skip-link {
@@ -40,7 +40,7 @@ To hide the link unless it is focused, you can add the following style:
 }
 ```
 
-Once a user changes route, bring focus back to the skip link. This can be achieved by calling focus on the skip link's template ref (assuming usage of `vue-router`):
+Bir kullanıcı rota değiştirdiğinde, odağı tekrar atla bağlantısına getirin. Bu, atla bağlantısının şablon referansında `focus` çağrılarak elde edilebilir ( `vue-router` kullanımı varsayılarak):
 
 <div class="options-api">
 
@@ -78,62 +78,62 @@ watch(
 
 </div>
 
-[Read documentation on skip link to main content](https://www.w3.org/WAI/WCAG21/Techniques/general/G1.html)
+[Ana içeriğe atlama bağlantısı hakkındaki belgelere göz atın](https://www.w3.org/WAI/WCAG21/Techniques/general/G1.html)
 
-## Content Structure {#content-structure}
+## İçerik Yapısı {#içerik-yapısı}
 
-One of the most important pieces of accessibility is making sure that design can support accessible implementation. Design should consider not only color contrast, font selection, text sizing, and language, but also how the content is structured in the application.
+Erişilebilirliğin en önemli parçalarından biri, tasarımın erişilebilir uygulamayı destekleyebildiğinden emin olmaktır. Tasarım, yalnızca renk kontrastını, yazı tipi seçimini, metin boyutlandırmasını ve dili değil, aynı zamanda içeriğin uygulamada nasıl yapılandırıldığını da dikkate almalıdır.
 
-### Headings {#headings}
+### Başlıklar {#başlıklar}
 
-Users can navigate an application through headings. Having descriptive headings for every section of your application makes it easier for users to predict the content of each section. When it comes to headings, there are a couple of recommended accessibility practices:
+Kullanıcılar, bir uygulamada başlıklar aracılığıyla gezinebilir. Uygulamanızın her bölümü için açıklayıcı başlıklar kullanmak, kullanıcıların her bölümün içeriğini tahmin etmesini kolaylaştırır. Başlıklar söz konusu olduğunda, önerilen birkaç erişilebilirlik uygulaması vardır:
 
-- Nest headings in their ranking order: `<h1>` - `<h6>`
-- Don’t skip headings within a section
-- Use actual heading tags instead of styling text to give the visual appearance of headings
+- Başlıkları sıralama düzenine göre iç içe yerleştirin: `<h1>` - `<h6>`
+- Bir bölüm içinde başlıkları atlamayın
+- Başlıkların görsel görünümünü vermek için metni stillendirmek yerine gerçek başlık etiketlerini kullanın
 
-[Read more about headings](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-descriptive.html)
+[Başlıklar hakkında daha fazla bilgi edinin](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-descriptive.html)
 
 ```vue-html
 <main role="main" aria-labelledby="main-title">
-  <h1 id="main-title">Main title</h1>
+  <h1 id="main-title">Ana başlık</h1>
   <section aria-labelledby="section-title-1">
-    <h2 id="section-title-1"> Section Title </h2>
-    <h3>Section Subtitle</h3>
-    <!-- Content -->
+    <h2 id="section-title-1"> Bölüm Başlığı </h2>
+    <h3>Bölüm Alt Başlığı</h3>
+    <!-- İçerik -->
   </section>
   <section aria-labelledby="section-title-2">
-    <h2 id="section-title-2"> Section Title </h2>
-    <h3>Section Subtitle</h3>
-    <!-- Content -->
-    <h3>Section Subtitle</h3>
-    <!-- Content -->
+    <h2 id="section-title-2"> Bölüm Başlığı </h2>
+    <h3>Bölüm Alt Başlığı</h3>
+    <!-- İçerik -->
+    <h3>Bölüm Alt Başlığı</h3>
+    <!-- İçerik -->
   </section>
 </main>
 ```
 
-### Landmarks {#landmarks}
+### İşaretler {#işaretler}
 
-[Landmarks](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/landmark_role) provide programmatic access to sections within an application. Users who rely on assistive technology can navigate to each section of the application and skip over content. You can use [ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) to help you achieve this.
+[İşaretler](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/landmark_role), bir uygulama içindeki bölümlere programlı erişim sağlar. Yardımcı teknolojiye güvenen kullanıcılar, uygulamanın her bölümüne gidebilir ve içeriği atlayabilir. Bunu başarmak için [ARIA rollerini](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) kullanabilirsiniz.
 
-| HTML            | ARIA Role            | Landmark Purpose                                                                                                 |
-| --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| header          | role="banner"        | Prime heading: title of the page                                                                                 |
-| nav             | role="navigation"    | Collection of links suitable for use when navigating the document or related documents                           |
-| main            | role="main"          | The main or central content of the document.                                                                     |
-| footer          | role="contentinfo"   | Information about the parent document: footnotes/copyrights/links to privacy statement                           |
-| aside           | role="complementary" | Supports the main content, yet is separated and meaningful on its own content                                    |
-| search          | role="search"        | This section contains the search functionality for the application                                               |
-| form            | role="form"          | Collection of form-associated elements                                                                           |
-| section         | role="region"        | Content that is relevant and that users will likely want to navigate to. Label must be provided for this element |
+| HTML            | ARIA Rolü            | İşaret Amacı                                                                                                   |
+| --------------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| header          | role="banner"        | Birincil başlık: sayfanın başlığı                                                                                 |
+| nav             | role="navigation"    | Belgede veya ilgili belgelerde gezinirken kullanıma uygun bağlantı koleksiyonu                                  |
+| main            | role="main"          | Belgenin ana veya merkezi içeriği.                                                                              |
+| footer          | role="contentinfo"   | Üst belge hakkında bilgiler: dipnotlar/telif hakları/gizlilik beyanına bağlantılar                                |
+| aside           | role="complementary" | Ana içeriği destekler ancak kendi başına ayrılmış ve anlamlıdır                                                   |
+| search          | role="search"        | Bu bölüm, uygulama için arama işlevselliğini içerir                                                            |
+| form            | role="form"          | Formla ilişkili öğelerin koleksiyonu                                                                            |
+| section         | role="region"        | İlgili olan ve kullanıcıların gitmek isteyeceği içerik. Bu öğe için etiket sağlanmalıdır                        |
 
-[Read more about landmarks](https://www.w3.org/TR/wai-aria-1.2/#landmark_roles)
+[İşaretler hakkında daha fazla bilgi edinin](https://www.w3.org/TR/wai-aria-1.2/#landmark_roles)
 
-## Semantic Forms {#semantic-forms}
+## Semantik Formlar {#semantik-formlar}
 
-When creating a form, you can use the following elements: `<form>`, `<label>`, `<input>`, `<textarea>`, and `<button>`
+Bir form oluştururken, aşağıdaki öğeleri kullanabilirsiniz: `<form>`, `<label>`, `<input>`, `<textarea>` ve `<button>`
 
-Labels are typically placed on top or to the left of the form fields:
+Etiketler tipik olarak form alanlarının üstüne veya soluna yerleştirilir:
 
 ```vue-html
 <form action="/dataCollectionLocation" method="post" autocomplete="on">
@@ -146,44 +146,44 @@ Labels are typically placed on top or to the left of the form fields:
       v-model="item.value"
     />
   </div>
-  <button type="submit">Submit</button>
+  <button type="submit">Gönder</button>
 </form>
 ```
 
-Notice how you can include `autocomplete='on'` on the form element and it will apply to all inputs in your form. You can also set different [values for autocomplete attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) for each input.
+Form öğesine `autocomplete='on'` ifadesini nasıl ekleyebileceğinize ve bunun formunuzdaki tüm girişlere nasıl uygulanacağına dikkat edin. Her giriş için [autocomplete özniteliği için farklı değerler](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) de ayarlayabilirsiniz.
 
-### Labels {#labels}
+### Etiketler {#etiketler}
 
-Provide labels to describe the purpose of all form control; linking `for` and `id`:
+Tüm form kontrollerinin amacını açıklamak için etiketler sağlayın; `for` ve `id` bağlantısını yapın:
 
 ```vue-html
-<label for="name">Name: </label>
+<label for="name">Ad: </label>
 <input type="text" name="name" id="name" v-model="name" />
 ```
 
-If you inspect this element in your Chrome DevTools and open the Accessibility tab inside the Elements tab, you will see how the input gets its name from the label:
+Bu öğeyi Chrome Geliştirici Araçlarınızda incelerseniz ve Öğeler sekmesinin içindeki Erişilebilirlik sekmesini açarsanız, girişin adını etiketten nasıl aldığını göreceksiniz:
 
-![Chrome Developer Tools showing input accessible name from label](./images/AccessibleLabelChromeDevTools.png)
+![Etiketten giriş erişilebilir adını gösteren Chrome Geliştirici Araçları](./images/AccessibleLabelChromeDevTools.png)
 
-:::warning Warning:
-Though you might have seen labels wrapping the input fields like this:
+:::warning Uyarı:
+Şöyle etiketlerin giriş alanlarını sardığını görmüş olabilirsiniz:
 
 ```vue-html
 <label>
-  Name:
+  Ad:
   <input type="text" name="name" id="name" v-model="name" />
 </label>
 ```
 
-Explicitly setting the labels with a matching id is better supported by assistive technology.
+Eşleşen bir kimliğe sahip etiketleri açıkça ayarlamak, yardımcı teknoloji tarafından daha iyi desteklenir.
 :::
 
 #### `aria-label` {#aria-label}
 
-You can also give the input an accessible name with [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label).
+Girişe [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label) ile erişilebilir bir ad da verebilirsiniz.
 
 ```vue-html
-<label for="name">Name: </label>
+<label for="name">Ad: </label>
 <input
   type="text"
   name="name"
@@ -193,13 +193,13 @@ You can also give the input an accessible name with [`aria-label`](https://devel
 />
 ```
 
-Feel free to inspect this element in Chrome DevTools to see how the accessible name has changed:
+Erişilebilir adın nasıl değiştiğini görmek için bu öğeyi Chrome Geliştirici Araçları'nda incelemekten çekinmeyin:
 
-![Chrome Developer Tools showing input accessible name from aria-label](./images/AccessibleARIAlabelDevTools.png)
+![aria-label'dan giriş erişilebilir adını gösteren Chrome Geliştirici Araçları](./images/AccessibleARIAlabelDevTools.png)
 
 #### `aria-labelledby` {#aria-labelledby}
 
-Using [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby) is similar to `aria-label` except it is used if the label text is visible on screen. It is paired to other elements by their `id` and you can link multiple `id`s:
+[`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby) kullanmak, etiket metni ekranda görünüyorsa kullanılması dışında `aria-label` ile benzerdir. Diğer öğelerle `id`'leri aracılığıyla eşleştirilir ve birden fazla `id` bağlayabilirsiniz:
 
 ```vue-html
 <form
@@ -208,9 +208,9 @@ Using [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibi
   method="post"
   autocomplete="on"
 >
-  <h1 id="billing">Billing</h1>
+  <h1 id="billing">Faturalandırma</h1>
   <div class="form-item">
-    <label for="name">Name: </label>
+    <label for="name">Ad: </label>
     <input
       type="text"
       name="name"
@@ -219,15 +219,15 @@ Using [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibi
       aria-labelledby="billing name"
     />
   </div>
-  <button type="submit">Submit</button>
+  <button type="submit">Gönder</button>
 </form>
 ```
 
-![Chrome Developer Tools showing input accessible name from aria-labelledby](./images/AccessibleARIAlabelledbyDevTools.png)
+![aria-labelledby'den giriş erişilebilir adını gösteren Chrome Geliştirici Araçları](./images/AccessibleARIAlabelledbyDevTools.png)
 
 #### `aria-describedby` {#aria-describedby}
 
-[aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby) is used the same way as `aria-labelledby` except provides a description with additional information that the user might need. This can be used to describe the criteria for any input:
+[aria-describedby](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby), kullanıcının ihtiyaç duyabileceği ek bilgilerle bir açıklama sağlaması dışında `aria-labelledby` ile aynı şekilde kullanılır. Bu, herhangi bir girdi için ölçütleri açıklamak için kullanılabilir:
 
 ```vue-html
 <form
@@ -236,9 +236,9 @@ Using [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibi
   method="post"
   autocomplete="on"
 >
-  <h1 id="billing">Billing</h1>
+  <h1 id="billing">Faturalandırma</h1>
   <div class="form-item">
-    <label for="name">Full Name: </label>
+    <label for="name">Tam Ad: </label>
     <input
       type="text"
       name="name"
@@ -247,23 +247,23 @@ Using [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibi
       aria-labelledby="billing name"
       aria-describedby="nameDescription"
     />
-    <p id="nameDescription">Please provide first and last name.</p>
+    <p id="nameDescription">Lütfen ad ve soyad girin.</p>
   </div>
-  <button type="submit">Submit</button>
+  <button type="submit">Gönder</button>
 </form>
 ```
 
-You can see the description by inspecting Chrome DevTools:
+Chrome Geliştirici Araçları'nı inceleyerek açıklamayı görebilirsiniz:
 
-![Chrome Developer Tools showing input accessible name from aria-labelledby and description with aria-describedby](./images/AccessibleARIAdescribedby.png)
+![aria-labelledby'den giriş erişilebilir adını ve aria-describedby ile açıklamayı gösteren Chrome Geliştirici Araçları](./images/AccessibleARIAdescribedby.png)
 
-### Placeholder {#placeholder}
+### Yer Tutucu {#yer-tutucu}
 
-Avoid using placeholders as they can confuse many users.
+Çok sayıda kullanıcının kafasını karıştırabileceği için yer tutucuları kullanmaktan kaçının.
 
-One of the issues with placeholders is that they don't meet the [color contrast criteria](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) by default; fixing the color contrast makes the placeholder look like pre-populated data in the input fields. Looking at the following example, you can see that the Last Name placeholder which meets the color contrast criteria looks like pre-populated data:
+Yer tutucularla ilgili sorunlardan biri, varsayılan olarak [renk kontrastı kriterlerini](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) karşılamamalarıdır; renk kontrastını düzeltmek, yer tutucunun giriş alanlarında önceden doldurulmuş veriler gibi görünmesini sağlar. Aşağıdaki örneğe bakıldığında, renk kontrastı kriterlerini karşılayan Soyadı yer tutucusunun önceden doldurulmuş veriler gibi göründüğünü görebilirsiniz:
 
-![Accessible placeholder](./images/AccessiblePlaceholder.png)
+![Erişilebilir yer tutucu](./images/AccessiblePlaceholder.png)
 
 ```vue-html
 <form
@@ -282,7 +282,7 @@ One of the issues with placeholders is that they don't meet the [color contrast 
       :placeholder="item.placeholder"
     />
   </div>
-  <button type="submit">Submit</button>
+  <button type="submit">Gönder</button>
 </form>
 ```
 
@@ -306,55 +306,54 @@ One of the issues with placeholders is that they don't meet the [color contrast 
 }
 ```
 
-It is best to provide all the information the user needs to fill out forms outside any inputs.
+Kullanıcının formları doldurmak için ihtiyaç duyduğu tüm bilgileri herhangi bir girişin dışında sağlamak en iyisidir.
 
-### Instructions {#instructions}
+### Talimatlar {#talimatlar}
 
-When adding instructions for your input fields, make sure to link it correctly to the input.
-You can provide additional instructions and bind multiple ids inside an [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby). This allows for more flexible design.
+Giriş alanlarınız için talimatlar eklerken, girişe doğru şekilde bağladığınızdan emin olun. Ek talimatlar sağlayabilir ve birden fazla kimliği bir [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby) içinde bağlayabilirsiniz. Bu, daha esnek bir tasarıma olanak tanır.
 
 ```vue-html
 <fieldset>
-  <legend>Using aria-labelledby</legend>
-  <label id="date-label" for="date">Current Date: </label>
+  <legend>aria-labelledby kullanma</legend>
+  <label id="date-label" for="date">Geçerli Tarih: </label>
   <input
     type="date"
     name="date"
     id="date"
     aria-labelledby="date-label date-instructions"
   />
-  <p id="date-instructions">MM/DD/YYYY</p>
+  <p id="date-instructions">GG/AA/YYYY</p>
 </fieldset>
 ```
 
-Alternatively, you can attach the instructions to the input with [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby):
+Alternatif olarak, talimatları [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby) ile girişe ekleyebilirsiniz:
 
 ```vue-html
 <fieldset>
-  <legend>Using aria-describedby</legend>
-  <label id="dob" for="dob">Date of Birth: </label>
+  <legend>aria-describedby kullanma</legend>
+  <label id="dob" for="dob">Doğum Tarihi: </label>
   <input type="date" name="dob" id="dob" aria-describedby="dob-instructions" />
-  <p id="dob-instructions">MM/DD/YYYY</p>
+  <p id="dob-instructions">GG/AA/YYYY</p>
 </fieldset>
 ```
 
-### Hiding Content {#hiding-content}
+### İçeriği Gizleme {#içeriği-gizleme}
 
-Usually it is not recommended to visually hide labels, even if the input has an accessible name. However, if the functionality of the input can be understood with surrounding content, then we can hide the visual label.
+Girişin erişilebilir bir adı olsa bile, etiketleri görsel olarak gizlemek genellikle önerilmez. Ancak, girişin işlevi çevreleyen içerikle anlaşılabiliyorsa, görsel etiketi gizleyebiliriz.
 
-Let's look at this search field:
+Bu arama alanına bir bakalım:
 
 ```vue-html
 <form role="search">
-  <label for="search" class="hidden-visually">Search: </label>
+  <label for="search" class="hidden-visually">Ara: </label>
   <input type="text" name="search" id="search" v-model="search" />
-  <button type="submit">Search</button>
+  <button type="submit">Ara</button>
 </form>
 ```
 
-We can do this because the search button will help visual users identify the purpose of the input field.
+Bunu yapabiliriz çünkü arama düğmesi, görsel kullanıcıların giriş alanının amacını belirlemesine yardımcı olacaktır.
 
-We can use CSS to visually hide elements but keep them available for assistive technology:
+Öğeleri görsel olarak gizlemek, ancak yardımcı teknoloji için kullanılabilir tutmak için CSS kullanabiliriz:
 
 ```css
 .hidden-visually {
@@ -372,146 +371,145 @@ We can use CSS to visually hide elements but keep them available for assistive t
 
 #### `aria-hidden="true"` {#aria-hidden-true}
 
-Adding `aria-hidden="true"` will hide the element from assistive technology but leave it visually available for other users. Do not use it on focusable elements, purely on decorative, duplicated or offscreen content.
+`aria-hidden="true"` eklemek, öğeyi yardımcı teknolojiden gizler, ancak diğer kullanıcılar için görsel olarak kullanılabilir durumda bırakır. Odaklanabilir öğelerde, yalnızca dekoratif, çoğaltılmış veya ekran dışı içerikte kullanmayın.
 
 ```vue-html
-<p>This is not hidden from screen readers.</p>
-<p aria-hidden="true">This is hidden from screen readers.</p>
+<p>Bu, ekran okuyuculardan gizlenmemiştir.</p>
+<p aria-hidden="true">Bu, ekran okuyuculardan gizlenmiştir.</p>
 ```
 
-### Buttons {#buttons}
+### Düğmeler {#düğmeler}
 
-When using buttons inside a form, you must set the type to prevent submitting the form.
-You can also use an input to create buttons:
+Bir form içinde düğmeler kullanırken, formu göndermeyi önlemek için türü ayarlamanız gerekir. Düğmeler oluşturmak için bir giriş de kullanabilirsiniz:
 
 ```vue-html
 <form action="/dataCollectionLocation" method="post" autocomplete="on">
-  <!-- Buttons -->
-  <button type="button">Cancel</button>
-  <button type="submit">Submit</button>
+  <!-- Düğmeler -->
+  <button type="button">İptal</button>
+  <button type="submit">Gönder</button>
 
-  <!-- Input buttons -->
-  <input type="button" value="Cancel" />
-  <input type="submit" value="Submit" />
+  <!-- Giriş düğmeleri -->
+  <input type="button" value="İptal" />
+  <input type="submit" value="Gönder" />
 </form>
 ```
 
-### Functional Images {#functional-images}
+### İşlevsel Görüntüler {#işlevsel-görüntüler}
 
-You can use this technique to create functional images.
+İşlevsel görüntüler oluşturmak için bu tekniği kullanabilirsiniz.
 
-- Input fields
+- Giriş alanları
 
-  - These images will act as a submit type button on forms
+  - Bu görüntüler, formlarda bir gönderme türü düğmesi olarak işlev görecektir
 
   ```vue-html
   <form role="search">
-    <label for="search" class="hidden-visually">Search: </label>
+    <label for="search" class="hidden-visually">Ara: </label>
     <input type="text" name="search" id="search" v-model="search" />
     <input
       type="image"
       class="btnImg"
       src="https://img.icons8.com/search"
-      alt="Search"
+      alt="Ara"
     />
   </form>
   ```
 
-- Icons
+- Simgeler
 
 ```vue-html
 <form role="search">
-  <label for="searchIcon" class="hidden-visually">Search: </label>
+  <label for="searchIcon" class="hidden-visually">Ara: </label>
   <input type="text" name="searchIcon" id="searchIcon" v-model="searchIcon" />
   <button type="submit">
     <i class="fas fa-search" aria-hidden="true"></i>
-    <span class="hidden-visually">Search</span>
+    <span class="hidden-visually">Ara</span>
   </button>
 </form>
 ```
 
-## Standards {#standards}
+## Standartlar {#standartlar}
 
-The World Wide Web Consortium (W3C) Web Accessibility Initiative (WAI) develops web accessibility standards for the different components:
+World Wide Web Consortium (W3C) Web Erişilebilirlik Girişimi (WAI), farklı bileşenler için web erişilebilirlik standartları geliştirir:
 
-- [User Agent Accessibility Guidelines (UAAG)](https://www.w3.org/WAI/standards-guidelines/uaag/)
-  - web browsers and media players, including some aspects of assistive technologies
-- [Authoring Tool Accessibility Guidelines (ATAG)](https://www.w3.org/WAI/standards-guidelines/atag/)
-  - authoring tools
-- [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-  - web content - used by developers, authoring tools, and accessibility evaluation tools
+- [Kullanıcı Aracısı Erişilebilirlik Yönergeleri (UAAG)](https://www.w3.org/WAI/standards-guidelines/uaag/)
+  - yardımcı teknolojilerin bazı yönleri de dahil olmak üzere web tarayıcıları ve medya oynatıcıları
+- [Yazma Aracı Erişilebilirlik Yönergeleri (ATAG)](https://www.w3.org/WAI/standards-guidelines/atag/)
+  - yazma araçları
+- [Web İçeriği Erişilebilirlik Yönergeleri (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+  - web içeriği - geliştiriciler, yazma araçları ve erişilebilirlik değerlendirme araçları tarafından kullanılır
 
-### Web Content Accessibility Guidelines (WCAG) {#web-content-accessibility-guidelines-wcag}
+### Web İçeriği Erişilebilirlik Yönergeleri (WCAG) {#web-içeriği-erişilebilirlik-yönergeleri-wcag}
 
-[WCAG 2.1](https://www.w3.org/TR/WCAG21/) extends on [WCAG 2.0](https://www.w3.org/TR/WCAG20/) and allows implementation of new technologies by addressing changes to the web. The W3C encourages use of the most current version of WCAG when developing or updating Web accessibility policies.
+[WCAG 2.1](https://www.w3.org/TR/WCAG21/), [WCAG 2.0](https://www.w3.org/TR/WCAG20/) üzerine genişler ve webdeki değişiklikleri ele alarak yeni teknolojilerin uygulanmasına olanak tanır. W3C, Web erişilebilirlik politikalarını geliştirirken veya güncellerken WCAG'nin en güncel sürümünün kullanılmasını teşvik eder.
 
-#### WCAG 2.1 Four Main Guiding Principles (abbreviated as POUR): {#wcag-2-1-four-main-guiding-principles-abbreviated-as-pour}
+#### WCAG 2.1 Dört Ana Yol Gösterici İlke (POUR olarak kısaltılmıştır): {#wcag-2-1-dört-ana-yol-gösterici-ilke-pour-olarak-kısaltılmıştır}
 
-- [Perceivable](https://www.w3.org/TR/WCAG21/#perceivable)
-  - Users must be able to perceive the information being presented
-- [Operable](https://www.w3.org/TR/WCAG21/#operable)
-  - Interface forms, controls, and navigation are operable
-- [Understandable](https://www.w3.org/TR/WCAG21/#understandable)
-  - Information and the operation of user interface must be understandable to all users
-- [Robust](https://www.w3.org/TR/WCAG21/#robust)
-  - Users must be able to access the content as technologies advance
+- [Algılanabilir](https://www.w3.org/TR/WCAG21/#perceivable)
+  - Kullanıcılar, sunulan bilgileri algılayabilmelidir
+- [İşletilebilir](https://www.w3.org/TR/WCAG21/#operable)
+  - Arayüz formları, kontrolleri ve navigasyon çalıştırılabilir
+- [Anlaşılabilir](https://www.w3.org/TR/WCAG21/#understandable)
+  - Bilgiler ve kullanıcı arayüzünün işleyişi tüm kullanıcılar tarafından anlaşılabilir olmalıdır
+- [Sağlam](https://www.w3.org/TR/WCAG21/#robust)
+  - Kullanıcılar, teknolojiler ilerledikçe içeriğe erişebilmelidir
 
-#### Web Accessibility Initiative – Accessible Rich Internet Applications (WAI-ARIA) {#web-accessibility-initiative-–-accessible-rich-internet-applications-wai-aria}
+#### Web Erişilebilirlik Girişimi – Erişilebilir Zengin İnternet Uygulamaları (WAI-ARIA) {#web-erişilebilirlik-girişimi-erişilebilir-zengin-internet-uygulamaları-wai-aria}
 
-W3C's WAI-ARIA provides guidance on how to build dynamic content and advanced user interface controls.
+W3C'nin WAI-ARIA'sı, dinamik içeriğin ve gelişmiş kullanıcı arayüzü kontrollerinin nasıl oluşturulacağına dair rehberlik sağlar.
 
-- [Accessible Rich Internet Applications (WAI-ARIA) 1.2](https://www.w3.org/TR/wai-aria-1.2/)
-- [WAI-ARIA Authoring Practices 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/)
+- [Erişilebilir Zengin İnternet Uygulamaları (WAI-ARIA) 1.2](https://www.w3.org/TR/wai-aria-1.2/)
+- [WAI-ARIA Yazma Uygulamaları 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/)
 
-## Resources {#resources}
+## Kaynaklar {#kaynaklar}
 
-### Documentation {#documentation}
+### Belgeler {#belgeler}
 
 - [WCAG 2.0](https://www.w3.org/TR/WCAG20/)
 - [WCAG 2.1](https://www.w3.org/TR/WCAG21/)
-- [Accessible Rich Internet Applications (WAI-ARIA) 1.2](https://www.w3.org/TR/wai-aria-1.2/)
-- [WAI-ARIA Authoring Practices 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/)
+- [Erişilebilir Zengin İnternet Uygulamaları (WAI-ARIA) 1.2](https://www.w3.org/TR/wai-aria-1.2/)
+- [WAI-ARIA Yazma Uygulamaları 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/)
 
-### Assistive Technologies {#assistive-technologies}
+### Yardımcı Teknolojiler {#yardımcı-teknolojiler}
 
-- Screen Readers
+- Ekran Okuyucular
   - [NVDA](https://www.nvaccess.org/download/)
   - [VoiceOver](https://www.apple.com/accessibility/mac/vision/)
   - [JAWS](https://www.freedomscientific.com/products/software/jaws/?utm_term=jaws%20screen%20reader&utm_source=adwords&utm_campaign=All+Products&utm_medium=ppc&hsa_tgt=kwd-394361346638&hsa_cam=200218713&hsa_ad=296201131673&hsa_kw=jaws%20screen%20reader&hsa_grp=52663682111&hsa_net=adwords&hsa_mt=e&hsa_src=g&hsa_acc=1684996396&hsa_ver=3&gclid=Cj0KCQjwnv71BRCOARIsAIkxW9HXKQ6kKNQD0q8a_1TXSJXnIuUyb65KJeTWmtS6BH96-5he9dsNq6oaAh6UEALw_wcB)
   - [ChromeVox](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en)
-- Zooming Tools
+- Zoom Araçları
   - [MAGic](https://www.freedomscientific.com/products/software/magic/)
   - [ZoomText](https://www.freedomscientific.com/products/software/zoomtext/)
   - [Magnifier](https://support.microsoft.com/en-us/help/11542/windows-use-magnifier-to-make-things-easier-to-see)
 
-### Testing {#testing}
+### Test {#test}
 
-- Automated Tools
+- Otomatik Araçlar
   - [Lighthouse](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk)
   - [WAVE](https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh)
   - [ARC Toolkit](https://chrome.google.com/webstore/detail/arc-toolkit/chdkkkccnlfncngelccgbgfmjebmkmce?hl=en-US)
-- Color Tools
-  - [WebAim Color Contrast](https://webaim.org/resources/contrastchecker/)
-  - [WebAim Link Color Contrast](https://webaim.org/resources/linkcontrastchecker)
-- Other Helpful Tools
+- Renk Araçları
+  - [WebAim Renk Kontrastı](https://webaim.org/resources/contrastchecker/)
+  - [WebAim Bağlantı Renk Kontrastı](https://webaim.org/resources/linkcontrastchecker)
+- Diğer Yardımcı Araçlar
   - [HeadingMap](https://chrome.google.com/webstore/detail/headingsmap/flbjommegcjonpdmenkdiocclhjacmbi?hl=en…)
   - [Color Oracle](https://colororacle.org)
   - [NerdeFocus](https://chrome.google.com/webstore/detail/nerdefocus/lpfiljldhgjecfepfljnbjnbjfhennpd?hl=en-US…)
   - [Visual Aria](https://chrome.google.com/webstore/detail/visual-aria/lhbmajchkkmakajkjenkchhnhbadmhmk?hl=en-US)
-  - [Silktide Website Accessibility Simulator](https://chrome.google.com/webstore/detail/silktide-website-accessib/okcpiimdfkpkjcbihbmhppldhiebhhaf?hl=en-US)
+  - [Silktide Web Sitesi Erişilebilirlik Simülatörü](https://chrome.google.com/webstore/detail/silktide-website-accessib/okcpiimdfkpkjcbihbmhppldhiebhhaf?hl=en-US)
 
-### Users {#users}
+### Kullanıcılar {#kullanıcılar}
 
-The World Health Organization estimates that 15% of the world's population has some form of disability, 2-4% of them severely so. That is an estimated 1 billion people worldwide; making people with disabilities the largest minority group in the world.
+Dünya Sağlık Örgütü, dünya nüfusunun %15'inin bir tür engelliliğe sahip olduğunu ve bunların %2-4'ünün ciddi şekilde engelli olduğunu tahmin ediyor. Bu, dünya çapında tahmini 1 milyar kişidir; bu da engelli insanları dünyadaki en büyük azınlık grubu yapmaktadır.
 
-There are a huge range of disabilities, which can be divided roughly into four categories:
+Kabaca dört kategoriye ayrılabilen çok çeşitli engellilikler vardır:
 
-- _[Visual](https://webaim.org/articles/visual/)_ - These users can benefit from the use of screen readers, screen magnification, controlling screen contrast, or braille display.
-- _[Auditory](https://webaim.org/articles/auditory/)_ - These users can benefit from captioning, transcripts or sign language video.
-- _[Motor](https://webaim.org/articles/motor/)_ - These users can benefit from a range of [assistive technologies for motor impairments](https://webaim.org/articles/motor/assistive): voice recognition software, eye tracking, single-switch access, head wand, sip and puff switch, oversized trackball mouse, adaptive keyboard or other assistive technologies.
-- _[Cognitive](https://webaim.org/articles/cognitive/)_ - These users can benefit from supplemental media, structural organization of content, clear and simple writing.
+- _[Görsel](https://webaim.org/articles/visual/)_ - Bu kullanıcılar, ekran okuyucuları, ekran büyütme, ekran kontrastını kontrol etme veya braille ekranı kullanımından yararlanabilir.
+- _[İşitsel](https://webaim.org/articles/auditory/)_ - Bu kullanıcılar, altyazılardan, transkriptlerden veya işaret dili videolarından yararlanabilir.
+- _[Motor](https://webaim.org/articles/motor/)_ - Bu kullanıcılar, [motor bozuklukları için çeşitli yardımcı teknolojilerden](https://webaim.org/articles/motor/assistive) yararlanabilir: ses tanıma yazılımı, göz takibi, tek anahtar erişimi, kafa çubuğu, yudum ve üfleme anahtarı, büyük boy trackball fare, uyarlanabilir klavye veya diğer yardımcı teknolojiler.
+- _[Bilişsel](https://webaim.org/articles/cognitive/)_ - Bu kullanıcılar, ek medyadan, içeriğin yapısal organizasyonundan, açık ve basit yazılardan yararlanabilir.
 
-Check out the following links from WebAim to understand from users:
+Kullanıcılardan anlamak için WebAim'den aşağıdaki bağlantılara göz atın:
 
-- [Web Accessibility Perspectives: Explore the Impact and Benefits for Everyone](https://www.w3.org/WAI/perspective-videos/)
-- [Stories of Web Users](https://www.w3.org/WAI/people-use-web/user-stories/)
+- [Web Erişilebilirlik Bakış Açıları: Herkes İçin Etkiyi ve Faydaları Keşfedin](https://www.w3.org/WAI/perspective-videos/)
+- [Web Kullanıcılarının Hikayeleri](https://www.w3.org/WAI/people-use-web/user-stories/)

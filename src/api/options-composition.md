@@ -1,10 +1,10 @@
-# Options: Composition {#options-composition}
+# Seçenekler: Composition {#options-composition}
 
 ## provide {#provide}
 
-Provide values that can be injected by descendant components.
+Alt bileşenler tarafından enjekte edilebilecek değerler sağlar.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -12,15 +12,15 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  `provide` and [`inject`](#inject) are used together to allow an ancestor component to serve as a dependency injector for all its descendants, regardless of how deep the component hierarchy is, as long as they are in the same parent chain.
+  `provide` ve [`inject`](#inject), aynı ebeveyn zincirinde oldukları sürece, bileşen hiyerarşisi ne kadar derin olursa olsun, bir ata bileşenin tüm alt öğeleri için bir bağımlılık enjektörü olarak görev yapmasına izin vermek için birlikte kullanılır.
 
-  The `provide` option should be either an object or a function that returns an object. This object contains the properties that are available for injection into its descendants. You can use Symbols as keys in this object.
+  `provide` seçeneği, bir nesne veya bir nesne döndüren bir fonksiyon olmalıdır. Bu nesne, alt öğelerine enjekte edilmek üzere kullanılabilen özellikleri içerir. Bu nesnede anahtar olarak Semboller kullanabilirsiniz.
 
-- **Example**
+- **Örnek**
 
-  Basic usage:
+  Temel kullanım:
 
   ```js
   const s = Symbol()
@@ -33,7 +33,7 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-  Using a function to provide per-component state:
+  Bileşen başına durum sağlamak için bir fonksiyon kullanma:
 
   ```js
   export default {
@@ -41,7 +41,7 @@ Provide values that can be injected by descendant components.
       return {
         msg: 'foo'
       }
-    }
+    },
     provide() {
       return {
         msg: this.msg
@@ -50,15 +50,15 @@ Provide values that can be injected by descendant components.
   }
   ```
 
-  Note in the above example, the provided `msg` will NOT be reactive. See [Working with Reactivity](/guide/components/provide-inject#working-with-reactivity) for more details.
+  Yukarıdaki örnekte, sağlanan `msg`'nin reaktif **OLMAYACAĞINA** dikkat edin. Daha fazla ayrıntı için [Reaktivite ile Çalışma](/guide/components/provide-inject#working-with-reactivity) bölümüne bakın.
 
-- **See also** [Provide / Inject](/guide/components/provide-inject)
+- **Ayrıca bakınız** [Sağlama / Enjekte Etme](/guide/components/provide-inject)
 
 ## inject {#inject}
 
-Declare properties to inject into the current component by locating them from ancestor providers.
+Atalardan gelen sağlayıcılardan konumlandırarak geçerli bileşene enjekte edilecek özellikleri bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -75,24 +75,24 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The `inject` option should be either:
+  `inject` seçeneği şu şekilde olmalıdır:
 
-  - An array of strings, or
-  - An object where the keys are the local binding name and the value is either:
-    - The key (string or Symbol) to search for in available injections, or
-    - An object where:
-      - The `from` property is the key (string or Symbol) to search for in available injections, and
-      - The `default` property is used as fallback value. Similar to props default values, a factory function is needed for object types to avoid value sharing between multiple component instances.
+  - Bir string dizisi veya
+  - Anahtarların yerel bağlama adı olduğu ve değerin şu olduğu bir nesne:
+    - Kullanılabilir enjeksiyonlarda aranacak anahtar (string veya Sembol) veya
+    - Şu şekilde olduğu bir nesne:
+      - `from` özelliği, kullanılabilir enjeksiyonlarda aranacak anahtardır (string veya Sembol) ve
+      - `default` özelliği, geri dönüş değeri olarak kullanılır. Props varsayılan değerlerine benzer şekilde, birden fazla bileşen örneği arasında değer paylaşımını önlemek için nesne türleri için bir fabrika işlevi gereklidir.
 
-  An injected property will be `undefined` if neither a matching property nor a default value was provided.
+  Eşleşen bir özellik veya varsayılan değer sağlanmadıysa, enjekte edilmiş bir özellik `undefined` olacaktır.
 
-  Note that injected bindings are NOT reactive. This is intentional. However, if the injected value is a reactive object, properties on that object do remain reactive. See [Working with Reactivity](/guide/components/provide-inject#working-with-reactivity) for more details.
+  Enjekte edilmiş bağlamaların reaktif **OLMADIĞINA** dikkat edin. Bu kasıtlıdır. Ancak, enjekte edilen değer reaktif bir nesneyse, o nesnedeki özellikler reaktif kalır. Daha fazla ayrıntı için [Reaktivite ile Çalışma](/guide/components/provide-inject#working-with-reactivity) bölümüne bakın.
 
-- **Example**
+- **Örnek**
 
-  Basic usage:
+  Temel kullanım:
 
   ```js
   export default {
@@ -103,7 +103,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Using an injected value as the default for a prop:
+  Enjekte edilmiş bir değeri bir prop için varsayılan olarak kullanma:
 
   ```js
   const Child = {
@@ -118,7 +118,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Using an injected value as data entry:
+  Enjekte edilmiş bir değeri veri girişi olarak kullanma:
 
   ```js
   const Child = {
@@ -131,7 +131,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Injections can be optional with default value:
+  Enjeksiyonlar, varsayılan değerle isteğe bağlı olabilir:
 
   ```js
   const Child = {
@@ -141,7 +141,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  If it needs to be injected from a property with a different name, use `from` to denote the source property:
+  Farklı bir ada sahip bir özellikten enjekte edilmesi gerekiyorsa, kaynak özelliğini belirtmek için `from` kullanın:
 
   ```js
   const Child = {
@@ -154,7 +154,7 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-  Similar to prop defaults, you need to use a factory function for non-primitive values:
+  Prop varsayılanlarına benzer şekilde, temel olmayan değerler için bir fabrika işlevi kullanmanız gerekir:
 
   ```js
   const Child = {
@@ -167,13 +167,13 @@ Declare properties to inject into the current component by locating them from an
   }
   ```
 
-- **See also** [Provide / Inject](/guide/components/provide-inject)
+- **Ayrıca bakınız** [Sağlama / Enjekte Etme](/guide/components/provide-inject)
 
 ## mixins {#mixins}
 
-An array of option objects to be mixed into the current component.
+Geçerli bileşene karıştırılacak seçenek nesneleri dizisi.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -181,17 +181,17 @@ An array of option objects to be mixed into the current component.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The `mixins` option accepts an array of mixin objects. These mixin objects can contain instance options like normal instance objects, and they will be merged against the eventual options using the certain option merging logic. For example, if your mixin contains a `created` hook and the component itself also has one, both functions will be called.
+  `mixins` seçeneği, mixin nesnelerinden oluşan bir dizi kabul eder. Bu mixin nesneleri, normal örnek nesneleri gibi örnek seçenekleri içerebilir ve belirli seçenek birleştirme mantığı kullanılarak sonuçta elde edilen seçeneklere karşı birleştirilir. Örneğin, mixin'iniz bir `created` kancası içeriyorsa ve bileşenin kendisinde de bir tane varsa, her iki fonksiyon da çağrılır.
 
-  Mixin hooks are called in the order they are provided, and called before the component's own hooks.
+  Mixin kancaları, sağlandıkları sırayla çağrılır ve bileşenin kendi kancalarından önce çağrılır.
 
-  :::warning No Longer Recommended
-  In Vue 2, mixins were the primary mechanism for creating reusable chunks of component logic. While mixins continue to be supported in Vue 3, [Composable functions using Composition API](/guide/reusability/composables) is now the preferred approach for code reuse between components.
+  :::warning Artık Tavsiye Edilmiyor
+  Vue 2'de, mixinler, yeniden kullanılabilir bileşen mantığı parçaları oluşturmak için kullanılan birincil mekanizmaydı. Mixinler Vue 3'te desteklenmeye devam ederken, [Composition API kullanan Birleştirilebilir fonksiyonlar](/guide/reusability/composables) artık bileşenler arasında kod yeniden kullanımı için tercih edilen yaklaşımdır.
   :::
 
-- **Example**
+- **Örnek**
 
   ```js
   const mixin = {
@@ -213,9 +213,9 @@ An array of option objects to be mixed into the current component.
 
 ## extends {#extends}
 
-A "base class" component to extend from.
+Uzantı yapılacak bir "temel sınıf" bileşeni.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -223,17 +223,17 @@ A "base class" component to extend from.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  Allows one component to extend another, inheriting its component options.
+  Bir bileşenin, bileşen seçeneklerini devralarak başka bir bileşeni genişletmesine olanak tanır.
 
-  From an implementation perspective, `extends` is almost identical to `mixins`. The component specified by `extends` will be treated as though it were the first mixin.
+  Uygulama açısından bakıldığında, `extends`, `mixins`'e neredeyse özdeştir. `extends` tarafından belirtilen bileşen, sanki ilk mixin'miş gibi değerlendirilecektir.
 
-  However, `extends` and `mixins` express different intents. The `mixins` option is primarily used to compose chunks of functionality, whereas `extends` is primarily concerned with inheritance.
+  Ancak, `extends` ve `mixins` farklı niyetler ifade eder. `mixins` seçeneği öncelikle işlevsellik parçalarını oluşturmak için kullanılırken, `extends` öncelikle kalıtımla ilgilidir.
 
-  As with `mixins`, any options (except for `setup()`) will be merged using the relevant merge strategy.
+  `mixins`'te olduğu gibi, tüm seçenekler (`setup()` hariç), ilgili birleştirme stratejisi kullanılarak birleştirilecektir.
 
-- **Example**
+- **Örnek**
 
   ```js
   const CompA = { ... }
@@ -244,12 +244,12 @@ A "base class" component to extend from.
   }
   ```
 
-  :::warning Not Recommended for Composition API
-  `extends` is designed for Options API and does not handle the merging of the `setup()` hook.
+  :::warning Composition API İçin Tavsiye Edilmez
+  `extends`, Options API için tasarlanmıştır ve `setup()` kancasının birleştirilmesini işlemez.
 
-  In Composition API, the preferred mental model for logic reuse is "compose" over "inheritance". If you have logic from a component that needs to be reused in another one, consider extracting the relevant logic into a [Composable](/guide/reusability/composables#composables).
+  Composition API'de, mantık yeniden kullanımı için tercih edilen zihinsel model, "kalıtım" yerine "birleştirme"dir. Bir bileşenden başka birinde yeniden kullanılması gereken mantığınız varsa, ilgili mantığı bir [Birleştirilebilir](/guide/reusability/composables#composables) içine çıkarmayı düşünün.
 
-  If you still intend to "extend" a component using Composition API, you can call the base component's `setup()` in the extending component's `setup()`:
+  Composition API kullanarak bir bileşeni hala "genişletmeyi" planlıyorsanız, temel bileşenin `setup()`'ını genişleten bileşenin `setup()`'ında çağırabilirsiniz:
 
   ```js
   import Base from './Base.js'
@@ -258,7 +258,7 @@ A "base class" component to extend from.
     setup(props, ctx) {
       return {
         ...Base.setup(props, ctx),
-        // local bindings
+        // yerel bağlamalar
       }
     }
   }

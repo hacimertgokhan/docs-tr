@@ -1,17 +1,17 @@
-# Reactivity API: Core {#reactivity-api-core}
+# Reaktivite API'si: Temel {#reactivity-api-core}
 
-:::info See also
-To better understand the Reactivity APIs, it is recommended to read the following chapters in the guide:
+:::info Ayrıca bakınız
+Reaktivite API'lerini daha iyi anlamak için kılavuzdaki aşağıdaki bölümleri okumanız önerilir:
 
-- [Reactivity Fundamentals](/guide/essentials/reactivity-fundamentals) (with the API preference set to Composition API)
-- [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- [Reaktivite Temelleri](/guide/essentials/reactivity-fundamentals) (API tercihi Composition API olarak ayarlanmış)
+- [Reaktivite Derinlemesine](/guide/extras/reactivity-in-depth)
   :::
 
 ## ref() {#ref}
 
-Takes an inner value and returns a reactive and mutable ref object, which has a single property `.value` that points to the inner value.
+Bir iç değer alır ve iç değere işaret eden tek bir `.value` özelliğine sahip reaktif ve değiştirilebilir bir ref nesnesi döndürür.
 
-- **Type**
+- **Tür**
 
   ```ts
   function ref<T>(value: T): Ref<UnwrapRef<T>>
@@ -21,15 +21,15 @@ Takes an inner value and returns a reactive and mutable ref object, which has a 
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The ref object is mutable - i.e. you can assign new values to `.value`. It is also reactive - i.e. any read operations to `.value` are tracked, and write operations will trigger associated effects.
+  Ref nesnesi değiştirilebilir; yani `.value`'ya yeni değerler atayabilirsiniz. Aynı zamanda reaktiftir; yani `.value`'ya yapılan tüm okuma işlemleri izlenir ve yazma işlemleri ilişkili efektleri tetikler.
 
-  If an object is assigned as a ref's value, the object is made deeply reactive with [reactive()](#reactive). This also means if the object contains nested refs, they will be deeply unwrapped.
+  Bir nesne, bir ref'in değeri olarak atanırsa, nesne [reactive()](#reactive) ile derinlemesine reaktif hale getirilir. Bu aynı zamanda nesne iç içe ref'ler içeriyorsa, bunların derinlemesine sarılacağı anlamına gelir.
 
-  To avoid the deep conversion, use [`shallowRef()`](./reactivity-advanced#shallowref) instead.
+  Derin dönüştürmeden kaçınmak için bunun yerine [`shallowRef()`](./reactivity-advanced#shallowref) kullanın.
 
-- **Example**
+- **Örnek**
 
   ```js
   const count = ref(0)
@@ -39,25 +39,25 @@ Takes an inner value and returns a reactive and mutable ref object, which has a 
   console.log(count.value) // 1
   ```
 
-- **See also**
-  - [Guide - Reactivity Fundamentals with `ref()`](/guide/essentials/reactivity-fundamentals#ref)
-  - [Guide - Typing `ref()`](/guide/typescript/composition-api#typing-ref) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - `ref()` ile Reaktivite Temelleri](/guide/essentials/reactivity-fundamentals#ref)
+  - [Rehber - `ref()` Türlendirme](/guide/typescript/composition-api#typing-ref) <sup class="vt-badge ts" />
 
 ## computed() {#computed}
 
-Takes a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) and returns a readonly reactive [ref](#ref) object for the returned value from the getter. It can also take an object with `get` and `set` functions to create a writable ref object.
+Bir [getter fonksiyonu](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#description) alır ve getter'dan döndürülen değer için salt okunur bir reaktif [ref](#ref) nesnesi döndürür. Yazılabilir bir ref nesnesi oluşturmak için `get` ve `set` fonksiyonlarına sahip bir nesne de alabilir.
 
-- **Type**
+- **Tür**
 
   ```ts
-  // read-only
+  // salt okunur
   function computed<T>(
     getter: (oldValue: T | undefined) => T,
-    // see "Computed Debugging" link below
+    // aşağıdaki "Hesaplanmış Hata Ayıklama" bağlantısına bakın
     debuggerOptions?: DebuggerOptions
   ): Readonly<Ref<Readonly<T>>>
 
-  // writable
+  // yazılabilir
   function computed<T>(
     options: {
       get: (oldValue: T | undefined) => T
@@ -67,9 +67,9 @@ Takes a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
   ): Ref<T>
   ```
 
-- **Example**
+- **Örnek**
 
-  Creating a readonly computed ref:
+  Salt okunur hesaplanmış bir ref oluşturma:
 
   ```js
   const count = ref(1)
@@ -77,10 +77,10 @@ Takes a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
 
   console.log(plusOne.value) // 2
 
-  plusOne.value++ // error
+  plusOne.value++ // hata
   ```
 
-  Creating a writable computed ref:
+  Yazılabilir hesaplanmış bir ref oluşturma:
 
   ```js
   const count = ref(1)
@@ -95,7 +95,7 @@ Takes a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
   console.log(count.value) // 0
   ```
 
-  Debugging:
+  Hata ayıklama:
 
   ```js
   const plusOne = computed(() => count.value + 1, {
@@ -108,74 +108,74 @@ Takes a [getter function](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
   })
   ```
 
-- **See also**
-  - [Guide - Computed Properties](/guide/essentials/computed)
-  - [Guide - Computed Debugging](/guide/extras/reactivity-in-depth#computed-debugging)
-  - [Guide - Typing `computed()`](/guide/typescript/composition-api#typing-computed) <sup class="vt-badge ts" />
-  - [Guide - Performance - Computed Stability](/guide/best-practices/performance#computed-stability)
+- **Ayrıca bakınız**
+  - [Rehber - Hesaplanan Özellikler](/guide/essentials/computed)
+  - [Rehber - Hesaplanan Hata Ayıklama](/guide/extras/reactivity-in-depth#computed-debugging)
+  - [Rehber - `computed()` Türlendirme](/guide/typescript/composition-api#typing-computed) <sup class="vt-badge ts" />
+  - [Rehber - Performans - Hesaplanan Kararlılık](/guide/best-practices/performance#computed-stability)
 
 ## reactive() {#reactive}
 
-Returns a reactive proxy of the object.
+Nesnenin reaktif bir proxy'sini döndürür.
 
-- **Type**
+- **Tür**
 
   ```ts
   function reactive<T extends object>(target: T): UnwrapNestedRefs<T>
   ```
 
-- **Details**
+- **Detaylar**
 
-  The reactive conversion is "deep": it affects all nested properties. A reactive object also deeply unwraps any properties that are [refs](#ref) while maintaining reactivity.
+  Reaktif dönüştürme "derindir": tüm iç içe özellikler etkilenir. Reaktif bir nesne aynı zamanda reaktifliği korurken herhangi bir [ref](#ref) olan özellikleri derinlemesine sarar.
 
-  It should also be noted that there is no ref unwrapping performed when the ref is accessed as an element of a reactive array or a native collection type like `Map`.
+  Ref'in, reaktif bir dizinin veya `Map` gibi yerel bir koleksiyon türünün bir öğesi olarak erişildiğinde ref sarma işleminin yapılmadığı da belirtilmelidir.
 
-  To avoid the deep conversion and only retain reactivity at the root level, use [shallowReactive()](./reactivity-advanced#shallowreactive) instead.
+  Derin dönüştürmeden kaçınmak ve reaktiviteyi yalnızca kök düzeyde tutmak için bunun yerine [shallowReactive()](./reactivity-advanced#shallowreactive) kullanın.
 
-  The returned object and its nested objects are wrapped with [ES Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and **not** equal to the original objects. It is recommended to work exclusively with the reactive proxy and avoid relying on the original object.
+  Döndürülen nesne ve iç içe geçmiş nesneleri, orijinal nesnelerle eşit **olmayan** [ES Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) ile sarılır. Yalnızca reaktif proxy ile çalışmanız ve orijinal nesneye güvenmekten kaçınmanız önerilir.
 
-- **Example**
+- **Örnek**
 
-  Creating a reactive object:
+  Reaktif bir nesne oluşturma:
 
   ```js
   const obj = reactive({ count: 0 })
   obj.count++
   ```
 
-  Ref unwrapping:
+  Ref sarma:
 
   ```ts
   const count = ref(1)
   const obj = reactive({ count })
 
-  // ref will be unwrapped
+  // ref sarılacaktır
   console.log(obj.count === count.value) // true
 
-  // it will update `obj.count`
+  // `obj.count` değerini güncelleyecektir
   count.value++
   console.log(count.value) // 2
   console.log(obj.count) // 2
 
-  // it will also update `count` ref
+  // ayrıca `count` ref'ini de güncelleyecektir
   obj.count++
   console.log(obj.count) // 3
   console.log(count.value) // 3
   ```
 
-  Note that refs are **not** unwrapped when accessed as array or collection elements:
+  Ref'lerin dizi veya koleksiyon öğeleri olarak erişildiğinde **sarılmadığını** unutmayın:
 
   ```js
-  const books = reactive([ref('Vue 3 Guide')])
-  // need .value here
+  const books = reactive([ref('Vue 3 Kılavuzu')])
+  // burada .value gerekli
   console.log(books[0].value)
 
   const map = reactive(new Map([['count', ref(0)]]))
-  // need .value here
+  // burada .value gerekli
   console.log(map.get('count').value)
   ```
 
-  When assigning a [ref](#ref) to a `reactive` property, that ref will also be automatically unwrapped:
+  `reactive` özelliğine bir [ref](#ref) atarken, bu ref de otomatik olarak sarılacaktır:
 
   ```ts
   const count = ref(1)
@@ -187,15 +187,15 @@ Returns a reactive proxy of the object.
   console.log(obj.count === count.value) // true
   ```
 
-- **See also**
-  - [Guide - Reactivity Fundamentals](/guide/essentials/reactivity-fundamentals)
-  - [Guide - Typing `reactive()`](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - Reaktivite Temelleri](/guide/essentials/reactivity-fundamentals)
+  - [Rehber - `reactive()` Türlendirme](/guide/typescript/composition-api#typing-reactive) <sup class="vt-badge ts" />
 
 ## readonly() {#readonly}
 
-Takes an object (reactive or plain) or a [ref](#ref) and returns a readonly proxy to the original.
+Bir nesne (reaktif veya düz) veya bir [ref](#ref) alır ve orijinaline salt okunur bir proxy döndürür.
 
-- **Type**
+- **Tür**
 
   ```ts
   function readonly<T extends object>(
@@ -203,13 +203,13 @@ Takes an object (reactive or plain) or a [ref](#ref) and returns a readonly prox
   ): DeepReadonly<UnwrapNestedRefs<T>>
   ```
 
-- **Details**
+- **Detaylar**
 
-  A readonly proxy is deep: any nested property accessed will be readonly as well. It also has the same ref-unwrapping behavior as `reactive()`, except the unwrapped values will also be made readonly.
+  Salt okunur bir proxy derindir: erişilen herhangi bir iç içe geçmiş özellik de salt okunur olacaktır. Ayrıca, sarılan değerler de salt okunur hale getirilecek şekilde `reactive()` ile aynı ref sarma davranışına sahiptir.
 
-  To avoid the deep conversion, use [shallowReadonly()](./reactivity-advanced#shallowreadonly) instead.
+  Derin dönüştürmeden kaçınmak için bunun yerine [shallowReadonly()](./reactivity-advanced#shallowreadonly) kullanın.
 
-- **Example**
+- **Örnek**
 
   ```js
   const original = reactive({ count: 0 })
@@ -217,22 +217,22 @@ Takes an object (reactive or plain) or a [ref](#ref) and returns a readonly prox
   const copy = readonly(original)
 
   watchEffect(() => {
-    // works for reactivity tracking
+    // reaktivite takibi için çalışır
     console.log(copy.count)
   })
 
-  // mutating original will trigger watchers relying on the copy
+  // orijinali değiştirmek, kopyaya dayanan izleyicileri tetikleyecektir
   original.count++
 
-  // mutating the copy will fail and result in a warning
-  copy.count++ // warning!
+  // kopyayı değiştirmek başarısız olur ve bir uyarıya neden olur
+  copy.count++ // uyarı!
   ```
 
 ## watchEffect() {#watcheffect}
 
-Runs a function immediately while reactively tracking its dependencies and re-runs it whenever the dependencies are changed.
+Bağımlılıklarını reaktif olarak izlerken bir fonksiyonu hemen çalıştırır ve bağımlılıklar değiştiğinde tekrar çalıştırır.
 
-- **Type**
+- **Tür**
 
   ```ts
   function watchEffect(
@@ -243,92 +243,90 @@ Runs a function immediately while reactively tracking its dependencies and re-ru
   type OnCleanup = (cleanupFn: () => void) => void
 
   interface WatchEffectOptions {
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    flush?: 'pre' | 'post' | 'sync' // varsayılan: 'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
   }
 
   interface WatchHandle {
-    (): void // callable, same as `stop`
+    (): void // çağrılabilir, `stop` ile aynı
     pause: () => void
     resume: () => void
     stop: () => void
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The first argument is the effect function to be run. The effect function receives a function that can be used to register a cleanup callback. The cleanup callback will be called right before the next time the effect is re-run, and can be used to clean up invalidated side effects, e.g. a pending async request (see example below).
+  İlk argüman, çalıştırılacak efekt fonksiyonudur. Efekt fonksiyonu, bir temizleme geri çağrısı kaydetmek için kullanılabilecek bir fonksiyon alır. Temizleme geri çağrısı, efektin bir sonraki çalıştırılmasından hemen önce çağrılacak ve geçersiz kılınan yan etkileri, örneğin bekleyen bir asenkron isteği temizlemek için kullanılabilir (aşağıdaki örneğe bakın).
 
-  The second argument is an optional options object that can be used to adjust the effect's flush timing or to debug the effect's dependencies.
+  İkinci argüman, efektin akış zamanlamasını ayarlamak veya efektin bağımlılıklarında hata ayıklamak için kullanılabilecek isteğe bağlı bir seçenekler nesnesidir.
 
-  By default, watchers will run just prior to component rendering. Setting `flush: 'post'` will defer the watcher until after component rendering. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) for more information. In rare cases, it might be necessary to trigger a watcher immediately when a reactive dependency changes, e.g. to invalidate a cache. This can be achieved using `flush: 'sync'`. However, this setting should be used with caution, as it can lead to problems with performance and data consistency if multiple properties are being updated at the same time.
+  Varsayılan olarak, izleyiciler bileşen render edilmeden hemen önce çalışır. `flush: 'post'`'u ayarlamak, izleyiciyi bileşen render edilene kadar erteler. Daha fazla bilgi için [Geri Çağrı Akış Zamanlaması](/guide/essentials/watchers#callback-flush-timing) bölümüne bakın. Nadir durumlarda, bir önbelleği geçersiz kılmak gibi, reaktif bir bağımlılık değiştiğinde bir izleyiciyi hemen tetiklemek gerekebilir. Bu, `flush: 'sync'` kullanılarak elde edilebilir. Ancak, aynı anda birden fazla özellik güncelleniyorsa performans ve veri tutarlılığı sorunlarına yol açabileceğinden, bu ayar dikkatli kullanılmalıdır.
 
-  The return value is a handle function that can be called to stop the effect from running again.
+  Dönüş değeri, efektin tekrar çalışmasını durdurmak için çağrılabilen bir işleyici fonksiyonudur.
 
-- **Example**
+- **Örnek**
 
   ```js
   const count = ref(0)
 
   watchEffect(() => console.log(count.value))
-  // -> logs 0
+  // -> 0 yazar
 
   count.value++
-  // -> logs 1
+  // -> 1 yazar
   ```
 
-  Stopping the watcher:
+  İzleyiciyi durdurma:
 
   ```js
   const stop = watchEffect(() => {})
 
-  // when the watcher is no longer needed:
+  // izleyiciye artık ihtiyaç duyulmadığında:
   stop()
   ```
 
-  Pausing / resuming the watcher: <sup class="vt-badge" data-text="3.5+" />
+  İzleyiciyi duraklatma/devam ettirme: <sup class="vt-badge" data-text="3.5+" />
 
   ```js
   const { stop, pause, resume } = watchEffect(() => {})
 
-  // temporarily pause the watcher
+  // izleyiciyi geçici olarak duraklat
   pause()
 
-  // resume later
+  // daha sonra devam ettir
   resume()
 
-  // stop
+  // durdur
   stop()
   ```
 
-  Side effect cleanup:
+  Yan etki temizleme:
 
   ```js
   watchEffect(async (onCleanup) => {
     const { response, cancel } = doAsyncWork(newId)
-    // `cancel` will be called if `id` changes, cancelling
-    // the previous request if it hasn't completed yet
+    // `id` değişirse `cancel` çağrılır ve henüz tamamlanmamışsa önceki istek iptal edilir
     onCleanup(cancel)
     data.value = await response
   })
   ```
 
-  Side effect cleanup in 3.5+:
+  3.5+'da yan etki temizleme:
 
   ```js
   import { onWatcherCleanup } from 'vue'
 
   watchEffect(async () => {
     const { response, cancel } = doAsyncWork(newId)
-    // `cancel` will be called if `id` changes, cancelling
-    // the previous request if it hasn't completed yet
+    // `id` değişirse `cancel` çağrılır ve henüz tamamlanmamışsa önceki istek iptal edilir
     onWatcherCleanup(cancel)
     data.value = await response
   })
   ```
 
-  Options:
+  Seçenekler:
 
   ```js
   watchEffect(() => {}, {
@@ -342,33 +340,33 @@ Runs a function immediately while reactively tracking its dependencies and re-ru
   })
   ```
 
-- **See also**
-  - [Guide - Watchers](/guide/essentials/watchers#watcheffect)
-  - [Guide - Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging)
+- **Ayrıca bakınız**
+  - [Rehber - İzleyiciler](/guide/essentials/watchers#watcheffect)
+  - [Rehber - İzleyici Hata Ayıklama](/guide/extras/reactivity-in-depth#watcher-debugging)
 
 ## watchPostEffect() {#watchposteffect}
 
-Alias of [`watchEffect()`](#watcheffect) with `flush: 'post'` option.
+`flush: 'post'` seçeneğiyle [`watchEffect()`](#watcheffect) takma adı.
 
 ## watchSyncEffect() {#watchsynceffect}
 
-Alias of [`watchEffect()`](#watcheffect) with `flush: 'sync'` option.
+`flush: 'sync'` seçeneğiyle [`watchEffect()`](#watcheffect) takma adı.
 
 ## watch() {#watch}
 
-Watches one or more reactive data sources and invokes a callback function when the sources change.
+Bir veya daha fazla reaktif veri kaynağını izler ve kaynaklar değiştiğinde bir geri çağrı fonksiyonunu çağırır.
 
-- **Type**
+- **Tür**
 
   ```ts
-  // watching single source
+  // tek kaynağı izleme
   function watch<T>(
     source: WatchSource<T>,
     callback: WatchCallback<T>,
     options?: WatchOptions
   ): WatchHandle
 
-  // watching multiple sources
+  // birden çok kaynağı izleme
   function watch<T>(
     sources: WatchSource<T>[],
     callback: WatchCallback<T[]>,
@@ -384,59 +382,59 @@ Watches one or more reactive data sources and invokes a callback function when t
   type WatchSource<T> =
     | Ref<T> // ref
     | (() => T) // getter
-    | (T extends object ? T : never) // reactive object
+    | (T extends object ? T : never) // reaktif nesne
 
   interface WatchOptions extends WatchEffectOptions {
-    immediate?: boolean // default: false
-    deep?: boolean | number // default: false
-    flush?: 'pre' | 'post' | 'sync' // default: 'pre'
+    immediate?: boolean // varsayılan: false
+    deep?: boolean | number // varsayılan: false
+    flush?: 'pre' | 'post' | 'sync' // varsayılan: 'pre'
     onTrack?: (event: DebuggerEvent) => void
     onTrigger?: (event: DebuggerEvent) => void
-    once?: boolean // default: false (3.4+)
+    once?: boolean // varsayılan: false (3.4+)
   }
 
   interface WatchHandle {
-    (): void // callable, same as `stop`
+    (): void // çağrılabilir, `stop` ile aynı
     pause: () => void
     resume: () => void
     stop: () => void
   }
   ```
 
-  > Types are simplified for readability.
+  > Türler, okunabilirlik için basitleştirilmiştir.
 
-- **Details**
+- **Detaylar**
 
-  `watch()` is lazy by default - i.e. the callback is only called when the watched source has changed.
+  `watch()`, varsayılan olarak tembeldir; yani geri çağrı yalnızca izlenen kaynak değiştiğinde çağrılır.
 
-  The first argument is the watcher's **source**. The source can be one of the following:
+  İlk argüman, izleyicinin **kaynağıdır**. Kaynak aşağıdakilerden biri olabilir:
 
-  - A getter function that returns a value
-  - A ref
-  - A reactive object
-  - ...or an array of the above.
+  - Bir değer döndüren bir getter fonksiyonu
+  - Bir ref
+  - Reaktif bir nesne
+  - ...veya yukarıdakilerin bir dizisi.
 
-  The second argument is the callback that will be called when the source changes. The callback receives three arguments: the new value, the old value, and a function for registering a side effect cleanup callback. The cleanup callback will be called right before the next time the effect is re-run, and can be used to clean up invalidated side effects, e.g. a pending async request.
+  İkinci argüman, kaynak değiştiğinde çağrılacak geri çağrıdır. Geri çağrı, üç argüman alır: yeni değer, eski değer ve bir yan etki temizleme geri çağrısı kaydetmek için bir fonksiyon. Temizleme geri çağrısı, efektin bir sonraki çalıştırılmasından hemen önce çağrılacak ve geçersiz kılınan yan etkileri, örneğin bekleyen bir asenkron isteği temizlemek için kullanılabilir.
 
-  When watching multiple sources, the callback receives two arrays containing new / old values corresponding to the source array.
+  Birden çok kaynak izlenirken, geri çağrı, kaynak dizisine karşılık gelen yeni / eski değerleri içeren iki dizi alır.
 
-  The third optional argument is an options object that supports the following options:
+  İsteğe bağlı üçüncü argüman, aşağıdaki seçenekleri destekleyen bir seçenekler nesnesidir:
 
-  - **`immediate`**: trigger the callback immediately on watcher creation. Old value will be `undefined` on the first call.
-  - **`deep`**: force deep traversal of the source if it is an object, so that the callback fires on deep mutations. In 3.5+, this can also be a number indicating the max traversal depth. See [Deep Watchers](/guide/essentials/watchers#deep-watchers).
-  - **`flush`**: adjust the callback's flush timing. See [Callback Flush Timing](/guide/essentials/watchers#callback-flush-timing) and [`watchEffect()`](/api/reactivity-core#watcheffect).
-  - **`onTrack / onTrigger`**: debug the watcher's dependencies. See [Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging).
-  - **`once`**: (3.4+) run the callback only once. The watcher is automatically stopped after the first callback run.
+  - **`immediate`**: izleyici oluşturulduğunda geri çağrıyı hemen tetikler. İlk çağrıda eski değer `undefined` olacaktır.
+  - **`deep`**: bir nesne ise, geri çağrının derin mutasyonlarda tetiklenmesi için kaynağın derin geçişini zorlar. 3.5+'da bu, maksimum geçiş derinliğini gösteren bir sayı da olabilir. [Derin İzleyiciler](/guide/essentials/watchers#deep-watchers) bölümüne bakın.
+  - **`flush`**: geri çağrının akış zamanlamasını ayarlayın. [Geri Çağrı Akış Zamanlaması](/guide/essentials/watchers#callback-flush-timing) ve [`watchEffect()`](/api/reactivity-core#watcheffect) bölümüne bakın.
+  - **`onTrack / onTrigger`**: izleyicinin bağımlılıklarında hata ayıklayın. [İzleyici Hata Ayıklama](/guide/extras/reactivity-in-depth#watcher-debugging) bölümüne bakın.
+  - **`once`**: (3.4+) geri çağrıyı yalnızca bir kez çalıştırın. İzleyici, ilk geri çağrı çalıştırıldıktan sonra otomatik olarak durdurulur.
 
-  Compared to [`watchEffect()`](#watcheffect), `watch()` allows us to:
+  [`watchEffect()`](#watcheffect) ile karşılaştırıldığında `watch()`, şunları yapmamızı sağlar:
 
-  - Perform the side effect lazily;
-  - Be more specific about what state should trigger the watcher to re-run;
-  - Access both the previous and current value of the watched state.
+  - Yan etkiyi tembelce gerçekleştirin;
+  - Hangi durumun izleyicinin tekrar çalışmasını tetiklemesi gerektiği konusunda daha spesifik olun;
+  - İzlenen durumun hem önceki hem de geçerli değerine erişin.
 
-- **Example**
+- **Örnek**
 
-  Watching a getter:
+  Bir getter'ı izleme:
 
   ```js
   const state = reactive({ count: 0 })
@@ -448,7 +446,7 @@ Watches one or more reactive data sources and invokes a callback function when t
   )
   ```
 
-  Watching a ref:
+  Bir ref'i izleme:
 
   ```js
   const count = ref(0)
@@ -457,7 +455,7 @@ Watches one or more reactive data sources and invokes a callback function when t
   })
   ```
 
-  When watching multiple sources, the callback receives arrays containing new / old values corresponding to the source array:
+  Birden çok kaynak izlenirken, geri çağrı, kaynak dizisine karşılık gelen yeni / eski değerleri içeren diziler alır:
 
   ```js
   watch([fooRef, barRef], ([foo, bar], [prevFoo, prevBar]) => {
@@ -465,7 +463,7 @@ Watches one or more reactive data sources and invokes a callback function when t
   })
   ```
 
-  When using a getter source, the watcher only fires if the getter's return value has changed. If you want the callback to fire even on deep mutations, you need to explicitly force the watcher into deep mode with `{ deep: true }`. Note in deep mode, the new value and the old will be the same object if the callback was triggered by a deep mutation:
+  Bir getter kaynağı kullanıldığında, izleyici yalnızca getter'ın dönüş değeri değiştiyse tetiklenir. Geri çağrının derin mutasyonlarda bile tetiklenmesini istiyorsanız, izleyiciyi `{ deep: true }` ile açıkça derin moda zorlamanız gerekir. Derin modda, geri çağrı derin bir mutasyon tarafından tetiklendiyse yeni değer ile eski değerin aynı nesne olacağına dikkat edin:
 
   ```js
   const state = reactive({ count: 0 })
@@ -478,16 +476,16 @@ Watches one or more reactive data sources and invokes a callback function when t
   )
   ```
 
-  When directly watching a reactive object, the watcher is automatically in deep mode:
+  Doğrudan reaktif bir nesne izlenirken, izleyici otomatik olarak derin moddadır:
 
   ```js
   const state = reactive({ count: 0 })
   watch(state, () => {
-    /* triggers on deep mutation to state */
+    /* state'te derin mutasyonda tetikler */
   })
   ```
 
-  `watch()` shares the same flush timing and debugging options with [`watchEffect()`](#watcheffect):
+  `watch()`, [`watchEffect()`](#watcheffect) ile aynı akış zamanlamasını ve hata ayıklama seçeneklerini paylaşır:
 
   ```js
   watch(source, callback, {
@@ -501,43 +499,42 @@ Watches one or more reactive data sources and invokes a callback function when t
   })
   ```
 
-  Stopping the watcher:
+  İzleyiciyi durdurma:
 
   ```js
   const stop = watch(source, callback)
 
-  // when the watcher is no longer needed:
+  // izleyiciye artık ihtiyaç duyulmadığında:
   stop()
   ```
 
-  Pausing / resuming the watcher: <sup class="vt-badge" data-text="3.5+" />
+  İzleyiciyi duraklatma/devam ettirme: <sup class="vt-badge" data-text="3.5+" />
 
   ```js
   const { stop, pause, resume } = watch(() => {})
 
-  // temporarily pause the watcher
+  // izleyiciyi geçici olarak duraklat
   pause()
 
-  // resume later
+  // daha sonra devam ettir
   resume()
 
-  // stop
+  // durdur
   stop()
   ```
 
-  Side effect cleanup:
+  Yan etki temizleme:
 
   ```js
   watch(id, async (newId, oldId, onCleanup) => {
     const { response, cancel } = doAsyncWork(newId)
-    // `cancel` will be called if `id` changes, cancelling
-    // the previous request if it hasn't completed yet
+    // `id` değişirse `cancel` çağrılır ve henüz tamamlanmamışsa önceki istek iptal edilir
     onCleanup(cancel)
     data.value = await response
   })
   ```
 
-  Side effect cleanup in 3.5+:
+  3.5+'da yan etki temizleme:
 
   ```js
   import { onWatcherCleanup } from 'vue'
@@ -549,16 +546,16 @@ Watches one or more reactive data sources and invokes a callback function when t
   })
   ```
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Guide - Watchers](/guide/essentials/watchers)
-  - [Guide - Watcher Debugging](/guide/extras/reactivity-in-depth#watcher-debugging)
+  - [Rehber - İzleyiciler](/guide/essentials/watchers)
+  - [Rehber - İzleyici Hata Ayıklama](/guide/extras/reactivity-in-depth#watcher-debugging)
 
 ## onWatcherCleanup() <sup class="vt-badge" data-text="3.5+" /> {#onwatchercleanup}
 
-Register a cleanup function to be executed when the current watcher is about to re-run. Can only be called during the synchronous execution of a `watchEffect` effect function or `watch` callback function (i.e. it cannot be called after an `await` statement in an async function.)
+Geçerli izleyici yeniden çalıştırılmak üzereyken yürütülecek bir temizleme fonksiyonu kaydedin. Yalnızca `watchEffect` efekt fonksiyonunun veya `watch` geri çağrı fonksiyonunun eşzamanlı yürütülmesi sırasında çağrılabilir (yani, asenkron bir fonksiyonda bir `await` ifadesinden sonra çağrılamaz).
 
-- **Type**
+- **Tür**
 
   ```ts
   function onWatcherCleanup(
@@ -567,15 +564,14 @@ Register a cleanup function to be executed when the current watcher is about to 
   ): void
   ```
 
-- **Example**
+- **Örnek**
 
   ```ts
   import { watch, onWatcherCleanup } from 'vue'
 
   watch(id, (newId) => {
     const { response, cancel } = doAsyncWork(newId)
-    // `cancel` will be called if `id` changes, cancelling
-    // the previous request if it hasn't completed yet
+    // `id` değişirse `cancel` çağrılır ve henüz tamamlanmamışsa önceki istek iptal edilir
     onWatcherCleanup(cancel)
   })
   ```

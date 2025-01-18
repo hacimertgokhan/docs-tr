@@ -1,10 +1,10 @@
-# Composition API: Helpers {#composition-api-helpers}
+# Composition API: Yardımcılar {#composition-api-helpers}
 
 ## useAttrs() {#useattrs}
 
-Returns the `attrs` object from the [Setup Context](/api/composition-api-setup#setup-context), which includes the [fallthrough attributes](/guide/components/attrs#fallthrough-attributes) of the current component. This is intended to be used in `<script setup>` where the setup context object is not available.
+Mevcut bileşenin [geçiş özellikleri](/guide/components/attrs#fallthrough-attributes) dahil olmak üzere [Kurulum Bağlamı](/api/composition-api-setup#setup-context)'ndan `attrs` nesnesini döndürür. Bu, kurulum bağlamı nesnesinin kullanılamadığı `<script setup>` içinde kullanılmak üzere tasarlanmıştır.
 
-- **Type**
+- **Tür**
 
   ```ts
   function useAttrs(): Record<string, unknown>
@@ -12,11 +12,11 @@ Returns the `attrs` object from the [Setup Context](/api/composition-api-setup#s
 
 ## useSlots() {#useslots}
 
-Returns the `slots` object from the [Setup Context](/api/composition-api-setup#setup-context), which includes parent passed slots as callable functions that return Virtual DOM nodes. This is intended to be used in `<script setup>` where the setup context object is not available.
+Sanal DOM düğümleri döndüren çağrılabilir fonksiyonlar olarak üstten geçirilen slotları içeren [Kurulum Bağlamı](/api/composition-api-setup#setup-context)'ndan `slots` nesnesini döndürür. Bu, kurulum bağlamı nesnesinin kullanılamadığı `<script setup>` içinde kullanılmak üzere tasarlanmıştır.
 
-If using TypeScript, [`defineSlots()`](/api/sfc-script-setup#defineslots) should be preferred instead.
+TypeScript kullanılıyorsa, bunun yerine [`defineSlots()`](/api/sfc-script-setup#defineslots) tercih edilmelidir.
 
-- **Type**
+- **Tür**
 
   ```ts
   function useSlots(): Record<string, (...args: any[]) => VNode[]>
@@ -24,11 +24,11 @@ If using TypeScript, [`defineSlots()`](/api/sfc-script-setup#defineslots) should
 
 ## useModel() {#usemodel}
 
-This is the underlying helper that powers [`defineModel()`](/api/sfc-script-setup#definemodel). If using `<script setup>`, `defineModel()` should be preferred instead.
+Bu, [`defineModel()`](/api/sfc-script-setup#definemodel)'e güç veren temel yardımcıdır. `<script setup>` kullanılıyorsa, bunun yerine `defineModel()` tercih edilmelidir.
 
-- Only available in 3.4+
+- Yalnızca 3.4+ sürümünde kullanılabilir
 
-- **Type**
+- **Tür**
 
   ```ts
   function useModel(
@@ -48,7 +48,7 @@ This is the underlying helper that powers [`defineModel()`](/api/sfc-script-setu
   ]
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -61,21 +61,21 @@ This is the underlying helper that powers [`defineModel()`](/api/sfc-script-setu
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  `useModel()` can be used in non-SFC components, e.g. when using raw `setup()` function. It expects the `props` object as the first argument, and the model name as the second argument. The optional third argument can be used to declare custom getter and setter for the resulting model ref. Note that unlike `defineModel()`, you are responsible for declaring the props and emits yourself.
+  `useModel()`, SFC olmayan bileşenlerde, örneğin ham `setup()` fonksiyonu kullanıldığında kullanılabilir. İlk argüman olarak `props` nesnesini ve ikinci argüman olarak model adını bekler. İsteğe bağlı üçüncü argüman, ortaya çıkan model ref'i için özel getter ve setter bildirmek için kullanılabilir. `defineModel()`'den farklı olarak, props ve emitleri kendiniz bildirmeniz gerektiğini unutmayın.
 
 ## useTemplateRef() <sup class="vt-badge" data-text="3.5+" /> {#usetemplateref}
 
-Returns a shallow ref whose value will be synced with the template element or component with a matching ref attribute.
+Değeri, eşleşen bir ref özelliği olan şablon öğesi veya bileşenle senkronize edilecek olan sığ bir ref döndürür.
 
-- **Type**
+- **Tür**
 
   ```ts
   function useTemplateRef<T>(key: string): Readonly<ShallowRef<T | null>>
   ```
 
-- **Example**
+- **Örnek**
 
   ```vue
   <script setup>
@@ -93,22 +93,22 @@ Returns a shallow ref whose value will be synced with the template element or co
   </template>
   ```
 
-- **See also**
-  - [Guide - Template Refs](/guide/essentials/template-refs)
-  - [Guide - Typing Template Refs](/guide/typescript/composition-api#typing-template-refs) <sup class="vt-badge ts" />
-  - [Guide - Typing Component Template Refs](/guide/typescript/composition-api#typing-component-template-refs) <sup class="vt-badge ts" />
+- **Ayrıca bakınız**
+  - [Rehber - Şablon Referansları](/guide/essentials/template-refs)
+  - [Rehber - Şablon Referansları Türlendirme](/guide/typescript/composition-api#typing-template-refs) <sup class="vt-badge ts" />
+  - [Rehber - Bileşen Şablonu Referansları Türlendirme](/guide/typescript/composition-api#typing-component-template-refs) <sup class="vt-badge ts" />
 
 ## useId() <sup class="vt-badge" data-text="3.5+" /> {#useid}
 
-Used to generate unique-per-application IDs for accessibility attributes or form elements.
+Erişilebilirlik özellikleri veya form öğeleri için uygulama başına benzersiz kimlikler oluşturmak için kullanılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   function useId(): string
   ```
 
-- **Example**
+- **Örnek**
 
   ```vue
   <script setup>
@@ -119,16 +119,16 @@ Used to generate unique-per-application IDs for accessibility attributes or form
 
   <template>
     <form>
-      <label :for="id">Name:</label>
+      <label :for="id">Ad:</label>
       <input :id="id" type="text" />
     </form>
   </template>
   ```
 
-- **Details**
+- **Detaylar**
 
-  IDs generated by `useId()` are unique-per-application. It can be used to generate IDs for form elements and accessibility attributes. Multiple calls in the same component will generate different IDs; multiple instances of the same component calling `useId()` will also have different IDs.
+  `useId()` tarafından oluşturulan kimlikler, uygulama başına benzersizdir. Form öğeleri ve erişilebilirlik özellikleri için kimlikler oluşturmak için kullanılabilir. Aynı bileşende birden fazla çağrı farklı kimlikler oluşturacaktır; `useId()` çağıran aynı bileşenin birden fazla örneği de farklı kimliklere sahip olacaktır.
 
-  IDs generated by `useId()` are also guaranteed to be stable across the server and client renders, so they can be used in SSR applications without leading to hydration mismatches.
+  `useId()` tarafından oluşturulan kimliklerin sunucu ve istemci renderları arasında kararlı olmaları da garanti edilir, bu nedenle SSR uygulamalarında hidrasyon uyuşmazlıklarına yol açmadan kullanılabilirler.
 
-  If you have more than one Vue application instance of the same page, you can avoid ID conflicts by giving each app an ID prefix via [`app.config.idPrefix`](/api/application#app-config-idprefix).
+  Aynı sayfada birden fazla Vue uygulama örneğiniz varsa, her uygulamaya [`app.config.idPrefix`](/api/application#app-config-idprefix) aracılığıyla bir kimlik ön eki vererek kimlik çakışmalarını önleyebilirsiniz.

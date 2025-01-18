@@ -25,7 +25,7 @@ const contactLink = computed(() => {
   <div class="partner-page">
     <div class="back">
       <a href="/partners/all.html"
-        ><VTIconChevronLeft class="icon" />Back to all partners</a
+        ><VTIconChevronLeft class="icon" />Geri dön</a
       >
     </div>
 
@@ -51,7 +51,7 @@ const contactLink = computed(() => {
     </div>
 
     <div class="hiring" v-if="hiring">
-      <a :href="hiring" @click="track">{{ name }} is hiring!</a>
+      <a :href="hiring" @click="track">{{ name }} işe alım yapıyor!</a>
     </div>
   </div>
 </template>

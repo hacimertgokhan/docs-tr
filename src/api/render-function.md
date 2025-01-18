@@ -1,20 +1,20 @@
-# Render Function APIs {#render-function-apis}
+# Render Fonksiyonu API'leri {#render-function-apis}
 
 ## h() {#h}
 
-Creates virtual DOM nodes (vnodes).
+Sanal DOM düğümleri (vnode'lar) oluşturur.
 
-- **Type**
+- **Tür**
 
   ```ts
-  // full signature
+  // tam imza
   function h(
     type: string | Component,
     props?: object | null,
     children?: Children | Slot | Slots
   ): VNode
 
-  // omitting props
+  // prop'ları atlama
   function h(type: string | Component, children?: Children | Slot): VNode
 
   type Children = string | number | boolean | VNode | null | Children[]
@@ -24,98 +24,97 @@ Creates virtual DOM nodes (vnodes).
   type Slots = { [name: string]: Slot }
   ```
 
-  > Types are simplified for readability.
+  > Türler, okunabilirlik için basitleştirilmiştir.
 
-- **Details**
+- **Detaylar**
 
-  The first argument can either be a string (for native elements) or a Vue component definition. The second argument is the props to be passed, and the third argument is the children.
+  İlk argüman, bir string (yerel öğeler için) veya bir Vue bileşen tanımı olabilir. İkinci argüman, geçirilecek prop'lardır ve üçüncü argüman çocuklardır.
 
-  When creating a component vnode, the children must be passed as slot functions. A single slot function can be passed if the component expects only the default slot. Otherwise, the slots must be passed as an object of slot functions.
+  Bir bileşen vnode oluşturulurken, çocuklar slot fonksiyonları olarak geçirilmelidir. Bileşen yalnızca varsayılan slotu bekliyorsa tek bir slot fonksiyonu geçirilebilir. Aksi takdirde, slotlar slot fonksiyonlarından oluşan bir nesne olarak geçirilmelidir.
 
-  For convenience, the props argument can be omitted when the children is not a slots object.
+  Kolaylık olması için, çocuklar bir slot nesnesi olmadığında prop argümanı atlanabilir.
 
-- **Example**
+- **Örnek**
 
-  Creating native elements:
+  Yerel öğeler oluşturma:
 
   ```js
   import { h } from 'vue'
 
-  // all arguments except the type are optional
+  // tür dışındaki tüm argümanlar isteğe bağlıdır
   h('div')
   h('div', { id: 'foo' })
 
-  // both attributes and properties can be used in props
-  // Vue automatically picks the right way to assign it
-  h('div', { class: 'bar', innerHTML: 'hello' })
+  // hem özellikler hem de öznitelikler prop'larda kullanılabilir
+  // Vue, onu atamak için doğru yolu otomatik olarak seçer
+  h('div', { class: 'bar', innerHTML: 'merhaba' })
 
-  // class and style have the same object / array
-  // value support like in templates
+  // class ve style, şablonlardaki gibi aynı nesne / dizi
+  // değer desteğine sahiptir
   h('div', { class: [foo, { bar }], style: { color: 'red' } })
 
-  // event listeners should be passed as onXxx
+  // olay dinleyicileri onXxx olarak geçirilmelidir
   h('div', { onClick: () => {} })
 
-  // children can be a string
-  h('div', { id: 'foo' }, 'hello')
+  // çocuklar bir string olabilir
+  h('div', { id: 'foo' }, 'merhaba')
 
-  // props can be omitted when there are no props
-  h('div', 'hello')
-  h('div', [h('span', 'hello')])
+  // prop'lar olmadığında prop'lar atlanabilir
+  h('div', 'merhaba')
+  h('div', [h('span', 'merhaba')])
 
-  // children array can contain mixed vnodes and strings
-  h('div', ['hello', h('span', 'hello')])
+  // çocuklar dizisi, karışık vnode'lar ve stringler içerebilir
+  h('div', ['merhaba', h('span', 'merhaba')])
   ```
 
-  Creating components:
+  Bileşenler oluşturma:
 
   ```js
   import Foo from './Foo.vue'
 
-  // passing props
+  // prop'ları geçirme
   h(Foo, {
-    // equivalent of some-prop="hello"
-    someProp: 'hello',
-    // equivalent of @update="() => {}"
+    // some-prop="merhaba" ile eşdeğer
+    someProp: 'merhaba',
+    // @update="() => {}" ile eşdeğer
     onUpdate: () => {}
   })
 
-  // passing single default slot
-  h(Foo, () => 'default slot')
+  // tek varsayılan slot geçirme
+  h(Foo, () => 'varsayılan slot')
 
-  // passing named slots
-  // notice the `null` is required to avoid
-  // slots object being treated as props
+  // adlandırılmış slotlar geçirme
+  // slot nesnesinin prop'lar olarak değerlendirilmesini önlemek için `null` gereklidir
   h(MyComponent, null, {
-    default: () => 'default slot',
+    default: () => 'varsayılan slot',
     foo: () => h('div', 'foo'),
-    bar: () => [h('span', 'one'), h('span', 'two')]
+    bar: () => [h('span', 'bir'), h('span', 'iki')]
   })
   ```
 
-- **See also** [Guide - Render Functions - Creating VNodes](/guide/extras/render-function#creating-vnodes)
+- **Ayrıca bakınız** [Rehber - Render Fonksiyonları - VNode Oluşturma](/guide/extras/render-function#creating-vnodes)
 
 ## mergeProps() {#mergeprops}
 
-Merge multiple props objects with special handling for certain props.
+Belirli prop'lar için özel işlemeyle birden çok prop nesnesini birleştirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   function mergeProps(...args: object[]): object
   ```
 
-- **Details**
+- **Detaylar**
 
-  `mergeProps()` supports merging multiple props objects with special handling for the following props:
+  `mergeProps()`, aşağıdaki prop'lar için özel işlemeyle birden çok prop nesnesini birleştirmeyi destekler:
 
   - `class`
   - `style`
-  - `onXxx` event listeners - multiple listeners with the same name will be merged into an array.
+  - `onXxx` olay dinleyicileri - aynı ada sahip birden çok dinleyici bir dizi halinde birleştirilecektir.
 
-  If you do not need the merge behavior and want simple overwrites, native object spread can be used instead.
+  Birleştirme davranışına ihtiyacınız yoksa ve basit üzerine yazmalar istiyorsanız, bunun yerine yerel nesne yayılımı kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```js
   import { mergeProps } from 'vue'
@@ -141,23 +140,23 @@ Merge multiple props objects with special handling for certain props.
 
 ## cloneVNode() {#clonevnode}
 
-Clones a vnode.
+Bir vnode'u klonlar.
 
-- **Type**
+- **Tür**
 
   ```ts
   function cloneVNode(vnode: VNode, extraProps?: object): VNode
   ```
 
-- **Details**
+- **Detaylar**
 
-  Returns a cloned vnode, optionally with extra props to merge with the original.
+  İsteğe bağlı olarak orijinaliyle birleştirilecek ekstra prop'larla birlikte klonlanmış bir vnode döndürür.
 
-  Vnodes should be considered immutable once created, and you should not mutate the props of an existing vnode. Instead, clone it with different / extra props.
+  Vnode'lar oluşturulduktan sonra değişmez olarak kabul edilmelidir ve mevcut bir vnode'un prop'larını değiştirmemelisiniz. Bunun yerine, farklı / ekstra prop'larla klonlayın.
 
-  Vnodes have special internal properties, so cloning them is not as simple as an object spread. `cloneVNode()` handles most of the internal logic.
+  Vnode'lar özel iç özelliklere sahiptir, bu nedenle onları klonlamak bir nesne yayılımı kadar basit değildir. `cloneVNode()`, iç mantığın çoğunu ele alır.
 
-- **Example**
+- **Örnek**
 
   ```js
   import { h, cloneVNode } from 'vue'
@@ -168,9 +167,9 @@ Clones a vnode.
 
 ## isVNode() {#isvnode}
 
-Checks if a value is a vnode.
+Bir değerin vnode olup olmadığını kontrol eder.
 
-- **Type**
+- **Tür**
 
   ```ts
   function isVNode(value: unknown): boolean
@@ -178,23 +177,23 @@ Checks if a value is a vnode.
 
 ## resolveComponent() {#resolvecomponent}
 
-For manually resolving a registered component by name.
+Kayıtlı bir bileşeni ada göre manuel olarak çözümlemek için.
 
-- **Type**
+- **Tür**
 
   ```ts
   function resolveComponent(name: string): Component | string
   ```
 
-- **Details**
+- **Detaylar**
 
-  **Note: you do not need this if you can import the component directly.**
+  **Not: Bileşeni doğrudan içe aktarabiliyorsanız buna ihtiyacınız yoktur.**
 
-  `resolveComponent()` must be called inside<span class="composition-api"> either `setup()` or</span> the render function in order to resolve from the correct component context.
+  `resolveComponent()`, doğru bileşen bağlamından çözümlemek için <span class="composition-api">ya `setup()` içinde ya da</span> render fonksiyonu içinde çağrılmalıdır.
 
-  If the component is not found, a runtime warning will be emitted, and the name string is returned.
+  Bileşen bulunamazsa, bir çalışma zamanı uyarısı verilir ve ad stringi döndürülür.
 
-- **Example**
+- **Örnek**
 
   <div class="composition-api">
 
@@ -228,33 +227,33 @@ For manually resolving a registered component by name.
 
   </div>
 
-- **See also** [Guide - Render Functions - Components](/guide/extras/render-function#components)
+- **Ayrıca bakınız** [Rehber - Render Fonksiyonları - Bileşenler](/guide/extras/render-function#components)
 
 ## resolveDirective() {#resolvedirective}
 
-For manually resolving a registered directive by name.
+Kayıtlı bir direktifi ada göre manuel olarak çözümlemek için.
 
-- **Type**
+- **Tür**
 
   ```ts
   function resolveDirective(name: string): Directive | undefined
   ```
 
-- **Details**
+- **Detaylar**
 
-  **Note: you do not need this if you can import the directive directly.**
+  **Not: Direktifi doğrudan içe aktarabiliyorsanız buna ihtiyacınız yoktur.**
 
-  `resolveDirective()` must be called inside<span class="composition-api"> either `setup()` or</span> the render function in order to resolve from the correct component context.
+  `resolveDirective()`, doğru bileşen bağlamından çözümlemek için <span class="composition-api">ya `setup()` içinde ya da</span> render fonksiyonu içinde çağrılmalıdır.
 
-  If the directive is not found, a runtime warning will be emitted, and the function returns `undefined`.
+  Direktif bulunamazsa, bir çalışma zamanı uyarısı verilir ve fonksiyon `undefined` döndürür.
 
-- **See also** [Guide - Render Functions - Custom Directives](/guide/extras/render-function#custom-directives)
+- **Ayrıca bakınız** [Rehber - Render Fonksiyonları - Özel Direktifler](/guide/extras/render-function#custom-directives)
 
 ## withDirectives() {#withdirectives}
 
-For adding custom directives to vnodes.
+Vnode'lara özel direktifler eklemek için.
 
-- **Type**
+- **Tür**
 
   ```ts
   function withDirectives(
@@ -262,7 +261,7 @@ For adding custom directives to vnodes.
     directives: DirectiveArguments
   ): VNode
 
-  // [Directive, value, argument, modifiers]
+  // [Direktif, değer, argüman, değiştiriciler]
   type DirectiveArguments = Array<
     | [Directive]
     | [Directive, any]
@@ -271,16 +270,16 @@ For adding custom directives to vnodes.
   >
   ```
 
-- **Details**
+- **Detaylar**
 
-  Wraps an existing vnode with custom directives. The second argument is an array of custom directives. Each custom directive is also represented as an array in the form of `[Directive, value, argument, modifiers]`. Tailing elements of the array can be omitted if not needed.
+  Mevcut bir vnode'u özel direktiflerle sarar. İkinci argüman, özel direktiflerden oluşan bir dizidir. Her özel direktif, `[Direktif, değer, argüman, değiştiriciler]` biçiminde bir dizi olarak da temsil edilir. Gerekli değilse dizinin sonundaki öğeler atlanabilir.
 
-- **Example**
+- **Örnek**
 
   ```js
   import { h, withDirectives } from 'vue'
 
-  // a custom directive
+  // özel bir direktif
   const pin = {
     mounted() {
       /* ... */
@@ -296,29 +295,29 @@ For adding custom directives to vnodes.
   ])
   ```
 
-- **See also** [Guide - Render Functions - Custom Directives](/guide/extras/render-function#custom-directives)
+- **Ayrıca bakınız** [Rehber - Render Fonksiyonları - Özel Direktifler](/guide/extras/render-function#custom-directives)
 
 ## withModifiers() {#withmodifiers}
 
-For adding built-in [`v-on` modifiers](/guide/essentials/event-handling#event-modifiers) to an event handler function.
+Bir olay işleyici fonksiyonuna yerleşik [`v-on` değiştiricileri](/guide/essentials/event-handling#event-modifiers) eklemek için.
 
-- **Type**
+- **Tür**
 
   ```ts
   function withModifiers(fn: Function, modifiers: ModifierGuardsKeys[]): Function
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   import { h, withModifiers } from 'vue'
 
   const vnode = h('button', {
-    // equivalent of v-on:click.stop.prevent
+    // v-on:click.stop.prevent ile eşdeğer
     onClick: withModifiers(() => {
       // ...
     }, ['stop', 'prevent'])
   })
   ```
 
-- **See also** [Guide - Render Functions - Event Modifiers](/guide/extras/render-function#event-modifiers)
+- **Ayrıca bakınız** [Rehber - Render Fonksiyonları - Olay Değiştiricileri](/guide/extras/render-function#event-modifiers)

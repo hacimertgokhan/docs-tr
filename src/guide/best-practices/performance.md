@@ -2,99 +2,99 @@
 outline: deep
 ---
 
-# Performance {#performance}
+# Performans {#performans}
 
-## Overview {#overview}
+## Genel Bakış {#genel-bakış}
 
-Vue is designed to be performant for most common use cases without much need for manual optimizations. However, there are always challenging scenarios where extra fine-tuning is needed. In this section, we will discuss what you should pay attention to when it comes to performance in a Vue application.
+Vue, manuel optimizasyonlara fazla ihtiyaç duymadan en yaygın kullanım durumları için performanslı olacak şekilde tasarlanmıştır. Ancak, ekstra ince ayar yapılması gereken zorlu senaryolar her zaman vardır. Bu bölümde, Vue uygulamasında performans söz konusu olduğunda nelere dikkat etmeniz gerektiğini tartışacağız.
 
-First, let's discuss the two major aspects of web performance:
+Öncelikle, web performansının iki ana yönünü tartışalım:
 
-- **Page Load Performance**: how fast the application shows content and becomes interactive on the initial visit. This is usually measured using web vital metrics like [Largest Contentful Paint (LCP)](https://web.dev/lcp/) and [First Input Delay (FID)](https://web.dev/fid/).
+-   **Sayfa Yükleme Performansı**: Uygulamanın ilk ziyarette içeriği ne kadar hızlı gösterdiği ve etkileşimli hale geldiği. Bu genellikle [En Büyük İçerikli Boyama (LCP)](https://web.dev/lcp/) ve [İlk Giriş Gecikmesi (FID)](https://web.dev/fid/) gibi temel web metrikleri kullanılarak ölçülür.
 
-- **Update Performance**: how fast the application updates in response to user input. For example, how fast a list updates when the user types in a search box, or how fast the page switches when the user clicks a navigation link in a Single-Page Application (SPA).
+-   **Güncelleme Performansı**: Uygulamanın kullanıcı girdisine yanıt olarak ne kadar hızlı güncellendiği. Örneğin, kullanıcı bir arama kutusuna yazdığında bir liste ne kadar hızlı güncellenir veya kullanıcı Tek Sayfa Uygulamasında (SPA) bir gezinme bağlantısını tıkladığında sayfa ne kadar hızlı değişir.
 
-While it would be ideal to maximize both, different frontend architectures tend to affect how easy it is to attain desired performance in these aspects. In addition, the type of application you are building greatly influences what you should prioritize in terms of performance. Therefore, the first step of ensuring optimal performance is picking the right architecture for the type of application you are building:
+Her ikisini de en üst düzeye çıkarmak ideal olsa da, farklı ön uç mimarileri bu yönlerde istenen performansı elde etmeyi ne kadar kolay etkilemektedir. Ek olarak, oluşturduğunuz uygulama türü, performans açısından neleri önceliklendirmeniz gerektiğini büyük ölçüde etkiler. Bu nedenle, optimum performansı sağlamanın ilk adımı, oluşturduğunuz uygulama türü için doğru mimariyi seçmektir:
 
-- Consult [Ways of Using Vue](/guide/extras/ways-of-using-vue) to see how you can leverage Vue in different ways.
+-   Vue'yu farklı şekillerde nasıl kullanabileceğinizi görmek için [Vue Kullanım Yolları](/guide/extras/ways-of-using-vue) bölümüne bakın.
 
-- Jason Miller discusses the types of web applications and their respective ideal implementation / delivery in [Application Holotypes](https://jasonformat.com/application-holotypes/).
+-   Jason Miller, [Uygulama Holotipleri](https://jasonformat.com/application-holotypes/) bölümünde web uygulamalarının türlerini ve bunların ilgili ideal uygulama/teslimatını tartışıyor.
 
-## Profiling Options {#profiling-options}
+## Profilleme Seçenekleri {#profilleme-seçenekleri}
 
-To improve performance, we need to first know how to measure it. There are a number of great tools that can help in this regard:
+Performansı artırmak için öncelikle onu nasıl ölçeceğimizi bilmemiz gerekir. Bu konuda yardımcı olabilecek bir dizi harika araç var:
 
-For profiling load performance of production deployments:
+Üretim dağıtımlarının yükleme performansını profillemek için:
 
-- [PageSpeed Insights](https://pagespeed.web.dev/)
-- [WebPageTest](https://www.webpagetest.org/)
+-   [PageSpeed Insights](https://pagespeed.web.dev/)
+-   [WebPageTest](https://www.webpagetest.org/)
 
-For profiling performance during local development:
+Yerel geliştirme sırasında performansı profillemek için:
 
-- [Chrome DevTools Performance Panel](https://developer.chrome.com/docs/devtools/evaluate-performance/)
-  - [`app.config.performance`](/api/application#app-config-performance) enables Vue-specific performance markers in Chrome DevTools' performance timeline.
-- [Vue DevTools Extension](/guide/scaling-up/tooling#browser-devtools) also provides a performance profiling feature.
+-   [Chrome DevTools Performans Paneli](https://developer.chrome.com/docs/devtools/evaluate-performance/)
+  -   [`app.config.performance`](/api/application#app-config-performance), Chrome DevTools'un performans zaman çizelgesinde Vue'ya özgü performans işaretleyicilerini etkinleştirir.
+-   [Vue DevTools Uzantısı](/guide/scaling-up/tooling#browser-devtools) da bir performans profilleme özelliği sağlar.
 
-## Page Load Optimizations {#page-load-optimizations}
+## Sayfa Yükleme Optimizasyonları {#sayfa-yükleme-optimizasyonları}
 
-There are many framework-agnostic aspects for optimizing page load performance - check out [this web.dev guide](https://web.dev/fast/) for a comprehensive round up. Here, we will primarily focus on techniques that are specific to Vue.
+Sayfa yükleme performansını optimize etmek için birçok çerçeveden bağımsız yön vardır - kapsamlı bir özet için [bu web.dev kılavuzuna](https://web.dev/fast/) göz atın. Burada, öncelikle Vue'ya özgü tekniklere odaklanacağız.
 
-### Choosing the Right Architecture {#choosing-the-right-architecture}
+### Doğru Mimarinin Seçilmesi {#doğru-mimarinin-seçilmesi}
 
-If your use case is sensitive to page load performance, avoid shipping it as a pure client-side SPA. You want your server to be directly sending HTML containing the content the users want to see. Pure client-side rendering suffers from slow time-to-content. This can be mitigated with [Server-Side Rendering (SSR)](/guide/extras/ways-of-using-vue#fullstack-ssr) or [Static Site Generation (SSG)](/guide/extras/ways-of-using-vue#jamstack-ssg). Check out the [SSR Guide](/guide/scaling-up/ssr) to learn about performing SSR with Vue. If your app doesn't have rich interactivity requirements, you can also use a traditional backend server to render the HTML and enhance it with Vue on the client.
+Kullanım durumunuz sayfa yükleme performansına duyarlıysa, onu saf bir istemci tarafı SPA olarak göndermekten kaçının. Sunucunuzun, kullanıcıların görmek istediği içeriği içeren HTML'yi doğrudan göndermesini istersiniz. Saf istemci tarafı oluşturma, içeriğe yavaş ulaşma süresinden muzdariptir. Bu, [Sunucu Tarafı Oluşturma (SSR)](/guide/extras/ways-of-using-vue#fullstack-ssr) veya [Statik Site Üretimi (SSG)](/guide/extras/ways-of-using-vue#jamstack-ssg) ile hafifletilebilir. Vue ile SSR'yi gerçekleştirme hakkında bilgi edinmek için [SSR Kılavuzuna](/guide/scaling-up/ssr) göz atın. Uygulamanızın zengin etkileşim gereksinimleri yoksa, HTML'yi işlemek ve istemcide Vue ile geliştirmek için geleneksel bir arka uç sunucusu da kullanabilirsiniz.
 
-If your main application has to be an SPA, but has marketing pages (landing, about, blog), ship them separately! Your marketing pages should ideally be deployed as static HTML with minimal JS, by using SSG.
+Ana uygulamanızın bir SPA olması gerekiyorsa, ancak pazarlama sayfaları (açılış, hakkında, blog) varsa, bunları ayrı olarak gönderin! Pazarlama sayfalarınız ideal olarak SSG kullanılarak minimum JS ile statik HTML olarak dağıtılmalıdır.
 
-### Bundle Size and Tree-shaking {#bundle-size-and-tree-shaking}
+### Paket Boyutu ve Ağaç Sallama {#paket-boyutu-ve-ağaç-sallama}
 
-One of the most effective ways to improve page load performance is shipping smaller JavaScript bundles. Here are a few ways to reduce bundle size when using Vue:
+Sayfa yükleme performansını iyileştirmenin en etkili yollarından biri daha küçük JavaScript paketleri göndermektir. Vue kullanırken paket boyutunu azaltmanın birkaç yolu şunlardır:
 
-- Use a build step if possible.
+-   Mümkünse bir derleme adımı kullanın.
 
-  - Many of Vue's APIs are ["tree-shakable"](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) if bundled via a modern build tool. For example, if you don't use the built-in `<Transition>` component, it won't be included in the final production bundle. Tree-shaking can also remove other unused modules in your source code.
+  -   Vue'nun API'lerinin çoğu, modern bir derleme aracıyla paketlenirse ["ağaç sallanabilir"](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking). Örneğin, yerleşik `<Transition>` bileşenini kullanmazsanız, son üretim paketine dahil edilmez. Ağaç sallama, kaynak kodunuzdaki diğer kullanılmayan modülleri de kaldırabilir.
 
-  - When using a build step, templates are pre-compiled so we don't need to ship the Vue compiler to the browser. This saves **14kb** min+gzipped JavaScript and avoids the runtime compilation cost.
+  -   Bir derleme adımı kullanırken, şablonlar önceden derlenir, böylece Vue derleyicisini tarayıcıya göndermemiz gerekmez. Bu, **14 kb** min+gzipped JavaScript'i kurtarır ve çalışma zamanı derleme maliyetinden kaçınır.
 
-- Be cautious of size when introducing new dependencies! In real-world applications, bloated bundles are most often a result of introducing heavy dependencies without realizing it.
+-   Yeni bağımlılıklar tanıtırken boyut konusunda dikkatli olun! Gerçek dünya uygulamalarında, şişirilmiş paketler en sık farkında olmadan ağır bağımlılıklar tanıtmanın bir sonucudur.
 
-  - If using a build step, prefer dependencies that offer ES module formats and are tree-shaking friendly. For example, prefer `lodash-es` over `lodash`.
+  -   Bir derleme adımı kullanılıyorsa, ES modülü biçimleri sunan ve ağaç sallamaya uygun olan bağımlılıkları tercih edin. Örneğin, `lodash` yerine `lodash-es` tercih edin.
 
-  - Check a dependency's size and evaluate whether it is worth the functionality it provides. Note if the dependency is tree-shaking friendly, the actual size increase will depend on the APIs you actually import from it. Tools like [bundlejs.com](https://bundlejs.com/) can be used for quick checks, but measuring with your actual build setup will always be the most accurate.
+  -   Bir bağımlılığın boyutunu kontrol edin ve sağladığı işlevselliğe değip değmediğini değerlendirin. Bağımlılığın ağaç sallamaya uygun olup olmadığını unutmayın; gerçek boyut artışı, ondan gerçekten içe aktardığınız API'lere bağlı olacaktır. [bundlejs.com](https://bundlejs.com/) gibi araçlar hızlı kontroller için kullanılabilir, ancak gerçek derleme kurulumunuzla ölçüm yapmak her zaman en doğru olacaktır.
 
-- If you are using Vue primarily for progressive enhancement and prefer to avoid a build step, consider using [petite-vue](https://github.com/vuejs/petite-vue) (only **6kb**) instead.
+-   Öncelikle aşamalı geliştirme için Vue kullanıyorsanız ve bir derleme adımından kaçınmayı tercih ediyorsanız, bunun yerine [petite-vue](https://github.com/vuejs/petite-vue) (**yalnızca 6kb**) kullanmayı düşünün.
 
-### Code Splitting {#code-splitting}
+### Kod Bölme {#kod-bölme}
 
-Code splitting is where a build tool splits the application bundle into multiple smaller chunks, which can then be loaded on demand or in parallel. With proper code splitting, features required at page load can be downloaded immediately, with additional chunks being lazy loaded only when needed, thus improving performance.
+Kod bölme, bir derleme aracının uygulama paketini daha küçük, birden çok parçaya böldüğü ve bunların daha sonra isteğe bağlı olarak veya paralel olarak yüklenebildiği yerdir. Doğru kod bölme ile, sayfa yüklemede gerekli özellikler hemen indirilebilir, ek parçalar yalnızca gerektiğinde tembel bir şekilde yüklenir, böylece performans artırılır.
 
-Bundlers like Rollup (which Vite is based upon) or webpack can automatically create split chunks by detecting the ESM dynamic import syntax:
+Rollup (Vite'nin dayandığı) veya webpack gibi paketleyiciler, ESM dinamik içe aktarma sözdizimini algılayarak otomatik olarak bölünmüş parçalar oluşturabilir:
 
 ```js
-// lazy.js and its dependencies will be split into a separate chunk
-// and only loaded when `loadLazy()` is called.
+// lazy.js ve bağımlılıkları ayrı bir parçaya bölünecek
+// ve yalnızca `loadLazy()` çağrıldığında yüklenecek.
 function loadLazy() {
   return import('./lazy.js')
 }
 ```
 
-Lazy loading is best used on features that are not immediately needed after initial page load. In Vue applications, this can be used in combination with Vue's [Async Component](/guide/components/async) feature to create split chunks for component trees:
+Tembel yükleme, ilk sayfa yüklemesinden hemen sonra gerekli olmayan özelliklerde en iyi şekilde kullanılır. Vue uygulamalarında bu, bileşen ağaçları için bölünmüş parçalar oluşturmak için Vue'nun [Eşzamansız Bileşen](/guide/components/async) özelliğiyle birlikte kullanılabilir:
 
 ```js
 import { defineAsyncComponent } from 'vue'
 
-// a separate chunk is created for Foo.vue and its dependencies.
-// it is only fetched on demand when the async component is
-// rendered on the page.
+// Foo.vue ve bağımlılıkları için ayrı bir parça oluşturulur.
+// yalnızca eşzamansız bileşen
+// sayfada işlendiğinde isteğe bağlı olarak getirilir.
 const Foo = defineAsyncComponent(() => import('./Foo.vue'))
 ```
 
-For applications using Vue Router, it is strongly recommended to use lazy loading for route components. Vue Router has explicit support for lazy loading, separate from `defineAsyncComponent`. See [Lazy Loading Routes](https://router.vuejs.org/guide/advanced/lazy-loading.html) for more details.
+Vue Router kullanan uygulamalar için, rota bileşenleri için tembel yükleme kullanılması şiddetle tavsiye edilir. Vue Router, `defineAsyncComponent`'ten ayrı olarak tembel yükleme için açık desteğe sahiptir. Daha fazla ayrıntı için [Tembel Yükleme Rotaları](https://router.vuejs.org/guide/advanced/lazy-loading.html) bölümüne bakın.
 
-## Update Optimizations {#update-optimizations}
+## Güncelleme Optimizasyonları {#güncelleme-optimizasyonları}
 
-### Props Stability {#props-stability}
+### Prop İstikrarı {#prop-istikrarı}
 
-In Vue, a child component only updates when at least one of its received props has changed. Consider the following example:
+Vue'da, bir alt bileşen yalnızca aldığı prop'larından en az biri değiştiğinde güncellenir. Aşağıdaki örneği inceleyin:
 
 ```vue-html
 <ListItem
@@ -103,9 +103,9 @@ In Vue, a child component only updates when at least one of its received props h
   :active-id="activeId" />
 ```
 
-Inside the `<ListItem>` component, it uses its `id` and `activeId` props to determine whether it is the currently active item. While this works, the problem is that whenever `activeId` changes, **every** `<ListItem>` in the list has to update!
+`<ListItem>` bileşeninin içinde, o anda etkin olan öğe olup olmadığını belirlemek için `id` ve `activeId` prop'larını kullanır. Bu işe yararken sorun şu ki, `activeId` her değiştiğinde listedeki **her** `<ListItem>`'ın güncellenmesi gerekiyor!
 
-Ideally, only the items whose active status changed should update. We can achieve that by moving the active status computation into the parent, and make `<ListItem>` directly accept an `active` prop instead:
+İdeal olarak, yalnızca etkin durumu değişen öğeler güncellenmelidir. Etkin durum hesaplamasını ana öğeye taşıyarak ve `<ListItem>`'ın bunun yerine doğrudan bir `active` prop'u kabul etmesini sağlayarak bunu başarabiliriz:
 
 ```vue-html
 <ListItem
@@ -114,19 +114,19 @@ Ideally, only the items whose active status changed should update. We can achiev
   :active="item.id === activeId" />
 ```
 
-Now, for most components the `active` prop will remain the same when `activeId` changes, so they no longer need to update. In general, the idea is keeping the props passed to child components as stable as possible.
+Şimdi, çoğu bileşen için `active` prop'u `activeId` değiştiğinde aynı kalacak, bu nedenle artık güncellenmeleri gerekmiyor. Genel olarak, fikir, alt bileşenlere geçirilen prop'ları olabildiğince kararlı tutmaktır.
 
 ### `v-once` {#v-once}
 
-`v-once` is a built-in directive that can be used to render content that relies on runtime data but never needs to update. The entire sub-tree it is used on will be skipped for all future updates. Consult its [API reference](/api/built-in-directives#v-once) for more details.
+`v-once`, çalışma zamanı verilerine dayanan ancak asla güncellenmesi gerekmeyen içeriği işlemek için kullanılabilen yerleşik bir direktiftir. Üzerinde kullanıldığı tüm alt ağaç, gelecekteki tüm güncellemeler için atlanacaktır. Daha fazla ayrıntı için [API referansına](/api/built-in-directives#v-once) bakın.
 
 ### `v-memo` {#v-memo}
 
-`v-memo` is a built-in directive that can be used to conditionally skip the update of large sub-trees or `v-for` lists. Consult its [API reference](/api/built-in-directives#v-memo) for more details.
+`v-memo`, büyük alt ağaçların veya `v-for` listelerinin güncellenmesini koşullu olarak atlamak için kullanılabilen yerleşik bir direktiftir. Daha fazla ayrıntı için [API referansına](/api/built-in-directives#v-memo) bakın.
 
-### Computed Stability {#computed-stability}
+### Hesaplanan İstikrar {#hesaplanan-istikrar}
 
-In Vue 3.4 and above, a computed property will only trigger effects when its computed value has changed from the previous one. For example, the following `isEven` computed only triggers effects if the returned value has changed from `true` to `false`, or vice-versa:
+Vue 3.4 ve üzeri sürümlerde, hesaplanmış bir özellik yalnızca hesaplanan değeri bir öncekinden değiştiğinde efektleri tetikler. Örneğin, aşağıdaki `isEven` hesaplanmış özelliği, döndürülen değer `true` değerinden `false` değerine veya tam tersi şekilde değiştiyse efektleri tetikler:
 
 ```js
 const count = ref(0)
@@ -134,12 +134,12 @@ const isEven = computed(() => count.value % 2 === 0)
 
 watchEffect(() => console.log(isEven.value)) // true
 
-// will not trigger new logs because the computed value stays `true`
+// hesaplanan değer `true` olarak kaldığı için yeni günlükleri tetiklemeyecek
 count.value = 2
 count.value = 4
 ```
 
-This reduces unnecessary effect triggers, but unfortunately doesn't work if the computed creates a new object on each compute:
+Bu, gereksiz efekt tetikleyicilerini azaltır, ancak hesaplanan her hesaplamada yeni bir nesne oluşturursa ne yazık ki işe yaramaz:
 
 ```js
 const computedObj = computed(() => {
@@ -149,9 +149,9 @@ const computedObj = computed(() => {
 })
 ```
 
-Because a new object is created each time, the new value is technically always different from the old value. Even if the `isEven` property remains the same, Vue won't be able to know unless it performs a deep comparison of the old value and the new value. Such comparison could be expensive and likely not worth it.
+Her seferinde yeni bir nesne oluşturulduğundan, yeni değer teknik olarak her zaman eski değerden farklıdır. `isEven` özelliği aynı kalsa bile, Vue eski değeri ve yeni değeri derinlemesine karşılaştırmadıkça bunu bilemez. Bu tür bir karşılaştırma pahalı olabilir ve büyük olasılıkla buna değmez.
 
-Instead, we can optimize this by manually comparing the new value with the old value, and conditionally returning the old value if we know nothing has changed:
+Bunun yerine, yeni değeri eski değerle manuel olarak karşılaştırarak ve hiçbir şeyin değişmediğini biliyorsak koşullu olarak eski değeri döndürerek bunu optimize edebiliriz:
 
 ```js
 const computedObj = computed((oldValue) => {
@@ -165,45 +165,45 @@ const computedObj = computed((oldValue) => {
 })
 ```
 
-[Try it in the playground](https://play.vuejs.org/#eNqVVMtu2zAQ/JUFgSZK4UpuczMkow/40AJ9IC3aQ9mDIlG2EokUyKVt1PC/d0lKtoEminMQQC1nZ4c7S+7Yu66L11awGUtNoesOwQi03ZzLuu2URtiBFtUECtV2FkU5gU2OxWpRVaJA2EOlVQuXxHDJJZeFkgYJayVC5hKj6dUxLnzSjZXmV40rZfFrh3Vb/82xVrLH//5DCQNNKPkweNiNVFP+zBsrIJvDjksgGrRahjVAbRZrIWdBVLz2yBfwBrIsg6mD7LncPyryfIVnywupUmz68HOEEqqCI+XFBQzrOKR79MDdx66GCn1jhpQDZx8f0oZ+nBgdRVcH/aMuBt1xZ80qGvGvh/X6nlXwnGpPl6qsLLxTtitzFFTNl0oSN/79AKOCHHQuS5pw4XorbXsr9ImHZN7nHFdx1SilI78MeOJ7Ca+nbvgd+GgomQOv6CNjSQqXaRJuHd03+kHRdg3JoT+A3a7XsfcmpbcWkQS/LZq6uM84C8o5m4fFuOg0CemeOXXX2w2E6ylsgj2gTgeYio/f1l5UEqj+Z3yC7lGuNDlpApswNNTrql7Gd0ZJeqW8TZw5t+tGaMdDXnA2G4acs7xp1OaTj6G2YjLEi5Uo7h+I35mti3H2TQsj9Jp6etjDXC8Fhu3F9y9iS+vDZqtK2xB6ZPNGGNVYpzHA3ltZkuwTnFf70b+1tVz+MIstCmmGQzmh/p56PGf00H4YOfpR7nV8PTxubP8P2GAP9Q==)
+[Oyun alanında deneyin](https://play.vuejs.org/#eNqVVMtu2zAQ/JUFgSZK4UpuczMkow/40AJ9IC3aQ9mDIlG2EokUyKVt1PC/d0lKtoEminMQQC1nZ4c7S+7Yu66L11awGUtNoesOwQi03ZzLuu2URtiBFtUECtV2FkU5gU2OxWpRVaJA2EOlVQuXxHDJJZeFkgYJayVC5hKj6dUxLnzSjZXmV40rZfFrh3Vb/82xVrLH//5DCQNNKPkweNiNVFP+zBsrIJvDjksgGrRahjVAbRZrIWdBVLz2yBfwBrIsg6mD7LncPyryfIVnywupUmz68HOEEqqCI+XFBQzrOKR79MDdx66GCn1jhpQDZx8f0oZ+nBgdRVcH/aMuBt1xZ80qGvGvh/X6nlXwnGpPl6qsLLxTtitzFFTNl0oSN/79AKOCHHQuS5pw4XorbXsr9ImHZN7nHFdx1SilI78MeOJ7Ca+nbvgd+GgomQOv6CNjSQqXaRJuHd03+kHRdg3JoT+A3a7XsfcmpbcWkQS/LZq6uM84C8o5m4fFuOg0CemeOXXX2w2E6ylsgj2gTgeYio/f1l5UEqj+Z3yC7lGuNDlpApswNNTrql7Gd0ZJeqW8TZw5t+tGaMdDXnA2G4acs7xp1OaTj6G2YjLEi5Uo7h+I35mti3H2TQsj9Jp6etjDXC8Fhu3F9y9iS+vDZqtK2xB6ZPNGGNVYpzHA3ltZkuwTnFf70b+1tVz+MIstCmmGQzmh/p56PGf00H4YOfpR7nV8PTxubP8P2GAP9Q==)
 
-Note that you should always perform the full computation before comparing and returning the old value, so that the same dependencies can be collected on every run.
+Eski değeri karşılaştırmadan ve döndürmeden önce her zaman tam hesaplamayı yapmanız gerektiğini unutmayın, böylece her çalıştırmada aynı bağımlılıklar toplanabilir.
 
-## General Optimizations {#general-optimizations}
+## Genel Optimizasyonlar {#genel-optimizasyonlar}
 
-> The following tips affect both page load and update performance.
+> Aşağıdaki ipuçları hem sayfa yükleme hem de güncelleme performansını etkiler.
 
-### Virtualize Large Lists {#virtualize-large-lists}
+### Büyük Listeleri Sanallaştırma {#büyük-listeleri-sanallaştırma}
 
-One of the most common performance issues in all frontend applications is rendering large lists. No matter how performant a framework is, rendering a list with thousands of items **will** be slow due to the sheer number of DOM nodes that the browser needs to handle.
+Tüm ön uç uygulamalarındaki en yaygın performans sorunlarından biri büyük listeleri işlemektir. Bir çerçeve ne kadar performanslı olursa olsun, tarayıcının işlemesi gereken çok sayıda DOM düğümü nedeniyle binlerce öğe içeren bir liste işlemek **yavaş** olacaktır.
 
-However, we don't necessarily have to render all these nodes upfront. In most cases, the user's screen size can display only a small subset of our large list. We can greatly improve the performance with **list virtualization**, the technique of only rendering the items that are currently in or close to the viewport in a large list.
+Ancak, tüm bu düğümleri önceden oluşturmamız gerekmez. Çoğu durumda, kullanıcının ekran boyutu, büyük listemizin yalnızca küçük bir alt kümesini görüntüleyebilir. Büyük bir listede yalnızca mevcut görüntü alanında veya yakında bulunan öğeleri işleme tekniği olan **liste sanallaştırma** ile performansı büyük ölçüde iyileştirebiliriz.
 
-Implementing list virtualization isn't easy, luckily there are existing community libraries that you can directly use:
+Liste sanallaştırmasını uygulamak kolay değildir, neyse ki doğrudan kullanabileceğiniz mevcut topluluk kitaplıkları vardır:
 
-- [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller)
-- [vue-virtual-scroll-grid](https://github.com/rocwang/vue-virtual-scroll-grid)
-- [vueuc/VVirtualList](https://github.com/07akioni/vueuc)
+-   [vue-virtual-scroller](https://github.com/Akryum/vue-virtual-scroller)
+-   [vue-virtual-scroll-grid](https://github.com/rocwang/vue-virtual-scroll-grid)
+-   [vueuc/VVirtualList](https://github.com/07akioni/vueuc)
 
-### Reduce Reactivity Overhead for Large Immutable Structures {#reduce-reactivity-overhead-for-large-immutable-structures}
+### Büyük Değişmez Yapılar İçin Reaktivite Yükünü Azaltma {#büyük-değişmez-yapılar-için-reaktivite-yükünü-azaltma}
 
-Vue's reactivity system is deep by default. While this makes state management intuitive, it does create a certain level of overhead when the data size is large, because every property access triggers proxy traps that perform dependency tracking. This typically becomes noticeable when dealing with large arrays of deeply nested objects, where a single render needs to access 100,000+ properties, so it should only affect very specific use cases.
+Vue'nun reaktivite sistemi varsayılan olarak derindir. Bu, durum yönetimini sezgisel hale getirirken, veri boyutu büyük olduğunda belirli bir düzeyde yük oluşturur, çünkü her özellik erişimi, bağımlılık izlemesi gerçekleştiren proxy tuzaklarını tetikler. Bu, genellikle, tek bir işlemin 100.000'den fazla özelliğe erişmesi gereken derin iç içe yerleştirilmiş nesnelerin büyük dizileriyle uğraşırken fark edilir hale gelir, bu nedenle yalnızca çok özel kullanım durumlarını etkilemelidir.
 
-Vue does provide an escape hatch to opt-out of deep reactivity by using [`shallowRef()`](/api/reactivity-advanced#shallowref) and [`shallowReactive()`](/api/reactivity-advanced#shallowreactive). Shallow APIs create state that is reactive only at the root level, and exposes all nested objects untouched. This keeps nested property access fast, with the trade-off being that we must now treat all nested objects as immutable, and updates can only be triggered by replacing the root state:
+Vue, [`shallowRef()`](/api/reactivity-advanced#shallowref) ve [`shallowReactive()`](/api/reactivity-advanced#shallowreactive) kullanarak derin reaktiviteden vazgeçmek için bir çıkış yolu sağlar. Sığ API'ler yalnızca kök düzeyinde reaktif olan ve tüm iç içe yerleştirilmiş nesneleri dokunulmamış olarak ortaya çıkaran bir durum oluşturur. Bu, tüm iç içe yerleştirilmiş nesneleri değiştirilemez olarak ele almamız ve güncellemelerin yalnızca kök durumu değiştirerek tetiklenebileceği ticareti ile iç içe yerleştirilmiş özellik erişimini hızlı tutar:
 
 ```js
 const shallowArray = shallowRef([
-  /* big list of deep objects */
+  /* derin nesnelerin büyük listesi */
 ])
 
-// this won't trigger updates...
+// bu güncellemeleri tetiklemeyecek...
 shallowArray.value.push(newObject)
-// this does:
+// bu tetikleyecek:
 shallowArray.value = [...shallowArray.value, newObject]
 
-// this won't trigger updates...
+// bu güncellemeleri tetiklemeyecek...
 shallowArray.value[0].foo = 1
-// this does:
+// bu tetikleyecek:
 shallowArray.value = [
   {
     ...shallowArray.value[0],
@@ -213,8 +213,8 @@ shallowArray.value = [
 ]
 ```
 
-### Avoid Unnecessary Component Abstractions {#avoid-unnecessary-component-abstractions}
+### Gereksiz Bileşen Soyutlamalarından Kaçının {#gereksiz-bileşen-soyutlamalarından-kaçının}
 
-Sometimes we may create [renderless components](/guide/components/slots#renderless-components) or higher-order components (i.e. components that render other components with extra props) for better abstraction or code organization. While there is nothing wrong with this, do keep in mind that component instances are much more expensive than plain DOM nodes, and creating too many of them due to abstraction patterns will incur performance costs.
+Bazen daha iyi soyutlama veya kod organizasyonu için [rendersiz bileşenler](/guide/components/slots#renderless-components) veya yüksek sıralı bileşenler (yani, diğer bileşenleri ekstra prop'larla işleyen bileşenler) oluşturabiliriz. Bunda yanlış bir şey olmamakla birlikte, bileşen örneklerinin düz DOM düğümlerinden çok daha maliyetli olduğunu ve soyutlama kalıpları nedeniyle çok fazla oluşturmanın performans maliyetlerine neden olacağını unutmayın.
 
-Note that reducing only a few instances won't have noticeable effect, so don't sweat it if the component is rendered only a few times in the app. The best scenario to consider this optimization is again in large lists. Imagine a list of 100 items where each item component contains many child components. Removing one unnecessary component abstraction here could result in a reduction of hundreds of component instances.
+Yalnızca birkaç örneğin azaltılmasının fark edilir bir etkisi olmayacağını unutmayın, bu nedenle bileşen uygulamada yalnızca birkaç kez işleniyorsa endişelenmeyin. Bu optimizasyonu değerlendirmek için en iyi senaryo yine büyük listelerdedir. Her öğe bileşeninin birçok alt bileşen içerdiği 100 öğelik bir liste hayal edin. Burada gereksiz bir bileşen soyutlamasını kaldırmak, yüzlerce bileşen örneğinin azaltılmasıyla sonuçlanabilir.

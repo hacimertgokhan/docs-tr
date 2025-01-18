@@ -1,8 +1,8 @@
-# SFC CSS Features {#sfc-css-features}
+# SFC CSS Özellikleri {#sfc-css-features}
 
-## Scoped CSS {#scoped-css}
+## Kapsamlı CSS {#scoped-css}
 
-When a `<style>` tag has the `scoped` attribute, its CSS will apply to elements of the current component only. This is similar to the style encapsulation found in Shadow DOM. It comes with some caveats, but doesn't require any polyfills. It is achieved by using PostCSS to transform the following:
+Bir `<style>` etiketinde `scoped` özelliği varsa, CSS'i yalnızca geçerli bileşenin öğelerine uygulanır. Bu, Shadow DOM'da bulunan stil kapsüllemeye benzer. Bazı uyarılarla birlikte gelir, ancak herhangi bir polifil gerektirmez. Aşağıdakileri dönüştürmek için PostCSS kullanılarak elde edilir:
 
 ```vue
 <style scoped>
@@ -12,11 +12,11 @@ When a `<style>` tag has the `scoped` attribute, its CSS will apply to elements 
 </style>
 
 <template>
-  <div class="example">hi</div>
+  <div class="example">merhaba</div>
 </template>
 ```
 
-Into the following:
+Aşağıdaki şekilde:
 
 ```vue
 <style>
@@ -26,17 +26,17 @@ Into the following:
 </style>
 
 <template>
-  <div class="example" data-v-f3f3eg9>hi</div>
+  <div class="example" data-v-f3f3eg9>merhaba</div>
 </template>
 ```
 
-### Child Component Root Elements {#child-component-root-elements}
+### Alt Bileşen Kök Öğeleri {#child-component-root-elements}
 
-With `scoped`, the parent component's styles will not leak into child components. However, a child component's root node will be affected by both the parent's scoped CSS and the child's scoped CSS. This is by design so that the parent can style the child root element for layout purposes.
+`scoped` ile üst bileşenin stilleri alt bileşenlere sızmaz. Ancak, bir alt bileşenin kök düğümü hem üst öğenin kapsamlı CSS'sinden hem de alt öğenin kapsamlı CSS'sinden etkilenecektir. Bu, üst öğenin düzen amaçları için alt kök öğesini stillendirebilmesi için tasarlanmıştır.
 
-### Deep Selectors {#deep-selectors}
+### Derin Seçiciler {#deep-selectors}
 
-If you want a selector in `scoped` styles to be "deep", i.e. affecting child components, you can use the `:deep()` pseudo-class:
+`scoped` stillerinde bir seçicinin "derin" olmasını, yani alt bileşenleri etkilemesini istiyorsanız, `:deep()` sözde sınıfını kullanabilirsiniz:
 
 ```vue
 <style scoped>
@@ -46,7 +46,7 @@ If you want a selector in `scoped` styles to be "deep", i.e. affecting child com
 </style>
 ```
 
-The above will be compiled into:
+Yukarıdaki aşağıdaki gibi derlenecektir:
 
 ```css
 .a[data-v-f3f3eg9] .b {
@@ -55,12 +55,12 @@ The above will be compiled into:
 ```
 
 :::tip
-DOM content created with `v-html` are not affected by scoped styles, but you can still style them using deep selectors.
+`v-html` ile oluşturulan DOM içeriği, kapsamlı stillerden etkilenmez, ancak yine de derin seçiciler kullanarak onları stillendirebilirsiniz.
 :::
 
-### Slotted Selectors {#slotted-selectors}
+### Yuvalanmış Seçiciler {#slotted-selectors}
 
-By default, scoped styles do not affect contents rendered by `<slot/>`, as they are considered to be owned by the parent component passing them in. To explicitly target slot content, use the `:slotted` pseudo-class:
+Varsayılan olarak, kapsamlı stiller `<slot/>` tarafından render edilen içeriği etkilemez, çünkü bunlar, onları içine geçiren üst bileşene ait kabul edilir. Slot içeriğini açıkça hedeflemek için `:slotted` sözde sınıfını kullanın:
 
 ```vue
 <style scoped>
@@ -70,9 +70,9 @@ By default, scoped styles do not affect contents rendered by `<slot/>`, as they 
 </style>
 ```
 
-### Global Selectors {#global-selectors}
+### Global Seçiciler {#global-selectors}
 
-If you want just one rule to apply globally, you can use the `:global` pseudo-class rather than creating another `<style>` (see below):
+Yalnızca bir kuralın global olarak uygulanmasını istiyorsanız, başka bir `<style>` oluşturmak yerine `:global` sözde sınıfını kullanabilirsiniz (aşağıya bakın):
 
 ```vue
 <style scoped>
@@ -82,33 +82,33 @@ If you want just one rule to apply globally, you can use the `:global` pseudo-cl
 </style>
 ```
 
-### Mixing Local and Global Styles {#mixing-local-and-global-styles}
+### Yerel ve Global Stilleri Karıştırma {#mixing-local-and-global-styles}
 
-You can also include both scoped and non-scoped styles in the same component:
+Aynı bileşende hem kapsamlı hem de kapsamlı olmayan stilleri de içerebilirsiniz:
 
 ```vue
 <style>
-/* global styles */
+/* global stiller */
 </style>
 
 <style scoped>
-/* local styles */
+/* yerel stiller */
 </style>
 ```
 
-### Scoped Style Tips {#scoped-style-tips}
+### Kapsamlı Stil İpuçları {#scoped-style-tips}
 
-- **Scoped styles do not eliminate the need for classes**. Due to the way browsers render various CSS selectors, `p { color: red }` will be many times slower when scoped (i.e. when combined with an attribute selector). If you use classes or ids instead, such as in `.example { color: red }`, then you virtually eliminate that performance hit.
+- **Kapsamlı stiller, sınıflara olan ihtiyacı ortadan kaldırmaz**. Tarayıcıların çeşitli CSS seçicilerini render etme biçimi nedeniyle, `p { color: red }`, kapsamlı olduğunda (yani bir öznitelik seçiciyle birleştirildiğinde) birçok kez daha yavaş olacaktır. Bunun yerine sınıfları veya kimlikleri kullanırsanız, örneğin `.example { color: red }`'de olduğu gibi, bu performans düşüşünü neredeyse ortadan kaldırırsınız.
 
-- **Be careful with descendant selectors in recursive components!** For a CSS rule with the selector `.a .b`, if the element that matches `.a` contains a recursive child component, then all `.b` in that child component will be matched by the rule.
+- **Özyinelemeli bileşenlerde alt seçicilere dikkat edin!** `.a .b` seçicisine sahip bir CSS kuralı için, `.a` ile eşleşen öğe özyinelemeli bir alt bileşen içeriyorsa, o zaman o alt bileşendeki tüm `.b`'ler kural tarafından eşleştirilecektir.
 
-## CSS Modules {#css-modules}
+## CSS Modülleri {#css-modules}
 
-A `<style module>` tag is compiled as [CSS Modules](https://github.com/css-modules/css-modules) and exposes the resulting CSS classes to the component as an object under the key of `$style`:
+Bir `<style module>` etiketi [CSS Modülleri](https://github.com/css-modules/css-modules) olarak derlenir ve ortaya çıkan CSS sınıflarını bileşene `$style` anahtarı altında bir nesne olarak gösterir:
 
 ```vue
 <template>
-  <p :class="$style.red">This should be red</p>
+  <p :class="$style.red">Bu kırmızı olmalı</p>
 </template>
 
 <style module>
@@ -118,17 +118,17 @@ A `<style module>` tag is compiled as [CSS Modules](https://github.com/css-modul
 </style>
 ```
 
-The resulting classes are hashed to avoid collision, achieving the same effect of scoping the CSS to the current component only.
+Ortaya çıkan sınıflar, çakışmayı önlemek için karma hale getirilir ve CSS'in yalnızca geçerli bileşene kapsamlanmasıyla aynı etkiyi elde eder.
 
-Refer to the [CSS Modules spec](https://github.com/css-modules/css-modules) for more details such as [global exceptions](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#exceptions) and [composition](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#composition).
+[Global istisnalar](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#exceptions) ve [bileşim](https://github.com/css-modules/css-modules/blob/master/docs/composition.md#composition) gibi daha fazla ayrıntı için [CSS Modülleri spesifikasyonuna](https://github.com/css-modules/css-modules) bakın.
 
-### Custom Inject Name {#custom-inject-name}
+### Özel Enjeksiyon Adı {#custom-inject-name}
 
-You can customize the property key of the injected classes object by giving the `module` attribute a value:
+`module` özelliğine bir değer vererek, enjekte edilen sınıflar nesnesinin özellik anahtarını özelleştirebilirsiniz:
 
 ```vue
 <template>
-  <p :class="classes.red">red</p>
+  <p :class="classes.red">kırmızı</p>
 </template>
 
 <style module="classes">
@@ -138,22 +138,22 @@ You can customize the property key of the injected classes object by giving the 
 </style>
 ```
 
-### Usage with Composition API {#usage-with-composition-api}
+### Composition API ile Kullanım {#usage-with-composition-api}
 
-The injected classes can be accessed in `setup()` and `<script setup>` via the `useCssModule` API. For `<style module>` blocks with custom injection names, `useCssModule` accepts the matching `module` attribute value as the first argument:
+Enjekte edilen sınıflara, `useCssModule` API'si aracılığıyla `setup()` ve `<script setup>` içinde erişilebilir. Özel enjeksiyon adlarına sahip `<style module>` blokları için, `useCssModule`, eşleşen `module` özellik değerini ilk argüman olarak kabul eder:
 
 ```js
 import { useCssModule } from 'vue'
 
-// inside setup() scope...
-// default, returns classes for <style module>
+// setup() kapsamı içinde...
+// varsayılan, <style module> için sınıflar döndürür
 useCssModule()
 
-// named, returns classes for <style module="classes">
+// adlandırılmış, <style module="classes"> için sınıflar döndürür
 useCssModule('classes')
 ```
 
-- **Example**
+- **Örnek**
 
 ```vue
 <script setup lang="ts">
@@ -163,7 +163,7 @@ const classes = useCssModule()
 </script>
 
 <template>
-  <p :class="classes.red">red</p>
+  <p :class="classes.red">kırmızı</p>
 </template>
 
 <style module>
@@ -173,13 +173,13 @@ const classes = useCssModule()
 </style>
 ```
 
-## `v-bind()` in CSS {#v-bind-in-css}
+## CSS'de `v-bind()` {#v-bind-in-css}
 
-SFC `<style>` tags support linking CSS values to dynamic component state using the `v-bind` CSS function:
+SFC `<style>` etiketleri, CSS değerlerini `v-bind` CSS fonksiyonunu kullanarak dinamik bileşen durumuna bağlamayı destekler:
 
 ```vue
 <template>
-  <div class="text">hello</div>
+  <div class="text">merhaba</div>
 </template>
 
 <script>
@@ -199,7 +199,7 @@ export default {
 </style>
 ```
 
-The syntax works with [`<script setup>`](./sfc-script-setup), and supports JavaScript expressions (must be wrapped in quotes):
+Sözdizimi, [`<script setup>`](./sfc-script-setup) ile çalışır ve JavaScript ifadelerini destekler (tırnak işaretleri içine alınmalıdır):
 
 ```vue
 <script setup>
@@ -210,7 +210,7 @@ const theme = ref({
 </script>
 
 <template>
-  <p>hello</p>
+  <p>merhaba</p>
 </template>
 
 <style scoped>
@@ -220,4 +220,4 @@ p {
 </style>
 ```
 
-The actual value will be compiled into a hashed CSS custom property, so the CSS is still static. The custom property will be applied to the component's root element via inline styles and reactively updated if the source value changes.
+Gerçek değer, karma bir CSS özel özelliğine derleneceğinden CSS hala statiktir. Özel özellik, bileşenin kök öğesine satır içi stiller aracılığıyla uygulanacak ve kaynak değeri değişirse reaktif olarak güncellenecektir.

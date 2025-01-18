@@ -1,14 +1,14 @@
-# Options: Lifecycle {#options-lifecycle}
+# Seçenekler: Yaşam Döngüsü {#options-lifecycle}
 
-:::info See also
-For shared usage of lifecycle hooks, see [Guide - Lifecycle Hooks](/guide/essentials/lifecycle)
+:::info Ayrıca bakınız
+Yaşam döngüsü kancalarının ortak kullanımı için [Rehber - Yaşam Döngüsü Kancaları](/guide/essentials/lifecycle) bölümüne bakın.
 :::
 
 ## beforeCreate {#beforecreate}
 
-Called when the instance is initialized.
+Örnek başlatıldığında çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -16,19 +16,19 @@ Called when the instance is initialized.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  Called immediately when the instance is initialized and props are resolved.
+  Örnek başlatıldığında ve prop'lar çözümlendiğinde hemen çağrılır.
 
-  Then the props will be defined as reactive properties and the state such as `data()` or `computed` will be set up.
+  Ardından prop'lar reaktif özellikler olarak tanımlanır ve `data()` veya `computed` gibi durum ayarlanır.
 
-  Note that the `setup()` hook of Composition API is called before any Options API hooks, even `beforeCreate()`.
+  Composition API'nin `setup()` kancasının, `beforeCreate()` dahil olmak üzere herhangi bir Options API kancasından önce çağrıldığına dikkat edin.
 
 ## created {#created}
 
-Called after the instance has finished processing all state-related options.
+Örnek, durumla ilgili tüm seçenekleri işlemeyi bitirdikten sonra çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -36,15 +36,15 @@ Called after the instance has finished processing all state-related options.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  When this hook is called, the following have been set up: reactive data, computed properties, methods, and watchers. However, the mounting phase has not been started, and the `$el` property will not be available yet.
+  Bu kanca çağrıldığında, aşağıdakiler ayarlanmıştır: reaktif veri, hesaplanan özellikler, metotlar ve izleyiciler. Ancak, montaj aşaması başlatılmamıştır ve `$el` özelliği henüz kullanılamaz olacaktır.
 
 ## beforeMount {#beforemount}
 
-Called right before the component is to be mounted.
+Bileşen monte edilmeden hemen önce çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -52,17 +52,17 @@ Called right before the component is to be mounted.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  When this hook is called, the component has finished setting up its reactive state, but no DOM nodes have been created yet. It is about to execute its DOM render effect for the first time.
+  Bu kanca çağrıldığında, bileşen reaktif durumunu ayarlamayı bitirmiştir, ancak henüz DOM düğümleri oluşturulmamıştır. İlk kez DOM render etkisini yürütmek üzeredir.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
 ## mounted {#mounted}
 
-Called after the component has been mounted.
+Bileşen monte edildikten sonra çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -70,23 +70,23 @@ Called after the component has been mounted.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  A component is considered mounted after:
+  Bir bileşen, aşağıdakilerden sonra monte edilmiş kabul edilir:
 
-  - All of its synchronous child components have been mounted (does not include async components or components inside `<Suspense>` trees).
+  - Tüm eşzamanlı alt bileşenleri monte edilmiştir (asenkron bileşenleri veya `<Suspense>` ağaçlarının içindeki bileşenleri içermez).
 
-  - Its own DOM tree has been created and inserted into the parent container. Note it only guarantees that the component's DOM tree is in-document if the application's root container is also in-document.
+  - Kendi DOM ağacı oluşturulmuş ve üst kapsayıcıya yerleştirilmiştir. Uygulamanın kök kapsayıcısı da belgenin içindeyse, yalnızca bileşenin DOM ağacının belgenin içinde olduğunu garanti ettiğini unutmayın.
 
-  This hook is typically used for performing side effects that need access to the component's rendered DOM, or for limiting DOM-related code to the client in a [server-rendered application](/guide/scaling-up/ssr).
+  Bu kanca genellikle bileşenin render edilmiş DOM'una erişim gerektiren yan etkileri gerçekleştirmek veya bir [sunucu tarafı render edilmiş uygulamada](/guide/scaling-up/ssr) DOM ile ilgili kodu istemciyle sınırlamak için kullanılır.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
 ## beforeUpdate {#beforeupdate}
 
-Called right before the component is about to update its DOM tree due to a reactive state change.
+Bileşen, reaktif bir durum değişikliği nedeniyle DOM ağacını güncellemeden hemen önce çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -94,17 +94,17 @@ Called right before the component is about to update its DOM tree due to a react
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  This hook can be used to access the DOM state before Vue updates the DOM. It is also safe to modify component state inside this hook.
+  Bu kanca, Vue DOM'u güncellemeden önce DOM durumuna erişmek için kullanılabilir. Bu kanca içinde bileşen durumunu değiştirmek de güvenlidir.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
 ## updated {#updated}
 
-Called after the component has updated its DOM tree due to a reactive state change.
+Bileşen, reaktif bir durum değişikliği nedeniyle DOM ağacını güncelledikten sonra çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -112,23 +112,23 @@ Called after the component has updated its DOM tree due to a reactive state chan
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  A parent component's updated hook is called after that of its child components.
+  Bir üst bileşenin güncellenmiş kancası, alt bileşenlerinkinden sonra çağrılır.
 
-  This hook is called after any DOM update of the component, which can be caused by different state changes. If you need to access the updated DOM after a specific state change, use [nextTick()](/api/general#nexttick) instead.
+  Bu kanca, bileşenin farklı durum değişikliklerinden kaynaklanabilen herhangi bir DOM güncellemesinden sonra çağrılır. Belirli bir durum değişikliğinden sonra güncellenmiş DOM'a erişmeniz gerekiyorsa, bunun yerine [nextTick()](/api/general#nexttick) kullanın.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
   :::warning
-  Do not mutate component state in the updated hook - this will likely lead to an infinite update loop!
+  Güncellenmiş kancada bileşen durumunu değiştirmeyin; bu muhtemelen sonsuz bir güncelleme döngüsüne yol açacaktır!
   :::
 
 ## beforeUnmount {#beforeunmount}
 
-Called right before a component instance is to be unmounted.
+Bir bileşen örneği kaldırılmadan hemen önce çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -136,17 +136,17 @@ Called right before a component instance is to be unmounted.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  When this hook is called, the component instance is still fully functional.
+  Bu kanca çağrıldığında, bileşen örneği hala tamamen işlevseldir.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
 ## unmounted {#unmounted}
 
-Called after the component has been unmounted.
+Bileşen kaldırıldıktan sonra çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -154,23 +154,23 @@ Called after the component has been unmounted.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  A component is considered unmounted after:
+  Bir bileşen, aşağıdakilerden sonra kaldırılmış kabul edilir:
 
-  - All of its child components have been unmounted.
+  - Tüm alt bileşenleri kaldırılmıştır.
 
-  - All of its associated reactive effects (render effect and computed / watchers created during `setup()`) have been stopped.
+  - Tüm ilişkili reaktif etkileri (`setup()` sırasında oluşturulan render etkisi ve hesaplananlar / izleyiciler) durdurulmuştur.
 
-  Use this hook to clean up manually created side effects such as timers, DOM event listeners or server connections.
+  Zamanlayıcılar, DOM olay dinleyicileri veya sunucu bağlantıları gibi manuel olarak oluşturulan yan etkileri temizlemek için bu kancayı kullanın.
 
-  **This hook is not called during server-side rendering.**
+  **Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
 ## errorCaptured {#errorcaptured}
 
-Called when an error propagating from a descendant component has been captured.
+Bir alt bileşenden yayılan bir hata yakalandığında çağrılır.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -183,45 +183,45 @@ Called when an error propagating from a descendant component has been captured.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  Errors can be captured from the following sources:
+  Hatalar aşağıdaki kaynaklardan yakalanabilir:
 
-  - Component renders
-  - Event handlers
-  - Lifecycle hooks
-  - `setup()` function
-  - Watchers
-  - Custom directive hooks
-  - Transition hooks
+  - Bileşen renderları
+  - Olay işleyicileri
+  - Yaşam döngüsü kancaları
+  - `setup()` fonksiyonu
+  - İzleyiciler
+  - Özel direktif kancaları
+  - Geçiş kancaları
 
-  The hook receives three arguments: the error, the component instance that triggered the error, and an information string specifying the error source type.
+  Kanca, üç argüman alır: hata, hatayı tetikleyen bileşen örneği ve hata kaynak türünü belirten bir bilgi dizesi.
 
   :::tip
-  In production, the 3rd argument (`info`) will be a shortened code instead of the full information string. You can find the code to string mapping in the [Production Error Code Reference](/error-reference/#runtime-errors).
+  Üretim ortamında, 3. argüman (`info`), tam bilgi dizesi yerine kısaltılmış bir kod olacaktır. Koddan dizeye eşleştirmeyi [Üretim Hata Kodu Referansı](/error-reference/#runtime-errors) bölümünde bulabilirsiniz.
   :::
 
-  You can modify component state in `errorCaptured()` to display an error state to the user. However, it is important that the error state should not render the original content that caused the error; otherwise the component will be thrown into an infinite render loop.
+  Kullanıcıya bir hata durumu görüntülemek için `errorCaptured()` içinde bileşen durumunu değiştirebilirsiniz. Ancak, hata durumunun hataya neden olan orijinal içeriği render etmemesi önemlidir; aksi takdirde bileşen sonsuz bir render döngüsüne girecektir.
 
-  The hook can return `false` to stop the error from propagating further. See error propagation details below.
+  Kanca, hatanın daha fazla yayılmasını durdurmak için `false` döndürebilir. Aşağıdaki hata yayılma ayrıntılarına bakın.
 
-  **Error Propagation Rules**
+  **Hata Yayılma Kuralları**
 
-  - By default, all errors are still sent to the application-level [`app.config.errorHandler`](/api/application#app-config-errorhandler) if it is defined, so that these errors can still be reported to an analytics service in a single place.
+  - Varsayılan olarak, tanımlanmışsa, tüm hatalar hala uygulama düzeyindeki [`app.config.errorHandler`](/api/application#app-config-errorhandler)'a gönderilir, böylece bu hatalar hala tek bir yerden bir analiz hizmetine raporlanabilir.
 
-  - If multiple `errorCaptured` hooks exist on a component's inheritance chain or parent chain, all of them will be invoked on the same error, in the order of bottom to top. This is similar to the bubbling mechanism of native DOM events.
+  - Bir bileşenin kalıtım zincirinde veya üst zincirinde birden fazla `errorCaptured` kancası varsa, hepsi aynı hatada aşağıdan yukarıya doğru çağrılır. Bu, yerel DOM olaylarının kabarcıklanma mekanizmasına benzer.
 
-  - If the `errorCaptured` hook itself throws an error, both this error and the original captured error are sent to `app.config.errorHandler`.
+  - `errorCaptured` kancasının kendisi bir hata verirse, hem bu hata hem de orijinal yakalanan hata `app.config.errorHandler`'a gönderilir.
 
-  - An `errorCaptured` hook can return `false` to prevent the error from propagating further. This is essentially saying "this error has been handled and should be ignored." It will prevent any additional `errorCaptured` hooks or `app.config.errorHandler` from being invoked for this error.
+  - Bir `errorCaptured` kancası, hatanın daha fazla yayılmasını engellemek için `false` döndürebilir. Bu esasen "bu hata ele alındı ve yok sayılmalı" anlamına gelir. Bu hata için ek `errorCaptured` kancalarının veya `app.config.errorHandler`'ın çağrılmasını engelleyecektir.
 
 ## renderTracked <sup class="vt-badge dev-only" /> {#rendertracked}
 
-Called when a reactive dependency has been tracked by the component's render effect.
+Bileşenin render etkisi tarafından bir reaktif bağımlılığın izlendiği zaman çağrılır.
 
-**This hook is development-mode-only and not called during server-side rendering.**
+**Bu kanca yalnızca geliştirme modu içindir ve sunucu tarafı render etme sırasında çağrılmaz.**
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -236,15 +236,15 @@ Called when a reactive dependency has been tracked by the component's render eff
   }
   ```
 
-- **See also** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- **Ayrıca bakınız** [Reaktivite Derinlemesine](/guide/extras/reactivity-in-depth)
 
 ## renderTriggered <sup class="vt-badge dev-only" /> {#rendertriggered}
 
-Called when a reactive dependency triggers the component's render effect to be re-run.
+Bir reaktif bağımlılığın, bileşenin render etkisinin yeniden çalıştırılması için tetiklediği zaman çağrılır.
 
-**This hook is development-mode-only and not called during server-side rendering.**
+**Bu kanca yalnızca geliştirme modu içindir ve sunucu tarafı render etme sırasında çağrılmaz.**
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -262,15 +262,15 @@ Called when a reactive dependency triggers the component's render effect to be r
   }
   ```
 
-- **See also** [Reactivity in Depth](/guide/extras/reactivity-in-depth)
+- **Ayrıca bakınız** [Reaktivite Derinlemesine](/guide/extras/reactivity-in-depth)
 
 ## activated {#activated}
 
-Called after the component instance is inserted into the DOM as part of a tree cached by [`<KeepAlive>`](/api/built-in-components#keepalive).
+Bileşen örneği, [`<KeepAlive>`](/api/built-in-components#keepalive) tarafından önbelleğe alınan bir ağacın parçası olarak DOM'a eklendikten sonra çağrılır.
 
-**This hook is not called during server-side rendering.**
+**Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -278,15 +278,15 @@ Called after the component instance is inserted into the DOM as part of a tree c
   }
   ```
 
-- **See also** [Guide - Lifecycle of Cached Instance](/guide/built-ins/keep-alive#lifecycle-of-cached-instance)
+- **Ayrıca bakınız** [Rehber - Önbelleğe Alınmış Örneğin Yaşam Döngüsü](/guide/built-ins/keep-alive#lifecycle-of-cached-instance)
 
 ## deactivated {#deactivated}
 
-Called after the component instance is removed from the DOM as part of a tree cached by [`<KeepAlive>`](/api/built-in-components#keepalive).
+Bileşen örneği, [`<KeepAlive>`](/api/built-in-components#keepalive) tarafından önbelleğe alınan bir ağacın parçası olarak DOM'dan kaldırıldıktan sonra çağrılır.
 
-**This hook is not called during server-side rendering.**
+**Bu kanca, sunucu tarafı render etme sırasında çağrılmaz.**
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -294,13 +294,13 @@ Called after the component instance is removed from the DOM as part of a tree ca
   }
   ```
 
-- **See also** [Guide - Lifecycle of Cached Instance](/guide/built-ins/keep-alive#lifecycle-of-cached-instance)
+- **Ayrıca bakınız** [Rehber - Önbelleğe Alınmış Örneğin Yaşam Döngüsü](/guide/built-ins/keep-alive#lifecycle-of-cached-instance)
 
-## serverPrefetch <sup class="vt-badge" data-text="SSR only" /> {#serverprefetch}
+## serverPrefetch <sup class="vt-badge" data-text="Yalnızca SSR" /> {#serverprefetch}
 
-Async function to be resolved before the component instance is to be rendered on the server.
+Bileşen örneği sunucuda render edilmeden önce çözümlenecek asenkron fonksiyon.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -308,13 +308,13 @@ Async function to be resolved before the component instance is to be rendered on
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  If the hook returns a Promise, the server renderer will wait until the Promise is resolved before rendering the component.
+  Kanca bir Promise döndürürse, sunucu render edicisi, bileşeni render etmeden önce Promise çözülene kadar bekleyecektir.
 
-  This hook is only called during server-side rendering can be used to perform server-only data fetching.
+  Bu kanca yalnızca sunucu tarafı render etme sırasında çağrılır ve yalnızca sunucu tarafında veri getirme işlemleri gerçekleştirmek için kullanılabilir.
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
@@ -324,19 +324,19 @@ Async function to be resolved before the component instance is to be rendered on
       }
     },
     async serverPrefetch() {
-      // component is rendered as part of the initial request
-      // pre-fetch data on server as it is faster than on the client
+      // bileşen, ilk isteğin bir parçası olarak render edilir
+      // istemciden daha hızlı olduğu için verileri sunucuda önceden getir
       this.data = await fetchOnServer(/* ... */)
     },
     async mounted() {
       if (!this.data) {
-        // if data is null on mount, it means the component
-        // is dynamically rendered on the client. Perform a
-        // client-side fetch instead.
+        // montaj sırasında veri null ise, bileşenin
+        // dinamik olarak istemcide render edildiği anlamına gelir. Bunun yerine
+        // bir istemci tarafı getirme gerçekleştirin.
         this.data = await fetchOnClient(/* ... */)
       }
     }
   }
   ```
 
-- **See also** [Server-Side Rendering](/guide/scaling-up/ssr)
+- **Ayrıca bakınız** [Sunucu Tarafı Render Etme](/guide/scaling-up/ssr)

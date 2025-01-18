@@ -1,10 +1,10 @@
-# Options: Misc {#options-misc}
+# Seçenekler: Çeşitli {#options-misc}
 
 ## name {#name}
 
-Explicitly declare a display name for the component.
+Bileşen için bir görünen ad açıkça bildirin.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -12,43 +12,43 @@ Explicitly declare a display name for the component.
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  The name of a component is used for the following:
+  Bir bileşenin adı, aşağıdakiler için kullanılır:
 
-  - Recursive self-reference in the component's own template
-  - Display in Vue DevTools' component inspection tree
-  - Display in warning component traces
+  - Bileşenin kendi şablonunda özyinelemeli kendine referans
+  - Vue Geliştirici Araçları'nın bileşen inceleme ağacında görüntüleme
+  - Uyarı bileşeni izlerinde görüntüleme
 
-  When you use Single-File Components, the component already infers its own name from the filename. For example, a file named `MyComponent.vue` will have the inferred display name "MyComponent".
+  Tek Dosyalı Bileşenler kullandığınızda, bileşen zaten kendi adını dosya adından çıkarır. Örneğin, `MyComponent.vue` adlı bir dosyanın çıkarılmış görünen adı "MyComponent" olacaktır.
 
-  Another case is that when a component is registered globally with [`app.component`](/api/application#app-component), the global ID is automatically set as its name.
+  Başka bir durum ise, bir bileşen [`app.component`](/api/application#app-component) ile global olarak kaydedildiğinde, global ID'nin otomatik olarak adı olarak ayarlanmasıdır.
 
-  The `name` option allows you to override the inferred name, or to explicitly provide a name when no name can be inferred (e.g. when not using build tools, or an inlined non-SFC component).
+  `name` seçeneği, çıkarılan adı geçersiz kılmanıza veya ad çıkarılamadığında (örneğin, derleme araçları kullanılmadığında veya satır içi bir SFC olmayan bileşen) açıkça bir ad sağlamanıza olanak tanır.
 
-  There is one case where `name` is explicitly necessary: when matching against cacheable components in [`<KeepAlive>`](/guide/built-ins/keep-alive) via its `include / exclude` props.
+  `name`'in açıkça gerekli olduğu bir durum vardır: [`<KeepAlive>`](/guide/built-ins/keep-alive)'da `include / exclude` prop'ları aracılığıyla önbelleğe alınabilir bileşenlere karşı eşleşirken.
 
   :::tip
-  Since version 3.2.34, a single-file component using `<script setup>` will automatically infer its `name` option based on the filename, removing the need to manually declare the name even when used with `<KeepAlive>`.
+  3.2.34 sürümünden bu yana, `<script setup>` kullanan tek dosya bileşeni, dosya adına göre `name` seçeneğini otomatik olarak çıkaracak ve `<KeepAlive>` ile kullanıldığında bile adı manuel olarak bildirme ihtiyacını ortadan kaldıracaktır.
   :::
 
 ## inheritAttrs {#inheritattrs}
 
-Controls whether the default component attribute fallthrough behavior should be enabled.
+Varsayılan bileşen özelliği geçiş davranışının etkinleştirilip etkinleştirilmeyeceğini kontrol eder.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
-    inheritAttrs?: boolean // default: true
+    inheritAttrs?: boolean // varsayılan: true
   }
   ```
 
-- **Details**
+- **Detaylar**
 
-  By default, parent scope attribute bindings that are not recognized as props will "fallthrough". This means that when we have a single-root component, these bindings will be applied to the root element of the child component as normal HTML attributes. When authoring a component that wraps a target element or another component, this may not always be the desired behavior. By setting `inheritAttrs` to `false`, this default behavior can be disabled. The attributes are available via the `$attrs` instance property and can be explicitly bound to a non-root element using `v-bind`.
+  Varsayılan olarak, prop'lar olarak tanınmayan üst kapsam özellik bağlamaları "geçer". Bu, tek köklü bir bileşenimiz olduğunda, bu bağlamaların normal HTML özellikleri olarak alt bileşenin kök öğesine uygulanacağı anlamına gelir. Bir hedef öğeyi veya başka bir bileşeni saran bir bileşen yazarken, bu her zaman istenen davranış olmayabilir. `inheritAttrs`'ı `false` olarak ayarlayarak bu varsayılan davranış devre dışı bırakılabilir. Özelliklere `$attrs` örnek özelliği aracılığıyla erişilebilir ve `v-bind` kullanılarak açıkça kök olmayan bir öğeye bağlanabilir.
 
-- **Example**
+- **Örnek**
 
   <div class="options-api">
 
@@ -76,7 +76,7 @@ Controls whether the default component attribute fallthrough behavior should be 
   </div>
   <div class="composition-api">
 
-  When declaring this option in a component that uses `<script setup>`, you can use the [`defineOptions`](/api/sfc-script-setup#defineoptions) macro:
+  Bu seçeneği `<script setup>` kullanan bir bileşende bildirirken, [`defineOptions`](/api/sfc-script-setup#defineoptions) makrosunu kullanabilirsiniz:
 
   ```vue
   <script setup>
@@ -101,19 +101,18 @@ Controls whether the default component attribute fallthrough behavior should be 
 
   </div>
 
-- **See also**
+- **Ayrıca bakınız**
 
-  - [Fallthrough Attributes](/guide/components/attrs)
-  <div class="composition-api">
-
-  - [Using `inheritAttrs` in normal `<script>`](/api/sfc-script-setup.html#usage-alongside-normal-script)
-  </div>
+  - [Geçiş Özellikleri](/guide/components/attrs)
+    <div class="composition-api">
+  - [Normal `<script>` içinde `inheritAttrs` Kullanma](/api/sfc-script-setup.html#usage-alongside-normal-script)
+    </div>
 
 ## components {#components}
 
-An object that registers components to be made available to the component instance.
+Bileşen örneği için kullanılabilir hale getirilecek bileşenleri kaydeden bir nesne.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -121,7 +120,7 @@ An object that registers components to be made available to the component instan
   }
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   import Foo from './Foo.vue'
@@ -129,21 +128,21 @@ An object that registers components to be made available to the component instan
 
   export default {
     components: {
-      // shorthand
+      // kısayol
       Foo,
-      // register under a different name
+      // farklı bir ad altında kaydet
       RenamedBar: Bar
     }
   }
   ```
 
-- **See also** [Component Registration](/guide/components/registration)
+- **Ayrıca bakınız** [Bileşen Kaydı](/guide/components/registration)
 
 ## directives {#directives}
 
-An object that registers directives to be made available to the component instance.
+Bileşen örneği için kullanılabilir hale getirilecek direktifleri kaydeden bir nesne.
 
-- **Type**
+- **Tür**
 
   ```ts
   interface ComponentOptions {
@@ -151,12 +150,12 @@ An object that registers directives to be made available to the component instan
   }
   ```
 
-- **Example**
+- **Örnek**
 
   ```js
   export default {
     directives: {
-      // enables v-focus in template
+      // şablonda v-focus'u etkinleştirir
       focus: {
         mounted(el) {
           el.focus()
@@ -170,4 +169,4 @@ An object that registers directives to be made available to the component instan
   <input v-focus>
   ```
 
-- **See also** [Custom Directives](/guide/reusability/custom-directives)
+- **Ayrıca bakınız** [Özel Direktifler](/guide/reusability/custom-directives)
